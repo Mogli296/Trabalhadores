@@ -152,8 +152,8 @@ export default function App() {
 
             {/* Galeria de Fotos e Vídeos */}
             <section className="py-16 bg-zinc-950/60 border-t border-zinc-900">
-              <div className="max-w-6xl mx-auto px-4 space-y-12 text-center">
-                                {/* Fotos */}
+                            <div className="max-w-6xl mx-auto px-4 space-y-12 text-center">
+                {/* Fotos */}
                 <div>
                   <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-white mb-6">
                     Galeria de Profissionais
