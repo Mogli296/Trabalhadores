@@ -225,15 +225,17 @@ export default function App() {
                   </div>
 
                   {/* Card 3 */}
-                  <div className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl space-y-4">
-                    <div className="w-12 h-12 bg-emerald-950/55 rounded-2xl border border-emerald-900 flex items-center justify-center text-emerald-400">
-                      <HeartHandshake size={20} />
-                    </div>
-                    <h3 className="font-display font-bold text-lg text-white">Aprovação Segura</h3>
-                    <p className="text-xs text-zinc-400 leading-relaxed font-sans">
-                      Sua documentação e mídias passam por crivo especializado corporativo, blindando contra propostas fraudulentas.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </section>
+<div className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl space-y-4">
+  <div className="w-12 h-12 bg-emerald-950/55 rounded-2xl border border-emerald-900 flex items-center justify-center text-emerald-400">
+    <HeartHandshake size={20} />
+  </div>
+  <h3 className="font-display font-bold text-lg text-white">Aprovação Segura</h3>
+  <p className="text-xs text-zinc-400 leading-relaxed font-sans">
+    Sua documentação e mídias passam por crivo especializado corporativo, blindando contra propostas fraudulentas.
+  </p>
+</div>
+</div> 
+</div> 
+</section> 
+</div> 
+)} 
