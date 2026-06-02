@@ -1,0 +1,6 @@
+{
+  "name": "Work - Cadastro de Trabalhadores Qualificados",
+  "description": "Plataforma profissional para cadastro de trabalhadores qualificados para viagens de trabalho temporárias e contratos sazonais.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
