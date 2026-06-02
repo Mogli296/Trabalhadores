@@ -150,43 +150,38 @@ export default function App() {
               </div>
             </section>
 
-            {/* Galeria de Fotos e Vídeos */}
-            <section className="py-16 bg-zinc-950/60 border-t border-zinc-900">
-                            <div className="max-w-6xl mx-auto px-4 space-y-12 text-center">
-                {/* Fotos */}
-                <div>
-                  <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-white mb-6">
-                    Galeria de Profissionais
-                  </h2>
-                  <p className="text-sm text-zinc-500 max-w-2xl mx-auto mb-10">
-                    Conheça alguns dos trabalhadores qualificados em ação durante suas temporadas internacionais.
-                  </p>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                    <img src="https://via.placeholder.com/300x200" alt="Profissional 1" className="rounded-xl border border-zinc-800 hover:opacity-90 transition" />
-                    <img src="https://via.placeholder.com/300x200" alt="Profissional 2" className="rounded-xl border border-zinc-800 hover:opacity-90 transition" />
-                    <img src="https://via.placeholder.com/300x200" alt="Profissional 3" className="rounded-xl border border-zinc-800 hover:opacity-90 transition" />
-                    <img src="https://via.placeholder.com/300x200" alt="Profissional 4" className="rounded-xl border border-zinc-800 hover:opacity-90 transition" />
-                  </div>
+                       {/* Vídeo de Apresentação */}
+            <section className="py-16 bg-zinc-950 border-t border-zinc-900">
+              <div className="max-w-4xl mx-auto px-4 text-center space-y-8">
+                <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                  Vídeo de Apresentação
+                </h2>
+                <p className="text-sm text-zinc-500 max-w-2xl mx-auto">
+                  Assista ao vídeo institucional e conheça como a plataforma Work conecta profissionais qualificados a oportunidades internacionais.
+                </p>
+                <div className="rounded-xl overflow-hidden border border-zinc-800 shadow-lg">
+                  <video controls className="w-full">
+                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+                    Seu navegador não suporta vídeos HTML5.
+                  </video>
                 </div>
+              </div>
+            </section>
 
-                {/* Vídeos */}
-                <div>
-                  <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-white mb-6">
-                    Vídeos em Campo
-                  </h2>
-                  <p className="text-sm text-zinc-500 max-w-2xl mx-auto mb-10">
-                    Veja os profissionais desempenhando suas funções em diferentes países e ambientes de trabalho.
-                  </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    <video controls className="rounded-xl border border-zinc-800 w-full">
-                      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
-                      Seu navegador não suporta vídeos HTML5.
-                    </video>
-                    <video controls className="rounded-xl border border-zinc-800 w-full">
-                      <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4" />
-                      Seu navegador não suporta vídeos HTML5.
-                    </video>
-                  </div>
+            {/* Galeria de Fotos */}
+            <section className="py-16 bg-zinc-950/70 border-t border-zinc-900">
+              <div className="max-w-6xl mx-auto px-4 text-center space-y-8">
+                <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-white">
+                  Fotos dos Profissionais
+                </h2>
+                <p className="text-sm text-zinc-500 max-w-2xl mx-auto">
+                  Veja alguns dos trabalhadores em ação durante suas temporadas internacionais.
+                </p>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                  <img src="https://via.placeholder.com/300x200" alt="Profissional 1" className="rounded-xl border border-zinc-800 hover:opacity-90 transition" />
+                  <img src="https://via.placeholder.com/300x200" alt="Profissional 2" className="rounded-xl border border-zinc-800 hover:opacity-90 transition" />
+                  <img src="https://via.placeholder.com/300x200" alt="Profissional 3" className="rounded-xl border border-zinc-800 hover:opacity-90 transition" />
+                  <img src="https://via.placeholder.com/300x200" alt="Profissional 4" className="rounded-xl border border-zinc-800 hover:opacity-90 transition" />
                 </div>
               </div>
             </section>
@@ -225,17 +220,15 @@ export default function App() {
                   </div>
 
                   {/* Card 3 */}
-<div className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl space-y-4">
-  <div className="w-12 h-12 bg-emerald-950/55 rounded-2xl border border-emerald-900 flex items-center justify-center text-emerald-400">
-    <HeartHandshake size={20} />
-  </div>
-  <h3 className="font-display font-bold text-lg text-white">Aprovação Segura</h3>
-  <p className="text-xs text-zinc-400 leading-relaxed font-sans">
-    Sua documentação e mídias passam por crivo especializado corporativo, blindando contra propostas fraudulentas.
-  </p>
-</div>
-</div> 
-</div> 
-</section> 
-</div> 
-)} 
+                  <div className="bg-zinc-950 border border-zinc-900 p-6 rounded-3xl space-y-4">
+                    <div className="w-12 h-12 bg-emerald-950/55 rounded-2xl border border-emerald-900 flex items-center justify-center text-emerald-400">
+                      <HeartHandshake size={20} />
+                    </div>
+                    <h3 className="font-display font-bold text-lg text-white">Aprovação Segura</h3>
+                    <p className="text-xs text-zinc-400 leading-relaxed font-sans">
+                      Sua documentação e mídias passam por crivo especializado corporativo, blindando contra propostas fraudulentas.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
