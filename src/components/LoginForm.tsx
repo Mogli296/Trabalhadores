@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Eye, EyeOff, Mail, Lock, ArrowRight, ShieldCheck, UserCheck } from 'lucide-react';
 import { api } from '../services/api';
+import TCWLogo from './TCWLogo';
 
 interface LoginFormProps {
   onSuccess: (userData: any) => void;
@@ -35,52 +36,50 @@ export default function LoginForm({ onSuccess, onNavigateToRegister }: LoginForm
     }
   };
 
-  const handleQuickLogin = async (role: 'admin' | 'worker') => {
+  const handleQuickLogin = (role: 'admin' | 'worker') => {
     setEmail(role === 'admin' ? 'speakai.agency@gmail.com' : 'trabalhador@work.com');
     setPassword(role === 'admin' ? 'admin' : 'pass');
   };
 
   return (
-    <div id="login-root" className="min-h-screen bg-black flex flex-col items-center justify-center p-4 relative text-white">
+    <div id="login-root" className="min-h-[90vh] flex flex-col items-center justify-center p-4 relative text-zinc-300">
       {/* Decorative Grid Overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#09090b_1px,transparent_1px),linear-gradient(to_bottom,#09090b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30 pointer-events-none" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0b112d_1px,transparent_1px),linear-gradient(to_bottom,#0b112d_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-40 pointer-events-none" />
 
       {/* Login Card */}
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-md bg-zinc-950 border border-zinc-900 rounded-none p-8 lg:p-10 relative z-10 shadow-2xl shadow-black/80"
-        id="login-card"
+         initial={{ opacity: 0, y: 15 }}
+         animate={{ opacity: 1, y: 0 }}
+         transition={{ duration: 0.5 }}
+         className="w-full max-w-md bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-3xl p-8 lg:p-10 relative z-10 shadow-2xl shadow-black/50"
+         id="login-card"
       >
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
-          <div className="w-8 h-8 bg-emerald-400 rounded-sm flex items-center justify-center mb-4">
-            <div className="w-4 h-4 bg-emerald-950 rounded-full"></div>
-          </div>
-          <h2 className="text-2xl font-semibold tracking-tighter text-white text-center uppercase">WORK ACCESS</h2>
-          <p className="text-[10px] text-gray-500 uppercase tracking-widest mt-1.5 text-center">Cadastramento Internacional e Emissão de Contratos Temporários</p>
+          <TCWLogo size="md" showText={true} className="mb-4" />
+          <h2 className="text-sm font-extrabold tracking-widest text-cyan-400 text-center uppercase font-mono">PORTAL DE ACESSO</h2>
+          <p className="text-[10px] text-zinc-400 uppercase font-bold tracking-wider mt-1.5 text-center leading-normal">Cadastramento Internacional e Emissão de Contratos Temporários</p>
         </div>
 
         {error && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="mb-6 p-3 rounded-none bg-red-950/40 border border-red-900/60 text-red-300 text-xs font-mono"
+            className="mb-6 p-3.5 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-mono font-semibold"
             id="login-error"
           >
             {error}
           </motion.div>
         )}
 
-        <form id="login-form" onSubmit={handleSubmit} className="space-y-4">
+        <form id="login-form" onSubmit={handleSubmit} className="space-y-5">
           {/* Email */}
           <div className="space-y-1">
-            <label htmlFor="login-email" className="block text-[10px] text-gray-500 uppercase mb-1">
+            <label htmlFor="login-email" className="block text-[10px] text-zinc-400 uppercase font-black tracking-wider mb-1">
               E-mail de acesso
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-500">
+              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500">
                 <Mail size={16} />
               </div>
               <input
@@ -91,18 +90,18 @@ export default function LoginForm({ onSuccess, onNavigateToRegister }: LoginForm
                 placeholder="nome@exemplo.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-zinc-900 border border-zinc-800 p-2.5 text-sm pl-9 text-white focus:border-emerald-500 outline-none rounded-none transition-all"
+                className="w-full bg-[#0b112d] border border-white/5 p-2.5 text-sm pl-10 text-white focus:border-cyan-400 placeholder-zinc-650 outline-none rounded-xl transition-all font-sans font-medium"
               />
             </div>
           </div>
 
           {/* Password */}
           <div className="space-y-1">
-            <label htmlFor="login-password" className="block text-[10px] text-gray-500 uppercase mb-1">
+            <label htmlFor="login-password" className="block text-[10px] text-zinc-400 uppercase font-black tracking-wider mb-1">
               Senha de acesso
             </label>
             <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-500">
+              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500">
                 <Lock size={16} />
               </div>
               <input
@@ -113,13 +112,13 @@ export default function LoginForm({ onSuccess, onNavigateToRegister }: LoginForm
                 placeholder="Insira sua senha"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-zinc-900 border border-zinc-800 p-2.5 text-sm pl-9 pr-10 text-white focus:border-emerald-500 outline-none rounded-none transition-all"
+                className="w-full bg-[#0b112d] border border-white/5 p-2.5 text-sm pl-10 pr-10 text-white focus:border-cyan-400 placeholder-zinc-650 outline-none rounded-xl transition-all font-sans font-medium"
               />
               <button
                 type="button"
                 id="login-toggle-password"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-zinc-500 hover:text-white transition-colors"
+                className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-zinc-500 hover:text-white transition-colors"
               >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -131,17 +130,17 @@ export default function LoginForm({ onSuccess, onNavigateToRegister }: LoginForm
               type="submit"
               id="login-submit-button"
               disabled={loading}
-              className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold py-3 text-sm transition-all shadow-[0_4px_20px_rgba(16,185,129,0.2)] rounded-none flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
+              className="w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 hover:from-cyan-300 hover:via-blue-400 hover:to-indigo-500 text-slate-950 font-black py-3 text-xs tracking-widest uppercase transition-all shadow-[0_0_20px_rgba(34,211,238,0.15)] rounded-xl flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
             >
-              {loading ? 'ACESSANDO...' : 'ACESSAR CONTA'}
-              {!loading && <ArrowRight size={16} />}
+              {loading ? 'ACESSANDO...' : 'ACESSAR MINHA CONTA'}
+              {!loading && <ArrowRight size={14} className="stroke-[2.5]" />}
             </button>
           </div>
         </form>
 
         {/* Quick Credentials testing panel */}
-        <div className="mt-8 border-t border-zinc-900 pt-6">
-          <p className="text-center text-[10px] text-gray-500 uppercase tracking-widest mb-4">
+        <div className="mt-8 border-t border-white/5 pt-6">
+          <p className="text-center text-[10px] text-zinc-400 uppercase font-black tracking-wider mb-4 font-mono">
             Acesso Rápido para Avaliação
           </p>
           <div className="grid grid-cols-2 gap-3">
@@ -149,34 +148,33 @@ export default function LoginForm({ onSuccess, onNavigateToRegister }: LoginForm
               type="button"
               id="login-demo-worker"
               onClick={() => handleQuickLogin('worker')}
-              className="flex items-center justify-center gap-1.5 py-2 px-3 border border-zinc-800 bg-zinc-900 text-white text-xs font-semibold hover:border-emerald-500 transition-all cursor-pointer rounded-none"
+              className="flex items-center justify-center gap-1.5 py-2.5 px-3 border border-white/5 bg-[#0b112d] text-zinc-300 text-xs font-bold hover:border-cyan-450 hover:text-white hover:bg-[#0e163b] transition-all cursor-pointer rounded-xl"
             >
-              <UserCheck size={14} className="text-emerald-400" />
+              <UserCheck size={14} className="text-cyan-400" />
               Sou Trabalhador
             </button>
             <button
               type="button"
               id="login-demo-admin"
               onClick={() => handleQuickLogin('admin')}
-              className="flex items-center justify-center gap-1.5 py-2 px-3 border border-zinc-800 bg-zinc-900 text-white text-xs font-semibold hover:border-emerald-500 transition-all cursor-pointer rounded-none"
+              className="flex items-center justify-center gap-1.5 py-2.5 px-3 border border-white/5 bg-[#0b112d] text-zinc-300 text-xs font-bold hover:border-cyan-450 hover:text-white hover:bg-[#0e163b] transition-all cursor-pointer rounded-xl"
             >
-              <ShieldCheck size={14} className="text-emerald-400" />
-              Sou Administrador
+              <ShieldCheck size={14} className="text-cyan-400" />
+              Administrador
             </button>
           </div>
         </div>
 
-        {/* Navigate to sign up */}
-        <div className="mt-6 text-center text-[10px] text-zinc-650 font-mono">
-          E-mail de Admin: <span className="text-emerald-400">speakai.agency@gmail.com</span> / Senha: <span className="font-bold text-emerald-400">admin</span>
+        <div className="mt-5 text-center text-[10px] text-zinc-500 font-mono font-bold tracking-wide">
+          Admin: <span className="text-cyan-400">speakai.agency@gmail.com</span> / Senha: <span className="text-cyan-400">admin</span>
         </div>
 
-        <div className="mt-6 text-center border-t border-zinc-900 pt-5">
-          <span className="text-xs text-zinc-400 uppercase tracking-widest">Ainda não tem conta? </span>
+        <div className="mt-6 text-center border-t border-white/5 pt-5">
+          <span className="text-xs text-zinc-400 font-semibold uppercase tracking-wide font-sans">Ainda não tem conta? </span>
           <button
             id="login-goto-register"
             onClick={onNavigateToRegister}
-            className="text-xs text-emerald-400 font-bold hover:text-emerald-300 uppercase tracking-widest ml-1 cursor-pointer"
+            className="text-xs text-cyan-400 font-black hover:text-cyan-300 uppercase tracking-widest ml-1 cursor-pointer font-mono"
           >
             Cadastrar-se
           </button>

@@ -10,25 +10,25 @@ export default function TCWLogo({ className = '', showText = true, size = 'md' }
   // Handle dimensions based on size selection
   const iconSize = {
     sm: 'w-10 h-10',
-    md: 'w-12 h-12',
-    lg: 'w-16 h-16'
+    md: 'w-14 h-14',
+    lg: 'w-24 h-24'
   }[size];
 
   const titleSize = {
-    sm: 'text-xl tracking-tight',
-    md: 'text-2xl tracking-tight',
-    lg: 'text-3xl tracking-tight'
+    sm: 'text-lg tracking-tight font-extrabold',
+    md: 'text-2xl tracking-normal font-black',
+    lg: 'text-5xl tracking-normal font-black'
   }[size];
 
   const subtitleSize = {
-    sm: 'text-[7px]',
-    md: 'text-[8px]',
-    lg: 'text-[9px]'
+    sm: 'text-[6px] tracking-[0.15em] font-bold',
+    md: 'text-[8px] tracking-[0.2em] font-black',
+    lg: 'text-[11px] tracking-[0.22em] font-black'
   }[size];
 
   return (
-    <div id="tcw-logo-root" className={`flex items-center gap-3 select-none ${className}`}>
-      {/* Golden Interconnected Globe + Sweeping Arrow Emblem */}
+    <div id="tcw-logo-root" className={`flex items-center gap-2.5 sm:gap-3.5 select-none ${className}`}>
+      {/* 3D Glass Globe, Interconnected networks, Team Nodes & Sweeping Blue Arrow */}
       <svg
         className={`${iconSize} shrink-0`}
         viewBox="0 0 100 100"
@@ -36,164 +36,175 @@ export default function TCWLogo({ className = '', showText = true, size = 'md' }
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          {/* Real Metallic Gold Gradient */}
-          <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FFF2CC" />
-            <stop offset="20%" stopColor="#ECC45C" />
-            <stop offset="50%" stopColor="#C59B27" />
-            <stop offset="80%" stopColor="#9C7310" />
-            <stop offset="100%" stopColor="#755102" />
+          {/* Royal Blue to Electric Blue Ribbon Gradient */}
+          <linearGradient id="richBlueGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#001C85" />
+            <stop offset="30%" stopColor="#003DDF" />
+            <stop offset="70%" stopColor="#005BFF" />
+            <stop offset="100%" stopColor="#0080FF" />
           </linearGradient>
 
-          {/* Core Globe Interior Dark Metallic Radial Gradient */}
-          <radialGradient id="globeBg" cx="50%" cy="50%" r="50%" fx="30%" fy="30%">
-            <stop offset="0%" stopColor="#252528" />
-            <stop offset="70%" stopColor="#121214" />
-            <stop offset="100%" stopColor="#0B0B0C" />
+          {/* Electric Blue Glow */}
+          <linearGradient id="neonBlueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#0070FF" />
+            <stop offset="100%" stopColor="#00E5FF" />
+          </linearGradient>
+
+          {/* Globe Background Light Sphere Gradient */}
+          <radialGradient id="glassGlobeBg" cx="50%" cy="40%" r="55%" fx="35%" fy="25%">
+            <stop offset="0%" stopColor="#FFFFFF" />
+            <stop offset="55%" stopColor="#F0F4FC" />
+            <stop offset="85%" stopColor="#D9E4FA" />
+            <stop offset="100%" stopColor="#C4D5F7" />
           </radialGradient>
 
-          {/* Soft Glow filter */}
-          <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="1.5" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          {/* Continent Shape Gradient (Soft grayish silver) */}
+          <linearGradient id="continentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#E2E8F0" />
+            <stop offset="100%" stopColor="#CBD5E1" />
+          </linearGradient>
+
+          {/* Soft Shadow Filter */}
+          <filter id="vectorDropShadow" x="-10%" y="-10%" width="120%" height="120%">
+            <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#003DDF" floodOpacity="0.15" />
           </filter>
         </defs>
 
-        {/* Outer orbital gold ring background glow */}
-        <circle cx="50" cy="50" r="38" stroke="url(#goldGrad)" strokeWidth="0.5" strokeOpacity="0.2" strokeDasharray="3 3" />
+        {/* 1. Transparent shadow for the sweeping outer ring */}
+        <circle cx="50" cy="50" r="38" stroke="url(#richBlueGrad)" strokeWidth="0.5" strokeOpacity="0.1" />
 
-        {/* 1. Main Globe sphere base */}
-        <circle cx="50" cy="50" r="34" fill="url(#globeBg)" stroke="#1F1F22" strokeWidth="1" />
+        {/* 2. Globe base with the premium blue-white glass radial gradient */}
+        <circle cx="50" cy="50" r="33" fill="url(#glassGlobeBg)" stroke="#E2E8F0" strokeWidth="0.75" />
 
-        {/* Abstract Golden Continents (representing geographic mapping) */}
-        {/* Americas / Western hemisphere continent paths */}
+        {/* 3. Subtle continents outline (gray/silver tone to support layout color) */}
+        {/* Americas Continent */}
         <path
-          d="M32 30c2 1 2 5-1 7s-6-1-7 2c0 1 3 4 5 3s4-2 6-1 2 6-1 8c-3 2-6 8-4 10s5 4 4 7c-1 2-3 4-2 5l1 1c2-1 3-5 5-6s4-1 6-4 1-5 2-8 3-7 5-8c3-1 4-5 2-7c-2-2-4 1-6-1s-3-5-6-5s-4-1-7-2z"
-          fill="url(#goldGrad)"
-          fillOpacity="0.15"
+          d="M28 32c1.5 0.5 1.5 4-0.8 5.3s-4.5-0.8-5.3 1.5c0 0.8 2.3 3 3.8 2.3s3-1.5 4.5-0.8 1.5 4.5-0.8 6c-2.3 1.5-4.5 6-3 7.5s3.8 3 3 5.3c-0.8 1.5-2.3 3-1.5 3.8l0.8 0.8c1.5-0.8 2.3-3.8 3.8-4.5s3-0.8 4.5-3 0.8-3.8 1.5-6 2.3-5.3 3.8-6c2.3-0.8 3-3.8 1.5-5.3c-1.5-1.5-3 0.8-4.5-0.8s-2.3-3.8-4.5-3.8s-3-0.8-5.3-1.5z"
+          fill="url(#continentGrad)"
+          fillOpacity="0.45"
         />
-        {/* Europe / Africa / Middle East continent paths */}
+        {/* Europe / Africa Continent */}
         <path
-          d="M62 25c1 2-2 3-1 6s4 2 2 4s-4 4-2 6c1 1 3 0 4 2s2 5 4 4s2-2 3-1s1 3 3 2c1 0 1-3 3-3s3 2 4 1c1-1 0-3-2-4s-3-1-2-3s2-2 1-4c0-2-3-2-4-4s-1-4-3-4s-4 1-6 2s-3-1-4 1s-1 1-3 1z"
-          fill="url(#goldGrad)"
-          fillOpacity="0.15"
-        />
-        <path
-          d="M60 45c2 1 4 0 5 2s-1 6 1 8c2 3 4-1 5 1s-1 4-1 6c1 3 4-1 5 1s0 5-2 6s-4-1-6 2c-1 2-2-1-3-2s-4-1-5-3s2-4 0-5s-3-2-2-4s2-3 2-5s1-5-1-7z"
-          fill="url(#goldGrad)"
-          fillOpacity="0.1"
+          d="M62 26c1 1.5-1.5 2.3-0.8 4.5s3 1.5 1.5 3-3 3-1.5 4.5c0.8 0.8 2.3 0 3 1.5s1.5 3.8 3 3s1.5-1.5 2.3-0.8s0.8 2.3 2.3 1.5c0.8 0 0.8-2.3 2.3-2.3s2.3 1.5 3 0.8c0.8-0.8 0-2.3-1.5-3s-2.3-0.8-1.5-2.3s1.5-1.5 0.8-3c0-1.5-2.3-1.5-3-3s-0.8-3-2.3-3s-3 0.8-4.5 1.5s-2.3-0.8-3 0.8s-0.8 0.8-2.3 0.8z"
+          fill="url(#continentGrad)"
+          fillOpacity="0.45"
         />
 
-        {/* 2. Global interconnectivity network grids (latitude and longitude arcs) */}
-        <path d="M19 50 A 31 31 0 0 0 81 50" stroke="url(#goldGrad)" strokeWidth="0.75" strokeOpacity="0.35" fill="none" />
-        <path d="M16 50 Q 50 72 84 50" stroke="url(#goldGrad)" strokeWidth="0.5" strokeOpacity="0.25" fill="none" />
-        <path d="M16 50 Q 50 28 84 50" stroke="url(#goldGrad)" strokeWidth="0.5" strokeOpacity="0.25" fill="none" />
-        
-        <path d="M50 16 Q 32 50 50 84" stroke="url(#goldGrad)" strokeWidth="0.5" strokeOpacity="0.25" fill="none" />
-        <path d="M50 16 Q 68 50 50 84" stroke="url(#goldGrad)" strokeWidth="0.5" strokeOpacity="0.25" fill="none" fillRule="evenodd" />
+        {/* 4. Elegant globe network arcs (Interconnectivity longitudes & latitudes) */}
+        <path d="M17 50 A 33 33 0 0 0 83 50" stroke="#94A3B8" strokeWidth="0.5" strokeOpacity="0.4" fill="none" />
+        <path d="M17 50 Q 50 68 83 50" stroke="#94A3B8" strokeWidth="0.5" strokeOpacity="0.3" fill="none" />
+        <path d="M17 50 Q 50 32 83 50" stroke="#94A3B8" strokeWidth="0.5" strokeOpacity="0.3" fill="none" />
+        <path d="M50 17 Q 35 50 50 83" stroke="#94A3B8" strokeWidth="0.5" strokeOpacity="0.3" fill="none" />
+        <path d="M50 17 Q 65 50 50 83" stroke="#94A3B8" strokeWidth="0.5" strokeOpacity="0.3" fill="none" />
 
-        {/* Connection Network Lines (explicit nodes mapping) */}
-        <path d="M28 35 C 38 42, 52 42, 60 30" stroke="url(#goldGrad)" strokeWidth="0.75" strokeOpacity="0.6" strokeDasharray="1.5 1.5" fill="none" />
-        <path d="M30 65 C 42 63, 44 48, 55 42" stroke="url(#goldGrad)" strokeWidth="0.75" strokeOpacity="0.6" strokeDasharray="1.5 1.5" fill="none" />
-        <path d="M55 42 C 68 45, 78 52, 80 50" stroke="url(#goldGrad)" strokeWidth="0.75" strokeOpacity="0.5" fill="none" />
-        <path d="M42 74 C 55 70, 71 61, 74 48" stroke="url(#goldGrad)" strokeWidth="0.75" strokeOpacity="0.5" fill="none" />
+        {/* Network connections (Dots on the intersections representing branches/agencies) */}
+        <circle cx="35" cy="27" r="1.5" fill="#005BFF" opacity="0.8" />
+        <circle cx="50" cy="26" r="1.8" fill="#005BFF" opacity="0.9" />
+        <circle cx="63" cy="23" r="1.5" fill="#005BFF" opacity="0.8" />
+        <circle cx="39" cy="37" r="1.5" fill="#005BFF" opacity="0.8" />
+        <circle cx="61" cy="36" r="1.5" fill="#005BFF" opacity="0.8" />
+        <circle cx="31" cy="43" r="1.5" fill="#005BFF" opacity="0.8" />
 
-        {/* 3. High-tech user nodes (person silhouettes inside circular badges) */}
-        {/* Node 1 (Top Left) */}
-        <g transform="translate(28, 35)">
-          <circle cx="0" cy="0" r="3.5" fill="#121214" stroke="url(#goldGrad)" strokeWidth="0.75" />
-          <circle cx="0" cy="-0.5" r="1.2" fill="url(#goldGrad)" />
-          <path d="M-1.8 2.2 C-1.8 1.1, -1 0.7, 0 0.7 C1 0.7, 1.8 1.1, 1.8 2.2 Z" fill="url(#goldGrad)" />
-        </g>
+        {/* Light connection paths connecting the dot network */}
+        <path d="M35 27 Q 44 24 50 26" stroke="#005BFF" strokeWidth="0.5" strokeOpacity="0.5" fill="none" />
+        <path d="M50 26 Q 57 23 63 23" stroke="#005BFF" strokeWidth="0.5" strokeOpacity="0.5" fill="none" />
+        <path d="M35 27 Q 37 32 39 37" stroke="#005BFF" strokeWidth="0.5" strokeOpacity="0.5" fill="none" />
+        <path d="M50 26 Q 56 31 61 36" stroke="#005BFF" strokeWidth="0.5" strokeOpacity="0.5" fill="none" />
+        <path d="M31 43 Q 35 40 39 37" stroke="#005BFF" strokeWidth="0.5" strokeOpacity="0.4" fill="none" />
 
-        {/* Node 2 (Center) */}
-        <g transform="translate(55, 42)">
-          <circle cx="0" cy="0" r="3.5" fill="#121214" stroke="url(#goldGrad)" strokeWidth="0.75" />
-          <circle cx="0" cy="-0.5" r="1.2" fill="url(#goldGrad)" />
-          <path d="M-1.8 2.2 C-1.8 1.1, -1 0.7, 0 0.7 C1 0.7, 1.8 1.1, 1.8 2.2 Z" fill="url(#goldGrad)" />
-        </g>
-
-        {/* Node 3 (Bottom Mid) */}
-        <g transform="translate(42, 74)">
-          <circle cx="0" cy="0" r="3.5" fill="#121214" stroke="url(#goldGrad)" strokeWidth="0.75" />
-          <circle cx="0" cy="-0.5" r="1.2" fill="url(#goldGrad)" />
-          <path d="M-1.8 2.2 C-1.8 1.1, -1 0.7, 0 0.7 C1 0.7, 1.8 1.1, 1.8 2.2 Z" fill="url(#goldGrad)" />
-        </g>
-
-        {/* Node 4 (Right Lower) */}
-        <g transform="translate(74, 48)">
-          <circle cx="0" cy="0" r="3.5" fill="#121214" stroke="url(#goldGrad)" strokeWidth="0.75" />
-          <circle cx="0" cy="-0.5" r="1.2" fill="url(#goldGrad)" />
-          <path d="M-1.8 2.2 C-1.8 1.1, -1 0.7, 0 0.7 C1 0.7, 1.8 1.1, 1.8 2.2 Z" fill="url(#goldGrad)" />
-        </g>
-
-        {/* Node 5 (Top Right) */}
-        <g transform="translate(68, 28)">
-          <circle cx="0" cy="0" r="2.5" fill="#121214" stroke="url(#goldGrad)" strokeWidth="0.5" />
-          <circle cx="0" cy="-0.3" r="0.8" fill="url(#goldGrad)" />
-          <path d="M-1.2 1.5 C-1.2 0.8, -0.6 0.5, 0 0.5 C0.6 0.5, 1.2 0.8, 1.2 1.5 Z" fill="url(#goldGrad)" />
-        </g>
-
-        {/* Node 6 (Left Lower) */}
-        <g transform="translate(18, 62)">
-          <circle cx="0" cy="0" r="2.5" fill="#121214" stroke="url(#goldGrad)" strokeWidth="0.5" />
-          <circle cx="0" cy="-0.3" r="0.8" fill="url(#goldGrad)" />
-          <path d="M-1.2 1.5 C-1.2 0.8, -0.6 0.5, 0 0.5 C0.6 0.5, 1.2 0.8, 1.2 1.5 Z" fill="url(#goldGrad)" />
-        </g>
-
-        {/* 4. The Sweeping Orbital Golden Arrow */}
-        {/* Dynamic bezier sweeping line with variable thickness representing orbiting velocity */}
-        <path
-          d="M 12 50 C 11 75, 45 92, 75 70 C 85 61, 91 48, 92 38"
-          stroke="url(#goldGrad)"
-          strokeWidth="3.2"
-          strokeLinecap="round"
-          filter="url(#goldGlow)"
-        />
-        <path
-          d="M 12 50 C 11 75, 45 92, 75 70 C 85 61, 91 48, 92 38"
-          stroke="#FFFFFF"
-          strokeWidth="0.6"
-          strokeLinecap="round"
-          strokeOpacity="0.8"
-        />
-
-        {/* Sweeping arrow tip (pointing forward and upward on the right side) */}
-        <g transform="translate(92.2, 37) rotate(-35)">
+        {/* 5. Central/Bottom People Team silhouettes - 3 figures */}
+        {/* Left Person Silhouette (Small) */}
+        <g transform="translate(41.5, 48)">
           <path
-            d="M -5 3 L 1 -5 L 6 3 L 1 1 Z"
-            fill="url(#goldGrad)"
-            stroke="url(#goldGrad)"
-            strokeWidth="0.5"
-            filter="url(#goldGlow)"
+            d="M -3,6 C -3,2.5 -1,1.5 2,1.5 C 5,1.5 7,2.5 7,6 Z"
+            fill="url(#richBlueGrad)"
           />
+          <circle cx="2" cy="-1.5" r="2" fill="url(#richBlueGrad)" />
+        </g>
+
+        {/* Right Person Silhouette (Small) */}
+        <g transform="translate(54.5, 48)">
           <path
-            d="M -5 3 L 1 -5 L 6 3 L 1 1 Z"
-            fill="#FFFFFF"
-            fillOpacity="0.3"
+            d="M -3,6 C -3,2.5 -1,1.5 2,1.5 C 5,1.5 7,2.5 7,6 Z"
+            fill="url(#richBlueGrad)"
+          />
+          <circle cx="2" cy="-1.5" r="2" fill="url(#richBlueGrad)" />
+        </g>
+
+        {/* Central Person Silhouette (Taller & Centered in front) */}
+        <g transform="translate(46.5, 43)">
+          <path
+            d="M -3.5,8.5 C -3.5,4 0,3.5 3.5,3.5 C 7,3.5 10.5,4 10.5,8.5 Z"
+            fill="url(#richBlueGrad)"
+          />
+          <circle cx="3.5.5" cy="-0.5" r="2.8" fill="url(#richBlueGrad)" />
+          {/* Subtle outline separator for depth */}
+          <path
+            d="M -3.5,8.5 C -3.5,4 0,3.5 3.5,3.5 C 7,3.5 10.5,4 10.5,8.5"
+            stroke="#FFFFFF"
+            strokeWidth="0.5"
+            fill="none"
+          />
+          <circle cx="3.5" cy="-0.5" r="2.8" stroke="#FFFFFF" strokeWidth="0.5" fill="none" />
+        </g>
+
+        {/* 6. Dynamic Sweeping Orbital Royal Blue Ribbon and Arrow */}
+        {/* Sweeping outer loop trail under the globe */}
+        <path
+          d="M 23 45 C 20.5 68, 41 85, 73 66 C 85 57, 91.5 45, 92 34"
+          stroke="url(#richBlueGrad)"
+          strokeWidth="3.8"
+          strokeLinecap="round"
+          filter="url(#vectorDropShadow)"
+        />
+        {/* Highlighting inner vector line */}
+        <path
+          d="M 23 45 C 20.5 68, 41 85, 73 66 C 85 57, 91.5 45, 92 34"
+          stroke="url(#neonBlueGrad)"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+          strokeOpacity="0.9"
+        />
+
+        {/* Outer orbital swoosh arrow tail connection */}
+        <path
+          d="M 22 43 C 21.5 35, 25 24, 34 20"
+          stroke="url(#richBlueGrad)"
+          strokeWidth="2.2"
+          strokeLinecap="round"
+          strokeOpacity="0.3"
+        />
+
+        {/* Bold arrow head pointing dynamically top right */}
+        <g transform="translate(91.8, 33) rotate(-28)">
+          <path
+            d="M -5.5 3 L 1 -5.5 L 7.5 3 L 1 1 Z"
+            fill="url(#richBlueGrad)"
+            stroke="url(#neonBlueGrad)"
+            strokeWidth="0.5"
           />
         </g>
       </svg>
 
-      {/* Styled Brand Text "TCW" + "CONNECTING THE FUTURE" */}
+      {/* Corporate Modern Blue Brand Text "TCW" + "CONNECTING THE FUTURE" */}
       {showText && (
         <div className="flex flex-col text-left justify-center">
           <div className="flex items-baseline leading-none">
-            {/* T (Silver/White gradient) */}
-            <span className={`${titleSize} font-sans font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-200 to-zinc-400`}>
+            {/* T (Deep Blue) */}
+            <span className={`${titleSize} text-transparent bg-clip-text bg-gradient-to-b from-[#003BFF] to-[#001066]`}>
               T
             </span>
-            {/* C (Rich Gold/Bronze gradient) */}
-            <span className={`${titleSize} font-sans font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-[#FFF0C2] via-[#DDA934] to-[#997116] mx-[1px]`}>
+            {/* C (Lighter Bright Blue Accent) */}
+            <span className={`${titleSize} text-transparent bg-clip-text bg-gradient-to-b from-[#00A2FF] to-[#0048B3] mx-[0.5px]`}>
               C
             </span>
-            {/* W (Silver/White gradient) */}
-            <span className={`${titleSize} font-sans font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-zinc-200 to-zinc-400`}>
+            {/* W (Deep Blue) */}
+            <span className={`${titleSize} text-transparent bg-clip-text bg-gradient-to-b from-[#003BFF] to-[#001066]`}>
               W
             </span>
           </div>
           {/* Subtitle "CONNECTING THE FUTURE." */}
-          <span className={`${subtitleSize} font-mono font-black tracking-[0.22em] text-transparent bg-clip-text bg-gradient-to-r from-[#ECC45C] via-[#C59B27] to-[#DDA934] uppercase mt-1 whitespace-nowrap`}>
+          <span className={`${subtitleSize} text-transparent bg-clip-text bg-gradient-to-r from-[#002FB3] via-[#005BFF] to-[#003DDF] uppercase mt-0.5 whitespace-nowrap`}>
             CONNECTING THE FUTURE
           </span>
         </div>

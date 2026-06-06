@@ -1,136 +1,148 @@
-import React, { useState, useRef } from 'react';
-import { 
-  Play, Pause, Volume2, VolumeX, Video, ExternalLink
-} from 'lucide-react';
+import React from 'react';
+import { Video, ImageIcon } from 'lucide-react';
 
-const VIDEO_DATA = {
-  id: "showcase",
-  title: "Apresentação: Ofício e Carpintaria Sazonal",
-  url: "https://assets.mixkit.co/videos/preview/mixkit-hands-of-a-craftsman-working-with-wood-42261-large.mp4",
-  subtitle: "A preparação minuciosa do trabalhador de ofício para garantir resultados perfeitos no exterior."
-};
+interface PhotoItem {
+  id: number;
+  title: string;
+  image: string;
+  description: string;
+}
+
+const PHOTOS_DATA: PhotoItem[] = [
+  {
+    id: 1,
+    title: "Colheita de Frutas em Pomares",
+    image: "https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?auto=format&fit=crop&w=800&q=80",
+    description: "Colheita manual de precisão e seleção de frutas em pomares de alta escala durante a alta temporada."
+  },
+  {
+    id: 2,
+    title: "Carpintaria de Estruturas",
+    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80",
+    description: "Montagem de estruturas de madeira, esquadrias e suporte técnico em projetos residenciais de grande porte."
+  },
+  {
+    id: 3,
+    title: "Copa e Cozinhas Industriais",
+    image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80",
+    description: "Suporte operacional na preparação de insumos e logística interna de grandes cozinhas comerciais."
+  },
+  {
+    id: 4,
+    title: "Operação de Empilhadeiras e Logística",
+    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80",
+    description: "Conferência de mercadorias, movimentação de cargas e organização de estoques em centros logísticos automatizados."
+  },
+  {
+    id: 5,
+    title: "Trabalho em Vinhedos e Terroirs",
+    image: "https://images.unsplash.com/photo-1595974482597-4b8da8879bc5?auto=format&fit=crop&w=800&q=80",
+    description: "Atividades de cultivo, manutenção fitossanitária e colheita sazonal de videiras finas."
+  },
+  {
+    id: 6,
+    title: "Montagem e Soldagem de Estruturas",
+    image: "https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=800&q=80",
+    description: "Processos industriais básicos de soldagem e corte aplicados à fixação de partes metálicas complexas."
+  }
+];
+
+const YOUTUBE_VIDEO_ID = "9No-FiE9ZMc"; // Inspiring travel & dynamic seasonal visual
+const VIDEO_TITLE = "Apresentação de Práticas Operacionais & Vivência Internacional";
 
 export default function LandingMedia() {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
-  
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const togglePlay = () => {
-    if (!videoRef.current) return;
-    if (isPlaying) {
-      videoRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      videoRef.current.play().then(() => {
-        setIsPlaying(true);
-      }).catch(err => {
-        console.error("Video play error:", err);
-      });
-    }
-  };
-
-  const toggleMute = () => {
-    if (!videoRef.current) return;
-    videoRef.current.muted = !isMuted;
-    setIsMuted(!isMuted);
-  };
-
   return (
-    <div className="space-y-12 max-w-4xl mx-auto px-4 py-6">
-      {/* HEADER SECTION */}
-      <div className="text-center space-y-2">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-950/40 border border-emerald-950 text-emerald-400 text-[10px] font-mono tracking-widest uppercase rounded-none">
-          <Video size={12} />
-          Vídeo de Apresentação
-        </div>
-        <h2 className="text-2xl sm:text-3xl font-semibold uppercase tracking-wider text-white">
-          Vídeo de Apresentação
-        </h2>
-        <p className="text-xs text-zinc-500 max-w-lg mx-auto uppercase tracking-wide">
-          Assista a demonstrações de alta definição dos ofícios e técnicas sazonais executados em nossos programas integrados.
-        </p>
-      </div>
-
-      {/* VIDEO PLAYER CONTAINER */}
-      <div className="bg-zinc-950 border border-zinc-900 rounded-none overflow-hidden relative group shadow-2xl">
-        <video 
-          ref={videoRef}
-          src={VIDEO_DATA.url}
-          loop
-          muted={isMuted}
-          playsInline
-          onClick={togglePlay}
-          className="w-full aspect-video object-cover bg-black cursor-pointer"
-        />
-        
-        {/* Ambient vignette gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-none" />
-
-        {/* Subtitles Overlay */}
-        <div className="absolute bottom-16 left-4 right-4 md:left-8 md:right-8 text-center pointer-events-none">
-          <span className="bg-black/90 text-white px-3 py-1.5 text-xs font-mono border border-zinc-800 tracking-wide uppercase leading-relaxed inline-block">
-            {VIDEO_DATA.subtitle}
-          </span>
+    <div className="space-y-16 max-w-5xl mx-auto px-4 py-4 text-zinc-300 bg-transparent">
+      
+      {/* SECTION 1: VIDEO DE APRESENTAÇÃO */}
+      <section id="presentation-video-section" className="space-y-6 max-w-4xl mx-auto">
+        <div className="text-center space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-cyan-950/40 border border-cyan-500/20 text-[#22d3ee] text-[10px] font-mono tracking-widest uppercase rounded-full">
+            <Video size={11} className="text-cyan-400 animate-pulse" />
+            Vencedores & Oportunidades Sazonais
+          </div>
+          <h2 className="text-xl sm:text-3xl font-extrabold uppercase tracking-tight text-white">
+            Vídeo de Apresentação
+          </h2>
+          <p className="text-xs sm:text-sm text-zinc-400 max-w-md mx-auto uppercase tracking-wide leading-relaxed font-semibold">
+            Assista ao vídeo demonstrativo direto do YouTube apresentando as atividades e oportunidades internacionais da plataforma.
+          </p>
         </div>
 
-        {/* Custom controls overlay panel */}
-        <div className="absolute bottom-0 inset-x-0 p-4 bg-gradient-to-t from-black to-transparent flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <button 
-              onClick={togglePlay}
-              className="w-10 h-10 rounded-none bg-emerald-500 hover:bg-emerald-400 text-black flex items-center justify-center cursor-pointer transition-all focus:outline-none"
-              title={isPlaying ? "Pausar Apresentação" : "Iniciar Apresentação"}
-            >
-              {isPlaying ? <Pause size={18} fill="currentColor" /> : <Play size={18} fill="currentColor" />}
-            </button>
+        {/* Video Player Box - Plays YouTube Embed */}
+        <div className="bg-[#060a23]/60 border border-white/5 rounded-3xl overflow-hidden relative shadow-2xl">
+          <div className="w-full aspect-video">
+            <iframe
+              src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?modestbranding=1&rel=0&iv_load_policy=3&hl=pt`}
+              title={VIDEO_TITLE}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className="w-full h-full border-0"
+            />
+          </div>
 
-            <button 
-              onClick={toggleMute}
-              className="w-10 h-10 rounded-none bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white flex items-center justify-center cursor-pointer transition-all focus:outline-none"
-              title={isMuted ? "Ativar Áudio" : "Desativar Áudio"}
-            >
-              {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-            </button>
+          {/* Subtext info under the premium box */}
+          <div className="p-4 bg-[#0b112d]/60 border-t border-white/5 flex items-center justify-between gap-4">
+            <div className="text-left">
+              <span className="text-[9px] text-zinc-500 font-mono uppercase block tracking-wider font-bold">APRESENTAÇÃO COMPLETA</span>
+              <span className="text-xs text-white font-bold block truncate max-w-xs">{VIDEO_TITLE}</span>
+            </div>
 
-            <div className="text-left pl-1">
-              <span className="text-[9px] text-zinc-500 font-mono uppercase block tracking-wider">APRESENTAÇÃO COMPLETA</span>
-              <span className="text-xs text-white font-medium block truncate max-w-xs">{VIDEO_DATA.title}</span>
+            {/* Loop Status tag */}
+            <div className="flex items-center gap-1.5 shrink-0 bg-cyan-950/40 px-2 py-0.5 rounded-full border border-cyan-500/20">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              <span className="text-[9px] font-mono text-cyan-400 font-bold uppercase tracking-widest">TRANSMISSÃO HD</span>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Loop Status indicator */}
-          <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">TRANSMISSÃO HD</span>
+      {/* SECTION 2: SESSÃO DE FOTOS */}
+      <section id="photo-session-section" className="space-y-8 border-t border-white/5 pt-12 max-w-4xl mx-auto">
+        <div className="text-center space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-cyan-950/40 border border-cyan-500/20 text-[#22d3ee] text-[10px] font-mono tracking-widest uppercase rounded-full">
+            <ImageIcon size={11} className="text-cyan-400" />
+            Galeria de Atividades
           </div>
+          <h2 className="text-xl sm:text-3xl font-extrabold uppercase tracking-tight text-white">
+            Sessão de Fotos Sazonais
+          </h2>
+          <p className="text-xs sm:text-sm text-zinc-400 max-w-md mx-auto uppercase tracking-wide leading-relaxed font-semibold">
+            Retratos fiéis das frentes operacionais integradas conduzidas pelos profissionais da nossa comunidade internacional.
+          </p>
         </div>
 
-        {/* Overlay Play Hint when stopped */}
-        {!isPlaying && (
-          <div 
-            onClick={togglePlay}
-            className="absolute inset-0 flex items-center justify-center bg-black/40 cursor-pointer group-hover:bg-black/50 transition-colors"
-          >
-            <div className="w-16 h-16 rounded-full bg-white text-black flex items-center justify-center shadow-2xl transform group-hover:scale-105 transition-all">
-              <Play size={26} fill="currentColor" className="ml-1" />
-            </div>
-          </div>
-        )}
-      </div>
+        {/* Clean Photos Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {PHOTOS_DATA.map((photo) => (
+            <div
+              key={photo.id}
+              className="bg-[#060a23]/60 border border-white/5 rounded-3xl overflow-hidden flex flex-col h-full group shadow-2xl transition-all duration-300"
+            >
+              <div className="aspect-[4/3] bg-zinc-950 overflow-hidden relative">
+                <img 
+                  src={photo.image} 
+                  alt={photo.title}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent pointer-events-none" />
+              </div>
 
-      {/* ADDITIONAL LINK LINK / CREDENTIALS (e por link) */}
-      <div className="text-center pt-2">
-        <a 
-          href={VIDEO_DATA.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-4 py-2 border border-zinc-800 hover:border-emerald-500/50 bg-zinc-950 hover:bg-zinc-90 w-auto text-zinc-450 hover:text-emerald-450 font-mono text-xs uppercase tracking-wider transition-all"
-        >
-          <span>Abrir link direto do vídeo</span>
-          <ExternalLink size={12} />
-        </a>
-      </div>
+              {/* Text content only: title & legend (description) */}
+              <div className="p-5 flex-1 text-left space-y-1 bg-[#0b112d]/55 border-t border-white/5">
+                <h4 className="text-xs font-extrabold text-white uppercase tracking-wider group-hover:text-cyan-400 transition-colors">
+                  {photo.title}
+                </h4>
+                <p className="text-[11px] text-zinc-400 font-sans leading-relaxed font-semibold">
+                  {photo.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
     </div>
   );
 }
