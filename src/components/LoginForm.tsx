@@ -56,7 +56,7 @@ export default function LoginForm({ onSuccess, onNavigateToRegister }: LoginForm
       >
         {/* Logo */}
         <div className="flex flex-col items-center mb-8">
-          <TCWLogo size="md" showText={true} className="mb-4" />
+          <TCWLogo size="md" showText={true} layout="vertical" className="mb-4" />
           <h2 className="text-sm font-extrabold tracking-widest text-cyan-400 text-center uppercase font-mono">PORTAL DE ACESSO</h2>
           <p className="text-[10px] text-zinc-400 uppercase font-bold tracking-wider mt-1.5 text-center leading-normal">Cadastramento Internacional e Emissão de Contratos Temporários</p>
         </div>

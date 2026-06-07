@@ -4,30 +4,34 @@ interface TCWLogoProps {
   className?: string;
   showText?: boolean;
   size?: 'sm' | 'md' | 'lg';
+  layout?: 'horizontal' | 'vertical';
 }
 
-export default function TCWLogo({ className = '', showText = true, size = 'md' }: TCWLogoProps) {
+export default function TCWLogo({ className = '', showText = true, size = 'md', layout = 'horizontal' }: TCWLogoProps) {
   // Handle dimensions based on size selection
   const iconSize = {
-    sm: 'w-10 h-10',
-    md: 'w-14 h-14',
-    lg: 'w-24 h-24'
+    sm: 'w-20 h-20',
+    md: 'w-28 h-28',
+    lg: 'w-44 h-44'
   }[size];
 
   const titleSize = {
-    sm: 'text-lg tracking-tight font-extrabold',
-    md: 'text-2xl tracking-normal font-black',
-    lg: 'text-5xl tracking-normal font-black'
+    sm: 'text-base sm:text-lg tracking-[0.05em] font-black',
+    md: 'text-2xl sm:text-3xl tracking-[0.05em] font-black',
+    lg: 'text-5xl sm:text-6xl tracking-[0.05em] font-black'
   }[size];
 
   const subtitleSize = {
-    sm: 'text-[6px] tracking-[0.15em] font-bold',
-    md: 'text-[8px] tracking-[0.2em] font-black',
-    lg: 'text-[11px] tracking-[0.22em] font-black'
+    sm: 'text-[6px] sm:text-[7px] tracking-[0.18em] font-bold',
+    md: 'text-[8px] sm:text-[9.5px] tracking-[0.2em] font-black',
+    lg: 'text-[12px] sm:text-[13px] tracking-[0.22em] font-black'
   }[size];
 
   return (
-    <div id="tcw-logo-root" className={`flex items-center gap-2.5 sm:gap-3.5 select-none ${className}`}>
+    <div 
+      id="tcw-logo-root" 
+      className={`select-none flex ${layout === 'vertical' ? 'flex-col items-center text-center gap-4' : 'items-center gap-2.5 sm:gap-3.5'} ${className}`}
+    >
       {/* 3D Glass Globe, Interconnected networks, Team Nodes & Sweeping Blue Arrow */}
       <svg
         className={`${iconSize} shrink-0`}
@@ -38,10 +42,10 @@ export default function TCWLogo({ className = '', showText = true, size = 'md' }
         <defs>
           {/* Royal Blue to Electric Blue Ribbon Gradient */}
           <linearGradient id="richBlueGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#001C85" />
-            <stop offset="30%" stopColor="#003DDF" />
-            <stop offset="70%" stopColor="#005BFF" />
-            <stop offset="100%" stopColor="#0080FF" />
+            <stop offset="0%" stopColor="#005BFF" />
+            <stop offset="30%" stopColor="#0084FF" />
+            <stop offset="70%" stopColor="#00BFFF" />
+            <stop offset="100%" stopColor="#00F5FF" />
           </linearGradient>
 
           {/* Electric Blue Glow */}
@@ -90,27 +94,27 @@ export default function TCWLogo({ className = '', showText = true, size = 'md' }
           fillOpacity="0.45"
         />
 
-        {/* 4. Elegant globe network arcs (Interconnectivity longitudes & latitudes) */}
-        <path d="M17 50 A 33 33 0 0 0 83 50" stroke="#94A3B8" strokeWidth="0.5" strokeOpacity="0.4" fill="none" />
-        <path d="M17 50 Q 50 68 83 50" stroke="#94A3B8" strokeWidth="0.5" strokeOpacity="0.3" fill="none" />
-        <path d="M17 50 Q 50 32 83 50" stroke="#94A3B8" strokeWidth="0.5" strokeOpacity="0.3" fill="none" />
-        <path d="M50 17 Q 35 50 50 83" stroke="#94A3B8" strokeWidth="0.5" strokeOpacity="0.3" fill="none" />
-        <path d="M50 17 Q 65 50 50 83" stroke="#94A3B8" strokeWidth="0.5" strokeOpacity="0.3" fill="none" />
+        {/* 4. Elegant globe network arcs (Interconnectivity longitudes & latitudes with soft blue glow) */}
+        <path d="M17 50 A 33 33 0 0 0 83 50" stroke="#00C4FF" strokeWidth="0.65" strokeOpacity="0.45" fill="none" />
+        <path d="M17 50 Q 50 68 83 50" stroke="#00C4FF" strokeWidth="0.65" strokeOpacity="0.4" fill="none" />
+        <path d="M17 50 Q 50 32 83 50" stroke="#00C4FF" strokeWidth="0.65" strokeOpacity="0.4" fill="none" />
+        <path d="M50 17 Q 35 50 50 83" stroke="#00C4FF" strokeWidth="0.65" strokeOpacity="0.4" fill="none" />
+        <path d="M50 17 Q 65 50 50 83" stroke="#00C4FF" strokeWidth="0.65" strokeOpacity="0.4" fill="none" />
 
         {/* Network connections (Dots on the intersections representing branches/agencies) */}
-        <circle cx="35" cy="27" r="1.5" fill="#005BFF" opacity="0.8" />
-        <circle cx="50" cy="26" r="1.8" fill="#005BFF" opacity="0.9" />
-        <circle cx="63" cy="23" r="1.5" fill="#005BFF" opacity="0.8" />
-        <circle cx="39" cy="37" r="1.5" fill="#005BFF" opacity="0.8" />
-        <circle cx="61" cy="36" r="1.5" fill="#005BFF" opacity="0.8" />
-        <circle cx="31" cy="43" r="1.5" fill="#005BFF" opacity="0.8" />
+        <circle cx="35" cy="27" r="1.8" fill="#00E5FF" opacity="1.0" />
+        <circle cx="50" cy="26" r="2.2" fill="#00E5FF" opacity="1.0" />
+        <circle cx="63" cy="23" r="1.8" fill="#00E5FF" opacity="1.0" />
+        <circle cx="39" cy="37" r="1.8" fill="#00E5FF" opacity="1.0" />
+        <circle cx="61" cy="36" r="1.8" fill="#00E5FF" opacity="1.0" />
+        <circle cx="31" cy="43" r="1.8" fill="#00E5FF" opacity="1.0" />
 
         {/* Light connection paths connecting the dot network */}
-        <path d="M35 27 Q 44 24 50 26" stroke="#005BFF" strokeWidth="0.5" strokeOpacity="0.5" fill="none" />
-        <path d="M50 26 Q 57 23 63 23" stroke="#005BFF" strokeWidth="0.5" strokeOpacity="0.5" fill="none" />
-        <path d="M35 27 Q 37 32 39 37" stroke="#005BFF" strokeWidth="0.5" strokeOpacity="0.5" fill="none" />
-        <path d="M50 26 Q 56 31 61 36" stroke="#005BFF" strokeWidth="0.5" strokeOpacity="0.5" fill="none" />
-        <path d="M31 43 Q 35 40 39 37" stroke="#005BFF" strokeWidth="0.5" strokeOpacity="0.4" fill="none" />
+        <path d="M35 27 Q 44 24 50 26" stroke="#00E5FF" strokeWidth="0.6" strokeOpacity="0.75" fill="none" />
+        <path d="M50 26 Q 57 23 63 23" stroke="#00E5FF" strokeWidth="0.6" strokeOpacity="0.75" fill="none" />
+        <path d="M35 27 Q 37 32 39 37" stroke="#00E5FF" strokeWidth="0.6" strokeOpacity="0.75" fill="none" />
+        <path d="M50 26 Q 56 31 61 36" stroke="#00E5FF" strokeWidth="0.6" strokeOpacity="0.75" fill="none" />
+        <path d="M31 43 Q 35 40 39 37" stroke="#00E5FF" strokeWidth="0.6" strokeOpacity="0.65" fill="none" />
 
         {/* 5. Central/Bottom People Team silhouettes - 3 figures */}
         {/* Left Person Silhouette (Small) */}
@@ -137,7 +141,7 @@ export default function TCWLogo({ className = '', showText = true, size = 'md' }
             d="M -3.5,8.5 C -3.5,4 0,3.5 3.5,3.5 C 7,3.5 10.5,4 10.5,8.5 Z"
             fill="url(#richBlueGrad)"
           />
-          <circle cx="3.5.5" cy="-0.5" r="2.8" fill="url(#richBlueGrad)" />
+          <circle cx="3.5" cy="-0.5" r="2.8" fill="url(#richBlueGrad)" />
           {/* Subtle outline separator for depth */}
           <path
             d="M -3.5,8.5 C -3.5,4 0,3.5 3.5,3.5 C 7,3.5 10.5,4 10.5,8.5"
@@ -186,27 +190,21 @@ export default function TCWLogo({ className = '', showText = true, size = 'md' }
         </g>
       </svg>
 
-      {/* Corporate Modern Blue Brand Text "TCW" + "CONNECTING THE FUTURE" */}
+      {/* Corporate Modern Blue Brand Text "TCW" */}
       {showText && (
-        <div className="flex flex-col text-left justify-center">
-          <div className="flex items-baseline leading-none">
-            {/* T (Deep Blue) */}
-            <span className={`${titleSize} text-transparent bg-clip-text bg-gradient-to-b from-[#003BFF] to-[#001066]`}>
-              T
-            </span>
-            {/* C (Lighter Bright Blue Accent) */}
-            <span className={`${titleSize} text-transparent bg-clip-text bg-gradient-to-b from-[#00A2FF] to-[#0048B3] mx-[0.5px]`}>
-              C
-            </span>
-            {/* W (Deep Blue) */}
-            <span className={`${titleSize} text-transparent bg-clip-text bg-gradient-to-b from-[#003BFF] to-[#001066]`}>
-              W
+        <div className={`flex flex-col ${layout === 'vertical' ? 'items-center animate-fade-in' : 'text-left justify-center'}`}>
+          <div className="flex items-baseline leading-none font-display">
+            {/* T, C, W rendered together as TCW with a premium text gradient */}
+            <span className={`${titleSize} text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-400 to-blue-500 font-black tracking-[0.05em]`}>
+              TCW
             </span>
           </div>
-          {/* Subtitle "CONNECTING THE FUTURE." */}
-          <span className={`${subtitleSize} text-transparent bg-clip-text bg-gradient-to-r from-[#002FB3] via-[#005BFF] to-[#003DDF] uppercase mt-0.5 whitespace-nowrap`}>
-            CONNECTING THE FUTURE
-          </span>
+          {/* Subtitle - only in horizontal layout */}
+          {layout === 'horizontal' && (
+            <span className={`${subtitleSize} text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-400 to-blue-500 uppercase mt-1.5 font-bold tracking-[0.2em] whitespace-nowrap`}>
+              CONNECTING THE FUTURE
+            </span>
+          )}
         </div>
       )}
     </div>

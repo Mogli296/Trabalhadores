@@ -111,7 +111,7 @@ export default function App() {
         id="main-header" 
         className="border-b sticky top-0 z-40 backdrop-blur-lg border-white/5 bg-[#010312]/85 text-white shadow-[0_4px_30px_rgba(0,0,0,0.4)]"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[6rem] py-2 flex items-center justify-between">
           {/* Logo Brand */}
           <button 
             onClick={() => setAppView(currentUser ? 'dashboard' : 'landing')}
