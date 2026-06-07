@@ -34,6 +34,8 @@ export default function App() {
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
 
+
+
   // Load session from localStorage on startup
   useEffect(() => {
     const stored = localStorage.getItem('work_user_session');
@@ -118,15 +120,7 @@ export default function App() {
             <TCWLogo size="sm" showText={true} />
           </button>
 
-          {/* Navigation Links - Centered (matches layout image menu) */}
-          {isLanding && (
-            <nav className="hidden lg:flex items-center gap-8 text-[11px] font-bold text-zinc-400 uppercase tracking-[0.18em]">
-              <a href="#hero-section" className="text-white hover:text-cyan-400 transition-colors">Home</a>
-              <a href="#about-company" className="hover:text-cyan-400 text-zinc-400 transition-colors">Quem Somos</a>
-              <a href="#video-operational" className="hover:text-cyan-400 text-zinc-400 transition-colors">Como Funciona</a>
-              <a href="#app-main-footer" className="hover:text-cyan-400 text-zinc-400 transition-colors">Contato</a>
-            </nav>
-          )}
+
 
           {/* Right Area - Admin/User indicator or CTA button */}
           <div className="flex items-center gap-4">
