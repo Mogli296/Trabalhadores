@@ -34,6 +34,51 @@ export default function App() {
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
 
+  // Premium initialization loading effect
+  const [isFirstLoading, setIsFirstLoading] = useState(true);
+  const [loadingText, setLoadingText] = useState('Estabelecendo conexão segura...');
+  const [loadingProgress, setLoadingProgress] = useState(0);
+
+  useEffect(() => {
+    const texts = [
+      'Buscando dados de expatriação regular...',
+      'Autenticando credenciais do portal consular...',
+      'Sincronizando contratos sazonais homologados...',
+      'Finalizando inicialização ambiental...'
+    ];
+
+    let count = 0;
+    const textInterval = setInterval(() => {
+      if (count < texts.length) {
+        setLoadingText(texts[count]);
+        count++;
+      }
+    }, 750);
+
+    let progressCount = 0;
+    const progressInterval = setInterval(() => {
+      progressCount += 3;
+      if (progressCount >= 100) {
+        setLoadingProgress(100);
+        clearInterval(progressInterval);
+      } else {
+        setLoadingProgress(progressCount);
+      }
+    }, 85);
+
+    const timer = setTimeout(() => {
+      setIsFirstLoading(false);
+      clearInterval(textInterval);
+      clearInterval(progressInterval);
+    }, 3100);
+
+    return () => {
+      clearTimeout(timer);
+      clearInterval(textInterval);
+      clearInterval(progressInterval);
+    };
+  }, []);
+
 
 
   // Load session from localStorage on startup
@@ -102,6 +147,65 @@ export default function App() {
       id="app-main-container" 
       className="min-h-screen bg-[#010312] text-zinc-300 selection:bg-cyan-500 selection:text-slate-950 font-sans transition-all duration-500 overflow-x-hidden relative"
     >
+      {/* Cinematic Access Loading Screen */}
+      <AnimatePresence>
+        {isFirstLoading && (
+          <motion.div
+            id="global-portal-loader"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, y: -30 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 bg-[#010312] z-50 flex flex-col items-center justify-center px-6 overflow-hidden select-none"
+          >
+            {/* Background cinematic grids and glowing elements */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:100%_4px] pointer-events-none" />
+            <div className="absolute top-[30%] left-[25%] w-[450px] h-[450px] bg-cyan-500/10 rounded-full blur-[140px] pointer-events-none" />
+            <div className="absolute bottom-[20%] right-[20%] w-[450px] h-[450px] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none" />
+
+            <div className="text-center space-y-8 max-w-lg mx-auto relative z-10 flex flex-col items-center">
+              {/* Very prominent TCW Brand Logo with spinning arrow */}
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="flex flex-col items-center"
+              >
+                <TCWLogo size="xl" layout="vertical" showText={true} isSpinning={true} />
+              </motion.div>
+
+              {/* Status display with glowing particle dot */}
+              <div className="space-y-4 pt-4 flex flex-col items-center w-full">
+                <div className="flex items-center gap-2.5 px-4 py-2 bg-white/[0.02] border border-white/5 rounded-full shadow-inner">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
+                  </span>
+                  <span className="text-[10px] text-zinc-405 font-mono tracking-widest uppercase font-black">
+                    {loadingText}
+                  </span>
+                </div>
+
+                {/* Micro premium subtle loader bar */}
+                <div className="w-56 h-[3px] bg-white/5 rounded-full overflow-hidden relative border border-white/[0.02]">
+                  <div 
+                    className="h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400 transition-all duration-150 ease-out" 
+                    style={{ width: `${loadingProgress}%` }}
+                  />
+                </div>
+                {/* Percentage text */}
+                <span className="text-[10px] text-cyan-400 font-mono font-black tracking-widest block text-center animate-pulse">
+                  {loadingProgress}% CARREGADO
+                </span>
+              </div>
+
+              {/* Secure Consular Footnote */}
+              <p className="text-[8px] text-zinc-550 font-mono tracking-widest uppercase font-black opacity-60">
+                Acesso Seguro Consular Corporativo • TCW Group Inc.
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       {/* Dynamic Background glowing items for internal views */}
       <div className="absolute top-[10%] left-[25%] w-[400px] h-[400px] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute top-[45%] right-[10%] w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[140px] pointer-events-none" />

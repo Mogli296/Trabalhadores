@@ -3,28 +3,38 @@ import React from 'react';
 interface TCWLogoProps {
   className?: string;
   showText?: boolean;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   layout?: 'horizontal' | 'vertical';
+  isSpinning?: boolean;
 }
 
-export default function TCWLogo({ className = '', showText = true, size = 'md', layout = 'horizontal' }: TCWLogoProps) {
+export default function TCWLogo({ 
+  className = '', 
+  showText = true, 
+  size = 'md', 
+  layout = 'horizontal',
+  isSpinning = false
+}: TCWLogoProps) {
   // Handle dimensions based on size selection
   const iconSize = {
     sm: 'w-14 h-14 sm:w-20 sm:h-20',
     md: 'w-20 h-20 sm:w-28 sm:h-28',
-    lg: 'w-28 h-28 sm:w-44 sm:h-44'
+    lg: 'w-28 h-28 sm:w-44 sm:h-44',
+    xl: 'w-32 h-32 sm:w-48 sm:h-48'
   }[size];
 
   const titleSize = {
     sm: 'text-sm sm:text-base tracking-[0.05em] font-black',
     md: 'text-xl sm:text-2xl tracking-[0.05em] font-black',
-    lg: 'text-3xl sm:text-5xl lg:text-6xl tracking-[0.05em] font-black'
+    lg: 'text-3xl sm:text-5xl lg:text-6xl tracking-[0.05em] font-black',
+    xl: 'text-4xl sm:text-6xl lg:text-7xl tracking-[0.05em] font-black'
   }[size];
 
   const subtitleSize = {
     sm: 'text-[5px] sm:text-[7px] tracking-[0.18em] font-bold',
     md: 'text-[7px] sm:text-[9.5px] tracking-[0.2em] font-black',
-    lg: 'text-[9px] sm:text-[13px] tracking-[0.22em] font-black'
+    lg: 'text-[9px] sm:text-[13px] tracking-[0.22em] font-black',
+    xl: 'text-[11px] sm:text-[15px] tracking-[0.22em] font-black'
   }[size];
 
   return (
@@ -153,40 +163,48 @@ export default function TCWLogo({ className = '', showText = true, size = 'md', 
         </g>
 
         {/* 6. Dynamic Sweeping Orbital Royal Blue Ribbon and Arrow */}
-        {/* Sweeping outer loop trail under the globe */}
-        <path
-          d="M 23 45 C 20.5 68, 41 85, 73 66 C 85 57, 91.5 45, 92 34"
-          stroke="url(#richBlueGrad)"
-          strokeWidth="3.8"
-          strokeLinecap="round"
-          filter="url(#vectorDropShadow)"
-        />
-        {/* Highlighting inner vector line */}
-        <path
-          d="M 23 45 C 20.5 68, 41 85, 73 66 C 85 57, 91.5 45, 92 34"
-          stroke="url(#neonBlueGrad)"
-          strokeWidth="1.2"
-          strokeLinecap="round"
-          strokeOpacity="0.9"
-        />
-
-        {/* Outer orbital swoosh arrow tail connection */}
-        <path
-          d="M 22 43 C 21.5 35, 25 24, 34 20"
-          stroke="url(#richBlueGrad)"
-          strokeWidth="2.2"
-          strokeLinecap="round"
-          strokeOpacity="0.3"
-        />
-
-        {/* Bold arrow head pointing dynamically top right */}
-        <g transform="translate(91.8, 33) rotate(-28)">
+        <g
+          className={isSpinning ? "animate-[spin_3s_linear_infinite]" : ""}
+          style={{ 
+            transformOrigin: '50px 50px',
+            animationDirection: isSpinning ? 'reverse' : 'normal'
+          }}
+        >
+          {/* Sweeping concentric outer loop trail under the globe */}
           <path
-            d="M -5.5 3 L 1 -5.5 L 7.5 3 L 1 1 Z"
-            fill="url(#richBlueGrad)"
-            stroke="url(#neonBlueGrad)"
-            strokeWidth="0.5"
+            d="M 11.5 50 A 38.5 38.5 0 1 0 84.3 32.5"
+            stroke="url(#richBlueGrad)"
+            strokeWidth="3.8"
+            strokeLinecap="round"
+            filter="url(#vectorDropShadow)"
           />
+          {/* Highlighting inner vector line */}
+          <path
+            d="M 11.5 50 A 38.5 38.5 0 1 0 84.3 32.5"
+            stroke="url(#neonBlueGrad)"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+            strokeOpacity="0.9"
+          />
+
+          {/* Outer orbital swoosh arrow tail connection - concentric */}
+          <path
+            d="M 11.5 50 A 38.5 38.5 0 0 1 22.7 22.7"
+            stroke="url(#richBlueGrad)"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeOpacity="0.3"
+          />
+
+          {/* Bold arrow head pointing dynamically along the circle tangent */}
+          <g transform="translate(84.3, 32.5) rotate(-27)">
+            <path
+              d="M -5.5 3 L 1 -5.5 L 7.5 3 L 1 1 Z"
+              fill="url(#richBlueGrad)"
+              stroke="url(#neonBlueGrad)"
+              strokeWidth="0.5"
+            />
+          </g>
         </g>
       </svg>
 

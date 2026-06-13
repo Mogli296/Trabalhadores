@@ -53,10 +53,6 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
 
         {/* Top Section */}
         <div className="relative z-10 space-y-8">
-          <div className="flex items-center gap-2">
-            <TCWLogo size="sm" showText={false} />
-            <span className="font-display text-2xl font-black tracking-tighter text-white uppercase">WORK.</span>
-          </div>
           
           <motion.div 
             initial={{ opacity: 0, y: 15 }}
