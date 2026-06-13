@@ -51,7 +51,7 @@ export default function LoginForm({ onSuccess, onNavigateToRegister }: LoginForm
          initial={{ opacity: 0, y: 15 }}
          animate={{ opacity: 1, y: 0 }}
          transition={{ duration: 0.5 }}
-         className="w-full max-w-md bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-3xl p-8 lg:p-10 relative z-10 shadow-2xl shadow-black/50"
+         className="w-full max-w-md bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 relative z-10 shadow-2xl shadow-black/50"
          id="login-card"
       >
         {/* Logo */}

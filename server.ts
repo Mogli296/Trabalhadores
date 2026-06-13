@@ -62,6 +62,7 @@ function loadDB(): DBState {
         drivesMachinery: 'Sim',
         phone: '11988888888',
         photos: [],
+        resumePhoto: '',
         videos: {
           presentation: '',
           documents: ''
@@ -165,6 +166,7 @@ async function startServer() {
       drivesMachinery: 'Não' as const,
       phone: phone.trim(),
       photos: [],
+      resumePhoto: '',
       videos: {
         presentation: '',
         documents: ''

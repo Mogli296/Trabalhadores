@@ -46,7 +46,7 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
   return (
     <div id="register-root" className="min-h-screen grid grid-cols-1 lg:grid-cols-12 text-zinc-300 bg-[#010312]">
       {/* Lado Esquerdo - Fundo com gradiente azul corporativo premium e etapas do cadastro */}
-      <div id="register-left-panel" className="lg:col-span-4 bg-gradient-to-b from-[#010312] via-[#050920] to-[#010312] p-10 lg:p-12 flex flex-col justify-between border-r border-white/5 relative overflow-hidden">
+      <div id="register-left-panel" className="lg:col-span-4 bg-gradient-to-b from-[#010312] via-[#050920] to-[#010312] p-6 sm:p-10 lg:p-12 flex flex-col justify-between border-r-0 lg:border-r border-b lg:border-b-0 border-white/5 relative overflow-hidden">
         
         {/* Subtle mesh details */}
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100%_4px] pointer-events-none" />
@@ -116,7 +116,7 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
       </div>
 
       {/* Lado Direito - Formulário de cadastro com fundo branco e campos de alta usabilidade */}
-      <div id="register-right-panel" className="lg:col-span-8 bg-[#010312] p-8 lg:p-16 flex flex-col justify-center overflow-hidden relative">
+      <div id="register-right-panel" className="lg:col-span-8 bg-[#010312] p-4 sm:p-8 lg:p-16 flex flex-col justify-center overflow-hidden relative">
         <div className="absolute top-[15%] right-[25%] w-[350px] h-[350px] bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none" />
         
         <div className="max-w-xl mx-auto w-full space-y-6 relative z-10">
@@ -136,7 +136,7 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
             </motion.div>
           )}
 
-          <div className="bg-[#060a23]/40 border border-white/5 backdrop-blur-md rounded-3xl p-6 sm:p-8 shadow-2xl shadow-black/40">
+          <div className="bg-[#060a23]/40 border border-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl shadow-black/40">
             <form id="register-form" onSubmit={handleSubmit} className="space-y-4">
               {/* Nome completo */}
               <div className="space-y-1">

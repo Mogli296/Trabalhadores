@@ -24,6 +24,7 @@ export interface WorkerProfile {
   drivesMachinery: 'Sim' | 'Não';
   phone: string;
   photos: string[]; // List of base64 or URL strings
+  resumePhoto?: string; // Base64 or URL to photo of the resume
   videos: {
     presentation?: string; // presentation video base64/URL
     documents?: string; // documents verification video base64/URL

@@ -10,21 +10,21 @@ interface TCWLogoProps {
 export default function TCWLogo({ className = '', showText = true, size = 'md', layout = 'horizontal' }: TCWLogoProps) {
   // Handle dimensions based on size selection
   const iconSize = {
-    sm: 'w-20 h-20',
-    md: 'w-28 h-28',
-    lg: 'w-44 h-44'
+    sm: 'w-14 h-14 sm:w-20 sm:h-20',
+    md: 'w-20 h-20 sm:w-28 sm:h-28',
+    lg: 'w-28 h-28 sm:w-44 sm:h-44'
   }[size];
 
   const titleSize = {
-    sm: 'text-base sm:text-lg tracking-[0.05em] font-black',
-    md: 'text-2xl sm:text-3xl tracking-[0.05em] font-black',
-    lg: 'text-5xl sm:text-6xl tracking-[0.05em] font-black'
+    sm: 'text-sm sm:text-base tracking-[0.05em] font-black',
+    md: 'text-xl sm:text-2xl tracking-[0.05em] font-black',
+    lg: 'text-3xl sm:text-5xl lg:text-6xl tracking-[0.05em] font-black'
   }[size];
 
   const subtitleSize = {
-    sm: 'text-[6px] sm:text-[7px] tracking-[0.18em] font-bold',
-    md: 'text-[8px] sm:text-[9.5px] tracking-[0.2em] font-black',
-    lg: 'text-[12px] sm:text-[13px] tracking-[0.22em] font-black'
+    sm: 'text-[5px] sm:text-[7px] tracking-[0.18em] font-bold',
+    md: 'text-[7px] sm:text-[9.5px] tracking-[0.2em] font-black',
+    lg: 'text-[9px] sm:text-[13px] tracking-[0.22em] font-black'
   }[size];
 
   return (

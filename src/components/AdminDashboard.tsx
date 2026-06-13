@@ -126,7 +126,7 @@ export default function AdminDashboard() {
   return (
     <div id="admin-root" className="max-w-7xl mx-auto p-2 lg:p-4 space-y-8 text-zinc-350">
       {/* Top Banner stats indicator */}
-      <div className="bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-3xl p-6 lg:p-8 shadow-2xl">
+      <div className="bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 pb-6 border-b border-white/5">
           <div>
             <span className="text-[10px] font-mono font-black text-[#22d3ee] uppercase tracking-widest bg-cyan-950/40 border border-cyan-500/25 px-3 py-1.5 rounded-full">
@@ -136,18 +136,18 @@ export default function AdminDashboard() {
             <p className="text-xs sm:text-sm text-zinc-400 mt-1 max-w-xl font-semibold leading-relaxed">Validação de dossiês técnicos, avaliação de documentação de vistos e emissão de contratos corporativos de curta temporada.</p>
           </div>
           
-          <div className="flex gap-1 bg-[#0b112d]/80 p-1.5 rounded-2xl shrink-0 border border-white/5" id="admin-tabs-toggle">
+          <div className="flex gap-0.5 sm:gap-1 bg-[#0b112d]/80 p-1 sm:p-1.5 rounded-xl sm:rounded-2xl shrink-0 border border-white/5" id="admin-tabs-toggle">
             <button
               id="admin-tab-profiles"
               onClick={() => setTab('profiles')}
-              className={`px-4 py-2 text-xs uppercase tracking-wider font-mono font-black transition-all cursor-pointer rounded-xl ${tab === 'profiles' ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 shadow-md shadow-cyan-400/10' : 'text-zinc-400 hover:text-white'}`}
+              className={`px-2.5 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs uppercase tracking-wider font-mono font-black transition-all cursor-pointer rounded-lg sm:rounded-xl ${tab === 'profiles' ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 shadow-md shadow-cyan-400/10' : 'text-zinc-400 hover:text-white'}`}
             >
-              Candidatos Ativos
+              Candidatos
             </button>
             <button
               id="admin-tab-contracts"
               onClick={() => setTab('contracts')}
-              className={`px-4 py-2 text-xs uppercase tracking-wider font-mono font-black transition-all cursor-pointer rounded-xl ${tab === 'contracts' ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 shadow-md shadow-cyan-400/10' : 'text-zinc-400 hover:text-white'}`}
+              className={`px-2.5 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs uppercase tracking-wider font-mono font-black transition-all cursor-pointer rounded-lg sm:rounded-xl ${tab === 'contracts' ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 shadow-md shadow-cyan-400/10' : 'text-zinc-400 hover:text-white'}`}
             >
               Contratos ({issuedContracts})
             </button>
@@ -186,7 +186,7 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Main search and profiles grid list */}
           <div className="lg:col-span-7 space-y-6">
-            <div className="bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-3xl p-6 space-y-4 shadow-sm">
+            <div className="bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-6 space-y-4 shadow-sm">
               <h3 className="text-xs uppercase tracking-wider text-[#22d3ee] font-black font-mono">Filtros de Busca Avançada</h3>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -267,8 +267,16 @@ export default function AdminDashboard() {
                       onClick={() => {
                         setSelectedProfile(p);
                         setShowContractForm(false);
+                        if (window.innerWidth < 1024) {
+                          setTimeout(() => {
+                            const detailSection = document.getElementById('admin-dossier-panel');
+                            if (detailSection) {
+                              detailSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                          }, 100);
+                        }
                       }}
-                      className={`w-full text-left p-5 transition-all cursor-pointer block rounded-3xl ${
+                      className={`w-full text-left p-4 sm:p-5 transition-all cursor-pointer block rounded-2xl sm:rounded-3xl ${
                         isSelected 
                           ? 'border-cyan-500/50 bg-[#0b112d]/85 shadow-lg shadow-cyan-400/5 border' 
                           : 'border-white/5 bg-[#0b112d]/40 shadow-xs hover:border-white/15 hover:bg-[#0b112d]/65 border'
@@ -302,9 +310,9 @@ export default function AdminDashboard() {
           </div>
 
           {/* Dossier inspect screen layout - Right side */}
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-5 scroll-mt-24" id="admin-dossier-panel">
             {selectedProfile ? (
-              <div className="bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-3xl p-6 lg:p-8 space-y-6 shadow-2xl relative text-zinc-305">
+              <div className="bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 space-y-5 sm:space-y-6 shadow-2xl relative text-zinc-350">
                 {/* Header */}
                 <div className="border-b border-white/5 pb-5">
                   <span className="text-[10px] font-mono text-cyan-400 font-black uppercase tracking-wider">
@@ -365,6 +373,26 @@ export default function AdminDashboard() {
                       <h3 className="text-[10px] font-mono font-black uppercase tracking-widest text-[#22d3ee]/85">
                         Galeria de Trabalho & Entrevistas
                       </h3>
+
+                      {/* Currículo (CV) inspect */}
+                      <div className="bg-[#0b112d]/50 border border-white/5 rounded-2xl p-4 space-y-2">
+                        <span className="text-[9px] text-zinc-400 font-mono block uppercase font-bold tracking-wider">Foto do Currículo Enviada (CV)</span>
+                        {selectedProfile.resumePhoto ? (
+                          <div className="relative aspect-video max-w-sm rounded-xl overflow-hidden border border-white/10 bg-black group shadow-md">
+                            <img src={selectedProfile.resumePhoto} className="w-full h-full object-contain" />
+                            <a 
+                              href={selectedProfile.resumePhoto} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all text-white text-[10px] font-mono uppercase font-black tracking-widest cursor-pointer"
+                            >
+                              Visualizar Currículo 🗗
+                            </a>
+                          </div>
+                        ) : (
+                          <div className="aspect-video max-w-sm bg-[#0b112d] border border-white/5 border-dashed flex items-center justify-center text-[10px] rounded-xl text-zinc-500 font-bold uppercase tracking-wider">Ainda não enviado de forma online ou capturado</div>
+                        )}
+                      </div>
 
                       {/* Video clips */}
                       <div className="grid grid-cols-2 gap-3">
@@ -534,7 +562,7 @@ export default function AdminDashboard() {
         </div>
       ) : (
         /* Contracts tab workspace */
-        <div className="bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-3xl p-6 lg:p-8 space-y-6 shadow-2xl">
+        <div className="bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 space-y-5 sm:space-y-6 shadow-2xl">
           <h3 className="text-xs font-mono font-black uppercase tracking-widest text-[#22d3ee] border-b border-white/5 pb-3">Histórico de Contratos Sazonais Emitidos</h3>
           
           {contracts.length === 0 ? (

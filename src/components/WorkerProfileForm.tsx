@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { 
   User, Calendar, Globe, MapPin, Briefcase, Award, 
   FileCheck, Shield, Phone, Image, Video, Plus, Trash2, 
-  CheckCircle, AlertCircle, Info
+  CheckCircle, AlertCircle, Info, Camera, Upload, FileText, X
 } from 'lucide-react';
 import { api } from '../services/api';
 import { WorkerProfile } from '../types';
@@ -23,6 +23,11 @@ export default function WorkerProfileForm({ userId, onProfileUpdated }: WorkerPr
   // Drag and drop states
   const [uploadProgress, setUploadProgress] = useState<string | null>(null);
 
+  // Camera capture states
+  const [isCameraActive, setIsCameraActive] = useState(false);
+  const [videoStream, setVideoStream] = useState<MediaStream | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
   // Local form field states
   const [fullName, setFullName] = useState('');
   const [age, setAge] = useState<number>(18);
@@ -39,6 +44,7 @@ export default function WorkerProfileForm({ userId, onProfileUpdated }: WorkerPr
   const [drivesMachinery, setDrivesMachinery] = useState<'Sim' | 'Não'>('Não');
   const [phone, setPhone] = useState('');
   const [photos, setPhotos] = useState<string[]>([]);
+  const [resumePhoto, setResumePhoto] = useState('');
   const [presentationVideo, setPresentationVideo] = useState('');
   const [documentsVideo, setDocumentsVideo] = useState('');
 
@@ -67,12 +73,98 @@ export default function WorkerProfileForm({ userId, onProfileUpdated }: WorkerPr
       setDrivesMachinery(data.drivesMachinery || 'Não');
       setPhone(data.phone || '');
       setPhotos(data.photos || []);
+      setResumePhoto(data.resumePhoto || '');
       setPresentationVideo(data.videos?.presentation || '');
       setDocumentsVideo(data.videos?.documents || '');
     } catch (err: any) {
       setError('Não foi possível carregar os dados do perfil.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Start/Stop Camera logic for Resume Photo Capture
+  const startCamera = async () => {
+    setError(null);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { facingMode: 'environment' } 
+      });
+      setVideoStream(stream);
+      setIsCameraActive(true);
+      // Wait for React to render video element
+      setTimeout(() => {
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+        }
+      }, 150);
+    } catch (err: any) {
+      setError('Não foi possível acessar a câmera. Certifique-se de conceder as permissões de acesso em seu navegador.');
+      console.error(err);
+    }
+  };
+
+  const stopCamera = () => {
+    if (videoStream) {
+      videoStream.getTracks().forEach(track => track.stop());
+      setVideoStream(null);
+    }
+    setIsCameraActive(false);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (videoStream) {
+        videoStream.getTracks().forEach(track => track.stop());
+      }
+    };
+  }, [videoStream]);
+
+  const captureResumePhoto = async () => {
+    if (!videoRef.current) return;
+    setUploadProgress('Processando captura da câmera...');
+    try {
+      const video = videoRef.current;
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth || 640;
+      canvas.height = video.videoHeight || 480;
+      
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const base64 = canvas.toDataURL('image/jpeg', 0.85);
+        
+        // Upload immediately
+        const uploadRes = await api.uploadMedia(`curriculo_capturado_${Date.now()}.jpeg`, base64);
+        setResumePhoto(uploadRes.url);
+        setSuccess('Foto do currículo capturada e enviada com sucesso! Preencha as demais mídias e clique em "Salvar Alterações" ao final.');
+      }
+      stopCamera();
+    } catch (err: any) {
+      setError('Erro ao enviar foto capturada pela câmera.');
+    } finally {
+      setUploadProgress(null);
+    }
+  };
+
+  const handleResumeUploadChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      alert('Por favor, envie um arquivo de imagem (JPEG ou PNG) para o currículo.');
+      return;
+    }
+
+    setUploadProgress('Enviando foto do currículo...');
+    try {
+      const url = await handleUploadFile(file);
+      setResumePhoto(url);
+      setSuccess('Foto do currículo enviada com sucesso! Salve o formulário para persistir.');
+    } catch (err) {
+      setError('Erro ao enviar o arquivo de currículo.');
+    } finally {
+      setUploadProgress(null);
     }
   };
 
@@ -199,6 +291,7 @@ export default function WorkerProfileForm({ userId, onProfileUpdated }: WorkerPr
         drivesMachinery,
         phone,
         photos,
+        resumePhoto,
         videos: {
           presentation: presentationVideo,
           documents: documentsVideo
@@ -230,7 +323,7 @@ export default function WorkerProfileForm({ userId, onProfileUpdated }: WorkerPr
   return (
     <div id="worker-profile-root" className="max-w-4xl mx-auto p-2 lg:p-4 text-zinc-300">
       {/* Intro banner */}
-      <div className="mb-8 bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-3xl p-8 lg:p-10 relative overflow-hidden shadow-2xl">
+      <div className="mb-8 bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl p-5 sm:p-8 lg:p-10 relative overflow-hidden shadow-2xl">
         <div className="absolute top-0 right-0 p-8 opacity-5 pointer-events-none">
           <Award size={120} className="text-cyan-400" />
         </div>
@@ -266,7 +359,7 @@ export default function WorkerProfileForm({ userId, onProfileUpdated }: WorkerPr
 
       <form id="profile-main-form" onSubmit={handleSubmit} className="space-y-6">
         {/* CARD 1: Dados Pessoais de Contato */}
-        <div className="bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-3xl p-6 lg:p-8 space-y-6 shadow-2xl">
+        <div className="bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 space-y-5 sm:space-y-6 shadow-2xl">
           <div className="flex items-center gap-3 border-b border-white/5 pb-4">
             <User className="text-[#22d3ee]" size={18} />
             <h3 className="font-extrabold text-base text-white uppercase tracking-wide">1. Informações de Identificação & Contato</h3>
@@ -377,7 +470,7 @@ export default function WorkerProfileForm({ userId, onProfileUpdated }: WorkerPr
         </div>
 
         {/* CARD 2: Competências e Qualificações */}
-        <div className="bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-3xl p-6 lg:p-8 space-y-6 shadow-2xl">
+        <div className="bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 space-y-5 sm:space-y-6 shadow-2xl">
           <div className="flex items-center gap-3 border-b border-white/5 pb-4">
             <Briefcase className="text-[#22d3ee]" size={18} />
             <h3 className="font-extrabold text-base text-white uppercase tracking-wide">2. Qualificações de Trabalho & Fluência</h3>
@@ -498,7 +591,7 @@ export default function WorkerProfileForm({ userId, onProfileUpdated }: WorkerPr
         </div>
 
         {/* CARD 3: Passaporte e Visto */}
-        <div className="bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-3xl p-6 lg:p-8 space-y-6 shadow-2xl">
+        <div className="bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 space-y-5 sm:space-y-6 shadow-2xl">
           <div className="flex items-center gap-3 border-b border-white/5 pb-4">
             <Shield className="text-[#22d3ee]" size={18} />
             <h3 className="font-extrabold text-base text-white uppercase tracking-wide">3. Aptidão Internacional & Documentos</h3>
@@ -561,11 +654,125 @@ export default function WorkerProfileForm({ userId, onProfileUpdated }: WorkerPr
         </div>
 
         {/* CARD 4: Fotos e Vídeos de Verificação */}
-        <div className="bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-3xl p-6 lg:p-8 space-y-6 shadow-2xl">
+        <div className="bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 space-y-5 sm:space-y-6 shadow-2xl">
           <div className="flex items-center gap-3 border-b border-white/5 pb-4">
             <Image className="text-[#22d3ee]" size={18} />
             <h3 className="font-extrabold text-base text-white uppercase tracking-wide">4. Galeria de Mídias & Vídeo-Apresentação</h3>
           </div>
+
+          {/* Foto do Currículo (Online ou Capturado) */}
+          <div className="border border-white/5 rounded-2xl p-5 bg-[#0b112d]/50 space-y-4">
+            <div className="flex items-center justify-between border-b border-white/5 pb-3">
+              <div className="flex items-center gap-2">
+                <FileText className="text-cyan-400" size={16} />
+                <span className="text-[11px] text-zinc-300 uppercase font-black tracking-wider font-mono">
+                  Foto do Currículo (CV)
+                </span>
+              </div>
+              <span className="text-[9px] font-mono font-bold tracking-wide text-cyan-400 uppercase bg-cyan-950/40 border border-cyan-500/25 px-2 py-0.5 rounded-full">
+                {resumePhoto ? 'Cadastrado' : 'Pendente'}
+              </span>
+            </div>
+            
+            <p className="text-[10.5px] text-zinc-400 leading-relaxed uppercase tracking-wide font-bold">
+              Envie uma imagem legível do seu currículo profissional. Você pode selecionar um arquivo existente no seu celular/computador ou tirar uma foto utilizando a câmera agora.
+            </p>
+
+            {isCameraActive ? (
+              /* Camera view active */
+              <div className="space-y-3">
+                <div className="relative aspect-video max-w-md mx-auto rounded-xl overflow-hidden bg-black border border-white/10 shadow-sm">
+                  <video 
+                    ref={videoRef} 
+                    autoPlay 
+                    playsInline 
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-2 right-2 px-2 py-1 bg-cyan-950/80 border border-cyan-400/40 text-[9px] text-cyan-400 font-mono tracking-widest font-black uppercase rounded-full animate-pulse flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                    CÂMERA ATIVA
+                  </div>
+                </div>
+                
+                <div className="flex justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={captureResumePhoto}
+                    className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-black text-[10px] tracking-widest uppercase transition-all shadow-md hover:opacity-90 rounded-xl cursor-pointer"
+                  >
+                    <Camera size={14} className="stroke-[2.5]" />
+                    Capturar Foto
+                  </button>
+                  <button
+                    type="button"
+                    onClick={stopCamera}
+                    className="flex items-center gap-1.5 px-4 py-2.5 bg-white/5 hover:bg-white/10 text-zinc-300 border border-white/5 font-black text-[10px] tracking-widest uppercase transition-colors rounded-xl cursor-pointer"
+                  >
+                    <X size={14} />
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            ) : resumePhoto ? (
+              /* Resume photo is selected or captured */
+              <div className="space-y-3">
+                <div className="relative group max-w-sm mx-auto aspect-[3/4] border border-white/10 bg-[#090e24] rounded-2xl overflow-hidden shadow-sm">
+                  <img 
+                    referrerPolicy="no-referrer" 
+                    src={resumePhoto} 
+                    alt="Foto do Currículo" 
+                    className="w-full h-full object-contain"
+                  />
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                    <button
+                      type="button"
+                      onClick={() => setResumePhoto('')}
+                      className="p-3 bg-red-500/15 border border-red-500/25 text-red-100 hover:bg-red-500 hover:text-white rounded-2xl transition-all cursor-pointer shadow-lg font-mono text-[10px] uppercase font-black"
+                    >
+                      Remover Currículo
+                    </button>
+                  </div>
+                </div>
+                
+                <p className="text-[9px] text-center text-zinc-500 font-mono uppercase tracking-widest font-bold">
+                  Passe o mouse por cima ou toque para remover e reenviar.
+                </p>
+              </div>
+            ) : (
+              /* Dropzone selection */
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Upload option */}
+                <label className="border-2 border-dashed border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/[0.02] flex flex-col items-center justify-center gap-3 rounded-2xl cursor-pointer transition-all text-zinc-400 hover:text-cyan-400 py-8 text-center uppercase tracking-widest font-mono shadow-xs">
+                  <Upload size={24} className="text-zinc-550" />
+                  <div>
+                    <span className="text-[11px] font-black">Enviar Arquivo (Online)</span>
+                    <span className="text-[9px] text-zinc-550 block mt-1 leading-relaxed font-sans font-bold">Foto do currículo do seu dispositivo</span>
+                  </div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleResumeUploadChange}
+                    className="hidden"
+                  />
+                </label>
+
+                {/* Capture option */}
+                <button
+                  type="button"
+                  onClick={startCamera}
+                  className="border-2 border-dashed border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/[0.02] flex flex-col items-center justify-center gap-3 rounded-2xl cursor-pointer transition-all text-zinc-400 hover:text-cyan-400 py-8 text-center uppercase tracking-widest font-mono shadow-xs bg-transparent"
+                >
+                  <Camera size={24} className="text-zinc-550" />
+                  <div>
+                    <span className="text-[11px] font-black">Tirar Foto na Câmera</span>
+                    <span className="text-[9px] text-zinc-550 block mt-1 leading-relaxed font-sans font-bold">Capturar currículo papel agora</span>
+                  </div>
+                </button>
+              </div>
+            )}
+          </div>
+          
+          <div className="border-b border-white/5 my-6" />
 
           {/* Fotos Upload */}
           <div className="space-y-3">
@@ -696,7 +903,7 @@ export default function WorkerProfileForm({ userId, onProfileUpdated }: WorkerPr
         </div>
 
         {/* Action controls */}
-        <div className="p-5 bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-3xl flex justify-between sm:justify-end items-center gap-4 shadow-xl">
+        <div className="p-4 sm:p-5 bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl flex justify-between sm:justify-end items-center gap-4 shadow-xl">
           <p className="text-[10px] text-zinc-500 font-mono hidden sm:block uppercase tracking-wider font-bold">Contato cadastrado: <span className="text-cyan-450 font-black">{phone || 'Pendente'}</span></p>
           <button
             type="submit"
