@@ -130,10 +130,10 @@ export default function AdminDashboard() {
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 pb-6 border-b border-white/5">
           <div>
             <span className="text-[10px] font-mono font-black text-[#22d3ee] uppercase tracking-widest bg-cyan-950/40 border border-cyan-500/25 px-3 py-1.5 rounded-full">
-              Sessão Administrativa de Qualificações
+              Administrative Qualifications Chamber
             </span>
-            <h2 className="text-xl lg:text-2xl font-black uppercase tracking-tight text-white mt-4">Gestão de Trabalhadores Sazonais</h2>
-            <p className="text-xs sm:text-sm text-zinc-400 mt-1 max-w-xl font-semibold leading-relaxed">Validação de dossiês técnicos, avaliação de documentação de vistos e emissão de contratos corporativos de curta temporada.</p>
+            <h2 className="text-xl lg:text-2xl font-black uppercase tracking-tight text-white mt-4">Seasonal Workforce Operations & Management</h2>
+            <p className="text-xs sm:text-sm text-zinc-400 mt-1 max-w-xl font-semibold leading-relaxed">Validation of technical dossiers, evaluation of consular visa papers, and issuance of official corporate season employment contracts.</p>
           </div>
           
           <div className="flex gap-0.5 sm:gap-1 bg-[#0b112d]/80 p-1 sm:p-1.5 rounded-xl sm:rounded-2xl shrink-0 border border-white/5" id="admin-tabs-toggle">
@@ -142,14 +142,14 @@ export default function AdminDashboard() {
               onClick={() => setTab('profiles')}
               className={`px-2.5 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs uppercase tracking-wider font-mono font-black transition-all cursor-pointer rounded-lg sm:rounded-xl ${tab === 'profiles' ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 shadow-md shadow-cyan-400/10' : 'text-zinc-400 hover:text-white'}`}
             >
-              Candidatos
+              Qualified Candidates
             </button>
             <button
               id="admin-tab-contracts"
               onClick={() => setTab('contracts')}
               className={`px-2.5 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs uppercase tracking-wider font-mono font-black transition-all cursor-pointer rounded-lg sm:rounded-xl ${tab === 'contracts' ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 shadow-md shadow-cyan-400/10' : 'text-zinc-400 hover:text-white'}`}
             >
-              Contratos ({issuedContracts})
+              Contracts ({issuedContracts})
             </button>
           </div>
         </div>
@@ -158,25 +158,25 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-6">
           <div className="bg-[#0b112d]/65 border border-white/5 rounded-2xl p-4">
             <Users size={16} className="text-cyan-400 mb-2" />
-            <span className="text-[10px] text-zinc-500 font-black font-mono block uppercase">Trabalhadores</span>
+            <span className="text-[10px] text-zinc-500 font-black font-mono block uppercase">Total Profiles Registered</span>
             <span className="text-xl font-extrabold text-white mt-1 block">{totalWorkers}</span>
           </div>
 
           <div className="bg-[#0b112d]/65 border border-white/5 rounded-2xl p-4">
             <Globe size={16} className="text-cyan-400 mb-2" />
-            <span className="text-[10px] text-zinc-500 font-black font-mono block uppercase">Passaportes Verificados</span>
-            <span className="text-xl font-extrabold text-white mt-1 block">{withPassport} de {totalWorkers}</span>
+            <span className="text-[10px] text-zinc-500 font-black font-mono block uppercase">Verified Passports</span>
+            <span className="text-xl font-extrabold text-white mt-1 block">{withPassport} of {totalWorkers}</span>
           </div>
 
           <div className="bg-[#0b112d]/65 border border-white/5 rounded-2xl p-4">
             <FileText size={16} className="text-cyan-400 mb-2" />
-            <span className="text-[10px] text-zinc-500 font-black font-mono block uppercase">Contratos Emitidos</span>
+            <span className="text-[10px] text-zinc-500 font-black font-mono block uppercase">Issued Contracts</span>
             <span className="text-xl font-extrabold text-white mt-1 block">{issuedContracts}</span>
           </div>
 
           <div className="bg-[#0b112d]/65 border border-white/5 rounded-2xl p-4">
             <FileSignature size={16} className="text-cyan-400 mb-2" />
-            <span className="text-[10px] text-zinc-500 font-black font-mono block uppercase">Contratos Assinados</span>
+            <span className="text-[10px] text-zinc-500 font-black font-mono block uppercase">Signed Contracts</span>
             <span className="text-xl font-extrabold text-white mt-1 block">{signedContracts}</span>
           </div>
         </div>
@@ -187,7 +187,7 @@ export default function AdminDashboard() {
           {/* Main search and profiles grid list */}
           <div className="lg:col-span-7 space-y-6">
             <div className="bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-6 space-y-4 shadow-sm">
-              <h3 className="text-xs uppercase tracking-wider text-[#22d3ee] font-black font-mono">Filtros de Busca Avançada</h3>
+              <h3 className="text-xs uppercase tracking-wider text-[#22d3ee] font-black font-mono">Advanced Sourcing & Sifting Filters</h3>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {/* Search */}
@@ -197,7 +197,7 @@ export default function AdminDashboard() {
                   </div>
                   <input
                     type="text"
-                    placeholder="Buscar por profissional, nome, país..."
+                    placeholder="Search by professional, name, country..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full bg-[#0b112d] text-white border border-white/5 p-2.5 text-sm pl-9 focus:border-cyan-400 outline-none rounded-xl transition-all font-medium placeholder-zinc-500"
@@ -206,46 +206,46 @@ export default function AdminDashboard() {
 
                 {/* English level select */}
                 <div className="space-y-1.5">
-                  <span className="text-[9px] font-mono text-zinc-500 uppercase font-black tracking-wider block mb-1.5">Fluência Inglês</span>
+                  <span className="text-[9px] font-mono text-zinc-500 uppercase font-black tracking-wider block mb-1.5">English Fluency</span>
                   <select
                     value={filterEnglish}
                     onChange={(e) => setFilterEnglish(e.target.value)}
                     className="w-full bg-[#0b112d] text-xs text-white border border-white/5 p-2.5 focus:border-cyan-400 outline-none rounded-xl font-sans font-bold"
                   >
-                    <option value="Todos" className="bg-[#0b112d] text-white">Todos os níveis</option>
-                    <option value="Não fala" className="bg-[#0b112d] text-white">Não fala</option>
-                    <option value="Básico" className="bg-[#0b112d] text-white">Básico</option>
-                    <option value="Intermediário" className="bg-[#0b112d] text-white">Intermediário</option>
-                    <option value="Avançado" className="bg-[#0b112d] text-white">Avançado</option>
-                    <option value="Fluente" className="bg-[#0b112d] text-white">Fluente</option>
+                    <option value="Todos" className="bg-[#0b112d] text-white">All proficiency levels</option>
+                    <option value="Não fala" className="bg-[#0b112d] text-white">Non-verbal</option>
+                    <option value="Básico" className="bg-[#0b112d] text-white">Basic</option>
+                    <option value="Intermediário" className="bg-[#0b112d] text-white">Intermediate</option>
+                    <option value="Avançado" className="bg-[#0b112d] text-white">Advanced</option>
+                    <option value="Fluente" className="bg-[#0b112d] text-white">Expert / Fluent</option>
                   </select>
                 </div>
 
                 {/* Passport select */}
                 <div className="space-y-1.5">
-                  <span className="text-[9px] font-mono text-zinc-500 uppercase font-black tracking-wider block mb-1.5">Passaporte Válido</span>
+                  <span className="text-[9px] font-mono text-zinc-500 uppercase font-black tracking-wider block mb-1.5">Valid Passport</span>
                   <select
                     value={filterPassport}
                     onChange={(e) => setFilterPassport(e.target.value)}
                     className="w-full bg-[#0b112d] text-xs text-white border border-white/5 p-2.5 focus:border-cyan-400 outline-none rounded-xl font-sans font-bold"
                   >
-                    <option value="Todos" className="bg-[#0b112d] text-white">Todos</option>
-                    <option value="Sim" className="bg-[#0b112d] text-white">Sim, possui</option>
-                    <option value="Não" className="bg-[#0b112d] text-white">Não possui</option>
+                    <option value="Todos" className="bg-[#0b112d] text-white">All</option>
+                    <option value="Sim" className="bg-[#0b112d] text-white">Yes, holds valid</option>
+                    <option value="Não" className="bg-[#0b112d] text-white">No</option>
                   </select>
                 </div>
 
                 {/* Machinery select */}
                 <div className="space-y-1.5 md:col-span-2">
-                  <span className="text-[9px] font-mono text-zinc-500 uppercase font-black tracking-wider block mb-1.5">Opera Maquinário</span>
+                  <span className="text-[9px] font-mono text-zinc-500 uppercase font-black tracking-wider block mb-1.5">Heavy Machinery operator</span>
                   <select
                     value={filterMachinery}
                     onChange={(e) => setFilterMachinery(e.target.value)}
                     className="w-full bg-[#0b112d] text-xs text-white border border-white/5 p-2.5 focus:border-cyan-400 outline-none rounded-xl font-sans font-bold"
                   >
-                    <option value="Todos" className="bg-[#0b112d] text-white">Todos</option>
-                    <option value="Sim" className="bg-[#0b112d] text-white">Sim, dirige</option>
-                    <option value="Não" className="bg-[#0b112d] text-white">Não dirige</option>
+                    <option value="Todos" className="bg-[#0b112d] text-white">All</option>
+                    <option value="Sim" className="bg-[#0b112d] text-white">Yes, operates heavy</option>
+                    <option value="Não" className="bg-[#0b112d] text-white">No</option>
                   </select>
                 </div>
               </div>
@@ -256,7 +256,7 @@ export default function AdminDashboard() {
               {filteredProfiles.length === 0 ? (
                 <div className="bg-[#060a23]/60 border border-white/5 rounded-3xl p-12 text-center text-zinc-450 shadow-xl">
                   <ShieldAlert className="mx-auto mb-3 text-zinc-500" size={24} />
-                  <p className="text-xs uppercase tracking-wider font-mono font-bold">Nenhum profissional qualificado atende a estes requisitos.</p>
+                  <p className="text-xs uppercase tracking-wider font-mono font-bold">No qualified professionals meet these filter criteria.</p>
                 </div>
               ) : (
                 filteredProfiles.map(p => {
@@ -286,9 +286,9 @@ export default function AdminDashboard() {
                         <div>
                           <div className="flex items-center gap-2">
                             <h4 className="font-extrabold text-white text-sm">{p.fullName}</h4>
-                            <span className="text-[10px] text-zinc-500 font-sans font-bold">({p.age} anos)</span>
+                            <span className="text-[10px] text-zinc-500 font-sans font-bold">({p.age} yrs)</span>
                           </div>
-                          <p className="text-[10px] text-[#22d3ee] font-sans font-black mt-1 uppercase tracking-wider">{p.profession || 'Ofício não preenchido'}</p>
+                          <p className="text-[10px] text-[#22d3ee] font-sans font-black mt-1 uppercase tracking-wider">{p.profession || 'Trade unresolved'}</p>
                         </div>
                         <span className="text-[10px] text-zinc-300 font-mono font-black bg-[#101942]/60 border border-white/5 px-3 py-1 rounded-full flex items-center gap-1 uppercase">
                           <MapPin size={10} className="text-zinc-500" />
@@ -316,7 +316,7 @@ export default function AdminDashboard() {
                 {/* Header */}
                 <div className="border-b border-white/5 pb-5">
                   <span className="text-[10px] font-mono text-cyan-400 font-black uppercase tracking-wider">
-                    Dossiê Técnico Consular
+                    Technical Candidate Dossier
                   </span>
                   <h2 className="text-lg lg:text-xl font-display font-black text-white mt-1 uppercase">
                     {selectedProfile.fullName}
@@ -329,40 +329,40 @@ export default function AdminDashboard() {
                     {/* Information map specs */}
                     <div className="space-y-4">
                       <h3 className="text-[10px] font-mono font-black uppercase tracking-widest text-[#22d3ee] border-l-2 border-cyan-400 pl-2">
-                        Especificações Profissionais ({selectedProfile.gender})
+                        Professional Verification & Details ({selectedProfile.gender})
                       </h3>
                       
                       <div className="grid grid-cols-2 gap-4 text-xs font-sans leading-relaxed">
                         <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
-                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Ofício</span>
-                          <span className="text-white font-extrabold block mt-0.5">{selectedProfile.profession || 'Não informado'}</span>
+                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Trade / Trade Specialization</span>
+                          <span className="text-white font-extrabold block mt-0.5">{selectedProfile.profession || 'Unresolved'}</span>
                         </div>
                         <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
-                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Nível do Inglês</span>
+                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">English Level</span>
                           <span className="text-[#22d3ee] font-extrabold block mt-0.5">{selectedProfile.englishLevel}</span>
                         </div>
                         <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
-                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Habilitação</span>
+                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">License / CNH</span>
                           <span className="text-white font-extrabold block mt-0.5">{selectedProfile.licenseType}</span>
                         </div>
                         <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
-                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Dirige Maquinário</span>
+                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Operate Machinery</span>
                           <span className="text-white font-extrabold block mt-0.5">{selectedProfile.drivesMachinery}</span>
                         </div>
                         <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5 col-span-2">
-                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Certificado Sazonal</span>
+                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Specialized Industrial Certificate</span>
                           <span className="text-white font-extrabold block mt-0.5">
-                            {selectedProfile.certificateType ? `${selectedProfile.certificateType} (Val: ${selectedProfile.certificateValidity})` : 'Nenhum certificado registrado'}
+                            {selectedProfile.certificateType ? `${selectedProfile.certificateType} (Val: ${selectedProfile.certificateValidity})` : 'No registered certifications'}
                           </span>
                         </div>
                         <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
-                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Tem Passaporte</span>
+                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Hold Valid Passport</span>
                           <span className="text-white font-extrabold block mt-0.5">{selectedProfile.hasPassport}</span>
                         </div>
                         <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
-                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Visto Existente</span>
+                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Current Visa Status</span>
                           <span className="text-white font-extrabold block mt-0.5">
-                            {selectedProfile.visaType ? `${selectedProfile.visaType} (Val: ${selectedProfile.visaValidity})` : 'Nenhum'}
+                            {selectedProfile.visaType ? `${selectedProfile.visaType} (Val: ${selectedProfile.visaValidity})` : 'None'}
                           </span>
                         </div>
                       </div>
@@ -371,12 +371,12 @@ export default function AdminDashboard() {
                     {/* Photo and Video analysis */}
                     <div className="space-y-4 pt-2">
                       <h3 className="text-[10px] font-mono font-black uppercase tracking-widest text-[#22d3ee]/85">
-                        Galeria de Trabalho & Entrevistas
+                        Work Gallery & Verification Media
                       </h3>
 
                       {/* Currículo (CV) inspect */}
                       <div className="bg-[#0b112d]/50 border border-white/5 rounded-2xl p-4 space-y-2">
-                        <span className="text-[9px] text-zinc-400 font-mono block uppercase font-bold tracking-wider">Foto do Currículo Enviada (CV)</span>
+                        <span className="text-[9px] text-zinc-400 font-mono block uppercase font-bold tracking-wider">Uploaded Resume & Document Copies</span>
                         {selectedProfile.resumePhoto ? (
                           <div className="relative aspect-video max-w-sm rounded-xl overflow-hidden border border-white/10 bg-black group shadow-md">
                             <img src={selectedProfile.resumePhoto} className="w-full h-full object-contain" />
@@ -386,30 +386,30 @@ export default function AdminDashboard() {
                               rel="noopener noreferrer"
                               className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all text-white text-[10px] font-mono uppercase font-black tracking-widest cursor-pointer"
                             >
-                              Visualizar Currículo 🗗
+                              View Complete Document 🗗
                             </a>
                           </div>
                         ) : (
-                          <div className="aspect-video max-w-sm bg-[#0b112d] border border-white/5 border-dashed flex items-center justify-center text-[10px] rounded-xl text-zinc-500 font-bold uppercase tracking-wider">Ainda não enviado de forma online ou capturado</div>
+                          <div className="aspect-video max-w-sm bg-[#0b112d] border border-white/5 border-dashed flex items-center justify-center text-[10px] rounded-xl text-zinc-500 font-bold uppercase tracking-wider">No resume/CV attached via web upload or camera snapshot.</div>
                         )}
                       </div>
 
                       {/* Video clips */}
                       <div className="grid grid-cols-2 gap-3">
                         <div className="space-y-1">
-                          <span className="text-[9px] text-zinc-500 font-mono block uppercase font-bold">Apresentação</span>
+                          <span className="text-[9px] text-zinc-500 font-mono block uppercase font-bold">Elevator Pitch</span>
                           {selectedProfile.videos?.presentation ? (
                             <video src={selectedProfile.videos.presentation} controls className="w-full aspect-video rounded-xl bg-black object-cover shadow-xs" />
                           ) : (
-                            <div className="aspect-video bg-[#0b112d] border border-white/5 flex items-center justify-center text-[10px] rounded-xl text-zinc-500 font-semibold tracking-wider uppercase">Pendente</div>
+                            <div className="aspect-video bg-[#0b112d] border border-white/5 flex items-center justify-center text-[10px] rounded-xl text-zinc-500 font-semibold tracking-wider uppercase">Pending</div>
                           )}
                         </div>
                         <div className="space-y-1">
-                          <span className="text-[9px] text-zinc-500 font-mono block uppercase font-bold">Documentação</span>
+                          <span className="text-[9px] text-zinc-500 font-mono block uppercase font-bold">ID Verification</span>
                           {selectedProfile.videos?.documents ? (
                             <video src={selectedProfile.videos.documents} controls className="w-full aspect-video rounded-xl bg-black object-cover shadow-xs" />
                           ) : (
-                            <div className="aspect-video bg-[#0b112d] border border-white/5 flex items-center justify-center text-[10px] rounded-xl text-zinc-500 font-semibold tracking-wider uppercase">Pendente</div>
+                            <div className="aspect-video bg-[#0b112d] border border-white/5 flex items-center justify-center text-[10px] rounded-xl text-zinc-500 font-semibold tracking-wider uppercase">Pending</div>
                           )}
                         </div>
                       </div>
@@ -424,7 +424,7 @@ export default function AdminDashboard() {
                           ))}
                         </div>
                       ) : (
-                        <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-black font-mono">Nenhuma foto de trabalho adicionada.</p>
+                        <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-black font-mono">No job site portfolio photos uploaded.</p>
                       )}
                     </div>
 
@@ -434,29 +434,29 @@ export default function AdminDashboard() {
                       id="admin-issue-contract-trigger"
                       onClick={() => {
                         setContractRole(selectedProfile.profession);
-                        setContractTerms(`EXPATRIADO DE TEMPORADA EM CONFORMIDADE CONSULAR.\n\nEste contrato de trabalho temporário regula as obrigações e deveres entre o trabalhador de ofício qualificado ${selectedProfile.fullName} e o grupo TCW para a temporada produtiva no exterior.\n\nBenefícios Inclusos:\n- Acomodação privativa ou compartilhada custeada.\n- Bilhete aéreo de ida e retorno.\n- Salário e repouso garantidos sob a convenção comercial local.\n- Seguro-saúde contra incidentes operacionais de trabalho.`);
+                        setContractTerms(`SEASONAL EXPATRIATE CONTRACT IN CONSULAR COMPLIANCE.\n\nThis seasonal employment agreement sets forth all professional obligations, durations, and duties between the skilled trade specialist ${selectedProfile.fullName} and the hiring organization for the duration of the upcoming active season abroad.\n\nGuaranteed Benefits Incurred:\n- fully funded private or shared accommodations.\n- round-trip flight arrangements both ways.\n- certified base wages and rest schedules matching local regional commerce terms.\n- direct industrial operations group health & accident insurance coverage.`);
                         setShowContractForm(true);
                       }}
                       className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-black py-4 transition-all rounded-xl shadow-[0_0_20px_rgba(34,211,238,0.15)] cursor-pointer text-xs uppercase tracking-widest font-mono"
                     >
                       <Plus size={14} className="stroke-[2.5]" />
-                      EMITIR CONTRATO CORPORATIVO
+                      ISSUE GLOBAL CORPORATE SERVICE OFFER
                     </button>
                   </>
                 ) : (
                   /* Form: Issue Seasonal Contract template */
                   <form id="issue-contract-form" onSubmit={handleIssueContract} className="space-y-4">
                     <div className="flex justify-between items-center pb-2 border-b border-white/5">
-                      <h3 className="text-xs uppercase font-mono font-black text-[#22d3ee]">Novo Contrato Sazonal</h3>
+                      <h3 className="text-xs uppercase font-mono font-black text-[#22d3ee]">New Seasonal Agreement Proposal</h3>
                       <button type="button" onClick={() => setShowContractForm(false)} className="p-1 px-2.5 bg-white/5 hover:bg-white/10 border border-white/5 text-zinc-300 cursor-pointer rounded-lg text-[9px] font-mono uppercase font-bold">
-                        FECHAR
+                        CLOSE
                       </button>
                     </div>
 
                     <div className="space-y-3 text-xs">
                       {/* Cargo/Role */}
                       <div className="space-y-1.55">
-                        <label className="text-zinc-400 font-mono uppercase text-[9px] font-black block mb-1.5">Função / Cargo</label>
+                        <label className="text-zinc-400 font-mono uppercase text-[9px] font-black block mb-1.5">Job Title / Certified Classification</label>
                         <input
                           type="text"
                           required
@@ -468,7 +468,7 @@ export default function AdminDashboard() {
 
                       {/* Destination */}
                       <div className="space-y-1.5">
-                        <label className="text-zinc-400 font-mono uppercase text-[9px] font-black block mb-1.5">País de Destino</label>
+                        <label className="text-zinc-400 font-mono uppercase text-[9px] font-black block mb-1.5">Destination Sovereign Region</label>
                         <input
                           type="text"
                           required
@@ -480,35 +480,35 @@ export default function AdminDashboard() {
 
                       {/* Salary template description */}
                       <div className="space-y-1.5">
-                        <label className="text-zinc-400 font-mono uppercase text-[9px] font-black block mb-1.5">Remuneração / Salário</label>
+                        <label className="text-zinc-400 font-mono uppercase text-[9px] font-black block mb-1.5">Guaranteed Base Remuneration</label>
                         <input
                           type="text"
                           required
-                          placeholder="Ex: $3,500.00 / Mês"
+                          placeholder="e.g. $4,200.00 / Month"
                           value={contractSalary}
                           onChange={(e) => setContractSalary(e.target.value)}
-                          className="w-full bg-[#0b112d] border border-white/5 p-2.5 text-white focus:outline-none focus:border-cyan-400 rounded-xl font-bold font-mono placeholder-zinc-600"
+                          className="w-full bg-[#0b112d] border border-white/5 p-2.5 text-white focus:outline-none focus:border-cyan-400 rounded-xl font-bold font-mono placeholder-zinc-650"
                         />
                       </div>
 
                       {/* Duration months */}
                       <div className="space-y-1.5">
-                        <label className="text-zinc-400 font-mono uppercase text-[9px] font-black block mb-1.5">Duração (Meses de Temporada)</label>
+                        <label className="text-zinc-400 font-mono uppercase text-[9px] font-black block mb-1.5">Active Term / Season Period (Months)</label>
                         <select
                           value={contractDuration}
                           onChange={(e) => setContractDuration(Number(e.target.value))}
                           className="w-full bg-[#0b112d] border border-white/5 p-2.5 text-[#22d3ee] font-extrabold focus:outline-none focus:border-cyan-400 rounded-xl font-sans"
                         >
-                          <option value="1" className="bg-[#0b112d] text-white">1 Mês (Curta Sazonalidade)</option>
-                          <option value="2" className="bg-[#0b112d] text-white">2 Meses (Média Sazonalidade)</option>
-                          <option value="3" className="bg-[#0b112d] text-white">3 Meses (Temporada Cheia)</option>
+                          <option value="1" className="bg-[#0b112d] text-white">1 Month (Short Seasonal Term)</option>
+                          <option value="2" className="bg-[#0b112d] text-white">2 Months (Mid Season Peak)</option>
+                          <option value="3" className="bg-[#0b112d] text-white">3 Months (Full Season Crop)</option>
                         </select>
                       </div>
 
                       {/* Dates start/ends */}
                       <div className="grid grid-cols-2 gap-3">
                         <div className="space-y-1.5">
-                          <label className="text-zinc-400 font-mono uppercase text-[9px] font-black block mb-1.5">Início Temporada</label>
+                          <label className="text-zinc-400 font-mono uppercase text-[9px] font-black block mb-1.5">Season Commencement Date</label>
                           <input
                             type="date"
                             required
@@ -518,7 +518,7 @@ export default function AdminDashboard() {
                           />
                         </div>
                         <div className="space-y-1.5">
-                          <label className="text-zinc-400 font-mono uppercase text-[9px] font-black block mb-1.5">Retorno Temporada</label>
+                          <label className="text-zinc-400 font-mono uppercase text-[9px] font-black block mb-1.5">Projected Return / Expiration Date</label>
                           <input
                             type="date"
                             required
@@ -531,7 +531,7 @@ export default function AdminDashboard() {
 
                       {/* Terms text */}
                       <div className="space-y-1.5">
-                        <label className="text-zinc-400 font-mono uppercase text-[9px] font-black block mb-1.5">Termos e Benefícios Oferecidos</label>
+                        <label className="text-zinc-400 font-mono uppercase text-[9px] font-black block mb-1.5">Detailed Perks, Accommodation & Working Terms</label>
                         <textarea
                           rows={4}
                           value={contractTerms}
@@ -546,7 +546,7 @@ export default function AdminDashboard() {
                       id="admin-issue-contract-submit"
                       className="w-full py-4 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-black text-xs uppercase tracking-widest font-mono transition-all cursor-pointer rounded-xl mt-4 shadow-[0_0_20px_rgba(34,211,238,0.15)]"
                     >
-                      EMITIR PROPOSTA DE CONTRATO
+                      DISPATCH SEASONAL OFFER TO CANDIDATE
                     </button>
                   </form>
                 )}
@@ -554,8 +554,8 @@ export default function AdminDashboard() {
             ) : (
               <div className="bg-[#060a23]/30 border border-white/5 border-dashed rounded-3xl p-8 text-center text-zinc-500 mx-auto max-w-sm">
                 <BadgeCheck size={28} className="text-zinc-500/50 mx-auto mb-3" />
-                <h4 className="font-mono text-xs text-white/80 uppercase tracking-wilder font-extrabold">Selecione um Candidato</h4>
-                <p className="text-[10px] text-zinc-450 mt-1 uppercase tracking-wide font-bold">Para analisar mídias de documentos e outorgar contratos season.</p>
+                <h4 className="font-mono text-xs text-white/80 uppercase tracking-wilder font-extrabold">Select a Qualified Candidate</h4>
+                <p className="text-[10px] text-zinc-450 mt-1 uppercase tracking-wide font-bold">To inspect vocational credentials, review interview streams, and draft corporate employment offers.</p>
               </div>
             )}
           </div>
@@ -563,21 +563,21 @@ export default function AdminDashboard() {
       ) : (
         /* Contracts tab workspace */
         <div className="bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 space-y-5 sm:space-y-6 shadow-2xl">
-          <h3 className="text-xs font-mono font-black uppercase tracking-widest text-[#22d3ee] border-b border-white/5 pb-3">Histórico de Contratos Sazonais Emitidos</h3>
+          <h3 className="text-xs font-mono font-black uppercase tracking-widest text-[#22d3ee] border-b border-white/5 pb-3">Issued Seasonal Offers & Employment History</h3>
           
           {contracts.length === 0 ? (
-            <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest font-bold">Nenhum contrato voluntário foi emitido até o momento na Work.</p>
+            <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest font-bold">No global employment offers have been initialized or dispatched yet.</p>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
                   <tr className="border-b border-white/5 text-zinc-500 font-mono uppercase text-[9px] tracking-wider font-extrabold">
-                    <th className="py-3 px-4">Profissional</th>
-                    <th className="py-3 px-4">Cargo / Função</th>
-                    <th className="py-3 px-4">Destino</th>
-                    <th className="py-3 px-4">Duração</th>
-                    <th className="py-3 px-4">Início / Término</th>
-                    <th className="py-3 px-4">Salário</th>
+                    <th className="py-3 px-4">Candidate Name</th>
+                    <th className="py-3 px-4">Offered Trade</th>
+                    <th className="py-3 px-4">Destination</th>
+                    <th className="py-3 px-4">Term</th>
+                    <th className="py-3 px-4">Commencement / Expiration</th>
+                    <th className="py-3 px-4">Remuneration</th>
                     <th className="py-3 px-4">Status</th>
                   </tr>
                 </thead>
@@ -589,8 +589,8 @@ export default function AdminDashboard() {
                       <td className="py-4 px-4 text-cyan-400 font-mono font-black uppercase">{contract.destinationCountry}</td>
                       <td className="py-4 px-4 font-mono font-black text-zinc-405">{contract.durationMonths} m</td>
                       <td className="py-4 px-4 text-zinc-500 font-mono text-[10px]">
-                        {new Date(contract.startDate).toLocaleDateString('pt-BR')} até{' '}
-                        {new Date(contract.endDate).toLocaleDateString('pt-BR')}
+                        {new Date(contract.startDate).toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})} to{' '}
+                        {new Date(contract.endDate).toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})}
                       </td>
                       <td className="py-4 px-4 font-mono font-extrabold text-[#22d3ee]">{contract.salary}</td>
                       <td className="py-4 px-4">
@@ -601,7 +601,7 @@ export default function AdminDashboard() {
                             ? 'bg-red-500/10 text-red-400 border border-red-500/20' 
                             : 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20'
                         }`}>
-                          {contract.status}
+                          {contract.status === 'Assinado' ? 'Signed' : contract.status === 'Cancelado' ? 'Cancelled' : 'Pending'}
                         </span>
                       </td>
                     </tr>

@@ -16,7 +16,7 @@ export const api = {
       body: JSON.stringify(data),
     });
     const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Erro ao registrar.');
+    if (!res.ok) throw new Error(result.error || 'Error completing registration.');
     return result;
   },
 
@@ -27,7 +27,7 @@ export const api = {
       body: JSON.stringify(data),
     });
     const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'E-mail ou senha inválidos.');
+    if (!res.ok) throw new Error(result.error || 'Invalid email or password.');
     return result;
   },
 
@@ -35,7 +35,7 @@ export const api = {
   async getProfile(userId: string): Promise<WorkerProfile> {
     const res = await fetch(`${API_BASE}/profile/${userId}`);
     const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Erro ao carregar perfil.');
+    if (!res.ok) throw new Error(result.error || 'Error loading profile.');
     return result;
   },
 
@@ -46,7 +46,7 @@ export const api = {
       body: JSON.stringify(data),
     });
     const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Erro ao atualizar perfil.');
+    if (!res.ok) throw new Error(result.error || 'Error updating profile.');
     return result;
   },
 
@@ -54,7 +54,34 @@ export const api = {
   async getAdminProfiles(): Promise<(WorkerProfile & { email: string })[]> {
     const res = await fetch(`${API_BASE}/admin/profiles`);
     const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Erro ao carregar perfis de trabalhadores.');
+    if (!res.ok) throw new Error(result.error || 'Error loading worker profiles.');
+    return result;
+  },
+
+  // --- Public Worker Catalog ---
+  async getPublicProfiles(): Promise<any[]> {
+    const res = await fetch(`${API_BASE}/public/profiles`);
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Error loading public catalog.');
+    return result;
+  },
+
+  // --- Real Shared Media Gallery ---
+  async getGallery(): Promise<any[]> {
+    const res = await fetch(`${API_BASE}/gallery`);
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Error loading gallery.');
+    return result;
+  },
+
+  async addToGallery(data: { workerName?: string; profession?: string; type: 'image' | 'video'; url: string; caption?: string }): Promise<any> {
+    const res = await fetch(`${API_BASE}/gallery`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || 'Error loading physical upload.');
     return result;
   },
 
@@ -62,7 +89,7 @@ export const api = {
   async getContracts(userId: string): Promise<SeasonalContract[]> {
     const res = await fetch(`${API_BASE}/contracts/${userId}`);
     const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Erro ao carregar contratos.');
+    if (!res.ok) throw new Error(result.error || 'Error retrieving contracts.');
     return result;
   },
 
@@ -73,18 +100,18 @@ export const api = {
       body: JSON.stringify(data),
     });
     const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Erro ao emitir contrato.');
+    if (!res.ok) throw new Error(result.error || 'Error issuing seasonal contract.');
     return result;
   },
 
-  async signContract(contractId: string, status: 'Assinado' | 'Cancelado'): Promise<{ contract: SeasonalContract; message: string }> {
+  async signContract(contractId: string, status: 'Signed' | 'Cancelled'): Promise<{ contract: SeasonalContract; message: string }> {
     const res = await fetch(`${API_BASE}/contracts/${contractId}/sign`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status }),
     });
     const result = await res.json();
-    if (!res.ok) throw new Error(result.error || 'Erro ao processar assinatura.');
+    if (!res.ok) throw new Error(result.error || 'Error processing signature.');
     return result;
   },
 

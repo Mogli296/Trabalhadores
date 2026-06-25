@@ -23,7 +23,7 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
     setError(null);
 
     if (!fullName.trim() || !email.trim() || !password || !phone.trim()) {
-      setError('Todos os campos são obrigatórios.');
+      setError('All fields are required.');
       return;
     }
 
@@ -37,7 +37,7 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
       });
       onSuccess(response.user);
     } catch (err: any) {
-      setError(err.message || 'Erro ao realizar o cadastro. Tente novamente.');
+      setError(err.message || 'Registration failed. Please check details and try again.');
     } finally {
       setLoading(false);
     }
@@ -61,10 +61,10 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
             className="space-y-4"
           >
             <h1 className="font-display text-4xl font-extrabold leading-tight text-white uppercase tracking-tight">
-              Comece com<br/>a Work.
+              Accelerate with<br/>Work.
             </h1>
             <p className="text-zinc-400 text-sm font-sans tracking-wide font-medium leading-relaxed">
-              Encontre contratos sazonais de 1 a 3 meses ao redor do mundo através do grupo TCW.
+              Unlock high-paying 1-to-3-month seasonal assignments across the globe backed by the prestigious TCW Group.
             </p>
           </motion.div>
         </div>
@@ -77,8 +77,8 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
               1
             </div>
             <div>
-              <h3 className="font-bold text-sm text-white">Criar conta</h3>
-              <p className="text-xs text-zinc-400 font-semibold font-sans">Dados básicos de acesso</p>
+              <h3 className="font-bold text-sm text-white">Sign Up</h3>
+              <p className="text-xs text-zinc-400 font-semibold font-sans">Basic Account Access</p>
             </div>
           </div>
 
@@ -88,8 +88,8 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
               2
             </div>
             <div>
-              <h3 className="font-bold text-sm text-white">Configurar perfil</h3>
-              <p className="text-xs text-zinc-400 font-sans font-medium">Experiência e habilidades</p>
+              <h3 className="font-bold text-sm text-white">Build Profile</h3>
+              <p className="text-xs text-zinc-400 font-sans font-medium">Skills & Experience</p>
             </div>
           </div>
 
@@ -99,8 +99,8 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
               3
             </div>
             <div>
-              <h3 className="font-bold text-sm text-white">Enviar documentos</h3>
-              <p className="text-xs text-zinc-400 font-sans font-medium">Passaportes e vistos</p>
+              <h3 className="font-bold text-sm text-white">Consular Verification</h3>
+              <p className="text-xs text-zinc-400 font-sans font-medium">Passports & Seasonal Visas</p>
             </div>
           </div>
         </div>
@@ -117,8 +117,8 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
         
         <div className="max-w-xl mx-auto w-full space-y-6 relative z-10">
           <div className="space-y-1 mb-6 text-center">
-            <h2 className="text-2xl font-black text-white uppercase tracking-tight">Criar Conta Profissional</h2>
-            <p className="text-cyan-400 text-[10px] uppercase font-mono tracking-widest font-bold">Informações necessárias para recrutamento corporativo</p>
+            <h2 className="text-2xl font-black text-white uppercase tracking-tight">Create Professional Account</h2>
+            <p className="text-cyan-400 text-[10px] uppercase font-mono tracking-widest font-bold">Enterprise-grade criteria for verified placement</p>
           </div>
 
           {error && (
@@ -137,7 +137,7 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
               {/* Nome completo */}
               <div className="space-y-1">
                 <label htmlFor="fullName" className="block text-[10px] text-zinc-400 uppercase font-black tracking-wider mb-1">
-                  Nome Completo
+                  Full Legal Name (Exactly as in Passport)
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500">
@@ -148,7 +148,7 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
                     name="fullName"
                     type="text"
                     required
-                    placeholder="Seu nome oficial para contratos"
+                    placeholder="Your official name for visa contracts"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     className="w-full bg-[#0b112d] border border-white/5 p-2.5 text-sm pl-10 text-white focus:border-cyan-400 placeholder-zinc-650 outline-none rounded-xl transition-all font-sans font-medium"
@@ -159,7 +159,7 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
               {/* Email */}
               <div className="space-y-1">
                 <label htmlFor="email" className="block text-[10px] text-zinc-400 uppercase font-black tracking-wider mb-1">
-                  E-mail
+                  Email Address
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500">
@@ -170,7 +170,7 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
                     name="email"
                     type="email"
                     required
-                    placeholder="Seu e-mail profissional"
+                    placeholder="your@employeemail.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full bg-[#0b112d] border border-white/5 p-2.5 text-sm pl-10 text-white focus:border-cyan-400 placeholder-zinc-650 outline-none rounded-xl transition-all font-sans font-medium"
@@ -181,7 +181,7 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
               {/* Celular */}
               <div className="space-y-1">
                 <label htmlFor="phone" className="block text-[10px] text-zinc-400 uppercase font-black tracking-wider mb-1">
-                  Número de Celular (Obrigatório)
+                  Mobile Number (Required)
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500">
@@ -192,19 +192,19 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
                     name="phone"
                     type="tel"
                     required
-                    placeholder="Ex: +55 (11) 99999-9999"
+                    placeholder="e.g. +1 (555) 019-2834"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     className="w-full bg-[#0b112d] border border-white/5 p-2.5 text-sm pl-10 text-white focus:border-cyan-400 placeholder-zinc-650 outline-none rounded-xl transition-all font-sans font-medium"
                   />
                 </div>
-                <p className="text-[10px] text-zinc-500 font-sans font-semibold mt-1">Utilizado pelo comitê internacional de recrutamento para convocação via WhatsApp.</p>
+                <p className="text-[10px] text-zinc-500 font-sans font-semibold mt-1">Our team uses this for urgent direct scheduling and WhatsApp matching.</p>
               </div>
 
               {/* Senha */}
               <div className="space-y-1">
                 <label htmlFor="password" className="block text-[10px] text-zinc-400 uppercase font-black tracking-wider mb-1">
-                  Senha de Acesso
+                  Secure Password
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-500">
@@ -215,7 +215,7 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
                     name="password"
                     type={showPassword ? 'text' : 'password'}
                     required
-                    placeholder="Sua senha de segurança"
+                    placeholder="Enter password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     className="w-full bg-[#0b112d] border border-white/5 p-2.5 text-sm pl-10 pr-10 text-white focus:border-cyan-400 placeholder-zinc-650 outline-none rounded-xl transition-all font-sans font-medium"
@@ -239,7 +239,7 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
                   disabled={loading}
                   className="w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 hover:from-cyan-300 hover:via-blue-400 hover:to-indigo-500 text-slate-950 font-black py-3 text-xs tracking-widest uppercase transition-all shadow-[0_0_20px_rgba(34,211,238,0.15)] rounded-xl flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
                 >
-                  {loading ? 'PROCESSANDO...' : 'CRIAR MINHA CONTA'}
+                  {loading ? 'PROVISIONING ACCESS...' : 'CREATE MY WORK ACCOUNT'}
                   {!loading && <ArrowRight size={14} className="stroke-[2.5]" />}
                 </button>
               </div>
@@ -248,13 +248,13 @@ export default function RegisterForm({ onSuccess, onNavigateToLogin }: RegisterF
 
           {/* Opção para navegar para o login */}
           <div className="mt-8 text-center border-t border-white/5 pt-6">
-            <span className="text-xs text-zinc-400 font-semibold uppercase tracking-wide">Já possui uma conta na Work? </span>
+            <span className="text-xs text-zinc-400 font-semibold uppercase tracking-wide">Already registered with Work? </span>
             <button
               id="register-goto-login"
               onClick={onNavigateToLogin}
               className="text-xs text-cyan-400 font-black hover:text-cyan-300 uppercase tracking-widest ml-1 cursor-pointer font-mono"
             >
-              Fazer Login
+              Sign In
             </button>
           </div>
         </div>

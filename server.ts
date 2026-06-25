@@ -49,17 +49,17 @@ function loadDB(): DBState {
         userId: 'user_worker_1',
         fullName: 'Carlos Silva',
         age: 28,
-        gender: 'Masculino',
-        country: 'Brasil',
-        profession: 'Carpinteiro Sênior',
-        licenseType: 'Categoria B',
-        englishLevel: 'Intermediário',
-        certificateType: 'Certificado de Segurança em Obra (OSHA)',
+        gender: 'Male',
+        country: 'Brazil',
+        profession: 'Senior Carpenter',
+        licenseType: 'Class B',
+        englishLevel: 'Intermediate',
+        certificateType: 'Occupational Safety & Health Certificate (OSHA)',
         certificateValidity: '2028-12-31',
-        hasPassport: 'Sim',
-        visaType: 'Visto de Trabalho Temporário H-2B',
+        hasPassport: 'Yes',
+        visaType: 'Temporary Seasonal H-2B Visa',
         visaValidity: '2026-12-31',
-        drivesMachinery: 'Sim',
+        drivesMachinery: 'Yes',
         phone: '11988888888',
         photos: [],
         resumePhoto: '',
@@ -76,14 +76,14 @@ function loadDB(): DBState {
         id: 'contract_1',
         workerId: 'user_worker_1',
         workerName: 'Carlos Silva',
-        destinationCountry: 'Estados Unidos',
+        destinationCountry: 'United States',
         durationMonths: 3,
-        role: 'Auxiliar de Carpintaria de Temporada',
-        salary: '$3,200.00 / Mês',
+        role: 'Seasonal Assistant Carpenter',
+        salary: '$3,200.00 / Month',
         startDate: '2026-07-01',
         endDate: '2026-10-01',
-        status: 'Pendente',
-        terms: 'Contrato temporário para o setor de construção civil sazonal em Boston, cobrindo acomodação, passagens de ida e volta e assistência médica básica.',
+        status: 'Pending',
+        terms: 'Temporary winter/summer contractor terms cover round-trip flights, dual occupancy accommodation units, health cover, and standardized overtime scaling.',
         createdAt: new Date().toISOString()
       }
     ]
@@ -125,7 +125,7 @@ async function startServer() {
     const { fullName, email, password, phone } = req.body;
     
     if (!fullName || !email || !password || !phone) {
-      return res.status(400).json({ error: 'Todos os campos são obrigatórios para o cadastro.' });
+      return res.status(400).json({ error: 'All fields are required to register.' });
     }
     
     const emailLower = email.toLowerCase().trim();
@@ -133,7 +133,7 @@ async function startServer() {
     // Check if user exists
     const exists = db.users.find(u => u.email.toLowerCase() === emailLower);
     if (exists) {
-      return res.status(400).json({ error: 'Este e-mail já está cadastrado na plataforma.' });
+      return res.status(400).json({ error: 'This email is already registered.' });
     }
     
     const userId = 'user_' + Date.now();
@@ -146,7 +146,7 @@ async function startServer() {
       role: 'worker' as const
     };
     
-    // Create an empty worker profile for them
+    // Create an empty worker profile for them in English
     const profileId = 'profile_' + Date.now();
     const newProfile = {
       id: profileId,
@@ -156,14 +156,14 @@ async function startServer() {
       gender: '',
       country: '',
       profession: '',
-      licenseType: 'Nenhuma',
-      englishLevel: 'Não fala',
+      licenseType: 'None',
+      englishLevel: 'Non-verbal',
       certificateType: '',
       certificateValidity: '',
-      hasPassport: 'Não' as const,
+      hasPassport: 'No' as const,
       visaType: '',
       visaValidity: '',
-      drivesMachinery: 'Não' as const,
+      drivesMachinery: 'No' as const,
       phone: phone.trim(),
       photos: [],
       resumePhoto: '',
@@ -187,7 +187,7 @@ async function startServer() {
         phone: newUser.phone,
         role: newUser.role
       },
-      message: 'Cadastro efetuado com sucesso!'
+      message: 'Registration completed successfully!'
     });
   });
 
@@ -196,14 +196,14 @@ async function startServer() {
     const { email, password } = req.body;
     
     if (!email || !password) {
-      return res.status(400).json({ error: 'E-mail e senha são obrigatórios.' });
+      return res.status(400).json({ error: 'Email and password are required.' });
     }
     
     const emailLower = email.toLowerCase().trim();
     const user = db.users.find(u => u.email.toLowerCase() === emailLower && u.password === password);
     
     if (!user) {
-      return res.status(401).json({ error: 'E-mail ou senha incorretos.' });
+      return res.status(401).json({ error: 'Incorrect email or password.' });
     }
     
     res.json({
@@ -214,7 +214,7 @@ async function startServer() {
         phone: user.phone,
         role: user.role
       },
-      message: 'Login realizado com sucesso!'
+      message: 'Login successful!'
     });
   });
 
@@ -224,11 +224,47 @@ async function startServer() {
     const profile = db.profiles.find(p => p.userId === userId);
     
     if (!profile) {
-      return res.status(404).json({ error: 'Perfil não encontrado.' });
+      return res.status(404).json({ error: 'Profile not found.' });
     }
     
     res.json(profile);
   });
+
+  // Helper to dynamically calculate TCW Talent Ranking
+  function calculateRanking(profile: any): 'Premium' | 'Verified' | 'Available' {
+    const hasPassport = profile.hasPassport === 'Yes' || profile.hasPassport === 'Sim';
+    const hasVideo = !!(profile.videos?.presentation);
+    
+    // Check English
+    const engDropdownVal = profile.englishLevel || '';
+    const isEngDropdownHigh = ['Intermediário', 'Avançado', 'Fluente', 'Intermediate', 'Advanced', 'Fluent', 'Expert'].includes(engDropdownVal);
+    const hasEngInLanguages = profile.languages && profile.languages.some((l: any) => {
+      const lang = (l.language || '').toLowerCase();
+      const lvl = (l.level || '').toLowerCase();
+      return (lang === 'inglês' || lang === 'english') && 
+             ['intermediário', 'avançado', 'fluente', 'intermediate', 'advanced', 'fluent', 'b2', 'c1', 'c2'].includes(lvl);
+    });
+    const isEnglishIntermediatePlus = isEngDropdownHigh || hasEngInLanguages;
+
+    // Check Certifications
+    const hasCertifications = (profile.certifications && profile.certifications.length > 0) || 
+                              (profile.certificateType && profile.certificateType.trim() !== '');
+
+    if (hasPassport && isEnglishIntermediatePlus && hasVideo && hasCertifications) {
+      return 'Premium';
+    }
+
+    // Verified Talent: Document validated (videos.documents or resumePhoto etc.) & Proven Experience
+    const hasDocVerified = !!(profile.videos?.documents || profile.resumePhoto || profile.passportNumber || profile.rgNumber || profile.cpfNumber);
+    const hasProvenExperience = (profile.experienceYears && profile.experienceYears !== 'Menos de 1 ano' && profile.experienceYears !== 'Less than 1 year') || 
+                                !!(profile.lastCompany && profile.lastCompany.trim() !== '');
+
+    if (hasDocVerified || hasProvenExperience) {
+      return 'Verified';
+    }
+
+    return 'Available';
+  }
 
   // Update worker profile
   app.put('/api/profile/:userId', (req, res) => {
@@ -237,24 +273,29 @@ async function startServer() {
     
     const index = db.profiles.findIndex(p => p.userId === userId);
     if (index === -1) {
-      return res.status(404).json({ error: 'Perfil não encontrado.' });
+      return res.status(404).json({ error: 'Profile not found.' });
     }
     
     const existingProfile = db.profiles[index];
     
     // Explicitly validate required phone mapping
     if (updateData.phone === undefined || updateData.phone === '') {
-      return res.status(400).json({ error: 'O número de celular é obrigatório.' });
+      return res.status(400).json({ error: 'Mobile phone number is required.' });
     }
 
-    db.profiles[index] = {
+    const mergedProfile = {
       ...existingProfile,
       ...updateData,
       // Keep immutable fields untouched
       id: existingProfile.id,
       userId: existingProfile.userId,
-      updatedAt: new Date().toISOString()
     };
+
+    // Calculate ranking dynamically
+    mergedProfile.ranking = calculateRanking(mergedProfile);
+    mergedProfile.updatedAt = new Date().toISOString();
+
+    db.profiles[index] = mergedProfile;
     
     // Also update phone/name on user account if changed
     const userIndex = db.users.findIndex(u => u.id === userId);
@@ -264,7 +305,7 @@ async function startServer() {
     }
     
     saveDB(db);
-    res.json({ profile: db.profiles[index], message: 'Perfil atualizado com sucesso!' });
+    res.json({ profile: db.profiles[index], message: 'Profile updated successfully!' });
   });
 
   // Upload pictures or videos as local Base64 media elements
@@ -272,7 +313,7 @@ async function startServer() {
     const { filename, fileData, type } = req.body; // fileData in base64
     
     if (!fileData) {
-      return res.status(400).json({ error: 'Nenhum dado de arquivo recebido.' });
+      return res.status(400).json({ error: 'No file data received.' });
     }
 
     try {
@@ -297,8 +338,87 @@ async function startServer() {
     } catch (error) {
       console.error('Error saving uploaded file locally', error);
       // Fallback is to send a mock URL or use the base64 content itself
-      res.json({ url: fileData, warning: 'Recurso guardado diretamente no banco por falha de escrita física.' });
+      res.json({ url: fileData, warning: 'Resource saved directly in the store.' });
     }
+  });
+
+  // --- Shared Public Media Gallery ---
+  app.get('/api/gallery', (req, res) => {
+    // If gallery array does not exist in db, initialize it
+    if (!(db as any).gallery) {
+      (db as any).gallery = [];
+    }
+    
+    // Seed default items if empty (using translated descriptions)
+    if ((db as any).gallery.length === 0) {
+      (db as any).gallery = [
+        {
+          id: 'gal_1',
+          workerName: 'Marcos Almeida',
+          profession: 'Senior Electrician',
+          type: 'image',
+          url: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=800&q=80',
+          caption: 'Primary power cables installation in industrial warehouse during European seasonal contract.',
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: 'gal_2',
+          workerName: 'Carlos Silva',
+          profession: 'Senior Carpenter',
+          type: 'image',
+          url: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=800&q=80',
+          caption: 'Structural wooden framing reinforcement for commercial exhibition pavilion.',
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: 'gal_3',
+          workerName: 'Juliana Portela',
+          profession: 'Forklift Operator',
+          type: 'image',
+          url: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80',
+          caption: 'Refrigerated container stacking at cargo hub in Germany.',
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: 'gal_4',
+          workerName: 'Lucas Lima',
+          profession: 'Cargo Assistant',
+          type: 'video',
+          url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+          caption: 'Demo of manual sorting workflow at airport logistics center.',
+          createdAt: new Date().toISOString()
+        }
+      ];
+      saveDB(db);
+    }
+    res.json((db as any).gallery);
+  });
+
+  app.post('/api/gallery', (req, res) => {
+    const { workerName, profession, type, url, caption } = req.body;
+    
+    if (!url) {
+      return res.status(400).json({ error: 'The file url is required.' });
+    }
+    
+    if (!(db as any).gallery) {
+      (db as any).gallery = [];
+    }
+    
+    const newItem = {
+      id: 'gal_' + Date.now(),
+      workerName: workerName || 'Work Certified Professional',
+      profession: profession || 'Qualified Worker',
+      type: type || 'image',
+      url,
+      caption: caption || 'Uploaded by verified field operative.',
+      createdAt: new Date().toISOString()
+    };
+    
+    (db as any).gallery.unshift(newItem);
+    saveDB(db);
+    
+    res.status(201).json(newItem);
   });
 
   // Admin routes: List all workers & profiles
@@ -314,13 +434,37 @@ async function startServer() {
     res.json(profilesWithEmail);
   });
 
+  // Public route to fetch worker profiles for the catalog page
+  app.get('/api/public/profiles', (req, res) => {
+    // Only return profiles that have set at least a profession to avoid showing blank half-created items
+    const publicProfiles = db.profiles
+      .filter(p => p.profession && p.profession.trim() !== '')
+      .map(p => ({
+        id: p.id,
+        fullName: p.fullName,
+        profession: p.profession,
+        country: p.country,
+        age: p.age,
+        gender: p.gender,
+        licenseType: p.licenseType,
+        englishLevel: p.englishLevel,
+        certificateType: p.certificateType,
+        hasPassport: p.hasPassport,
+        drivesMachinery: p.drivesMachinery,
+        photos: p.photos || [],
+        videos: p.videos || { presentation: '', documents: '' },
+        createdAt: p.createdAt
+      }));
+    res.json(publicProfiles);
+  });
+
   // Admin and Worker contracts
   app.get('/api/contracts/:userId', (req, res) => {
     const { userId } = req.params;
     const user = db.users.find(u => u.id === userId);
     
     if (!user) {
-      return res.status(404).json({ error: 'Usuário não encontrado.' });
+      return res.status(404).json({ error: 'User not found.' });
     }
     
     if (user.role === 'admin') {
@@ -336,12 +480,12 @@ async function startServer() {
     const { workerId, destinationCountry, durationMonths, role, salary, startDate, endDate, terms } = req.body;
     
     if (!workerId || !destinationCountry || !role || !salary || !startDate || !endDate) {
-      return res.status(400).json({ error: 'Todos os campos do contrato são obrigatórios.' });
+      return res.status(400).json({ error: 'All contract fields are required.' });
     }
     
     const workerUser = db.users.find(u => u.id === workerId);
     if (!workerUser) {
-      return res.status(404).json({ error: 'Trabalhador não encontrado.' });
+      return res.status(404).json({ error: 'Worker profile not found.' });
     }
     
     const contractId = 'contract_' + Date.now();
@@ -355,31 +499,31 @@ async function startServer() {
       salary,
       startDate,
       endDate,
-      status: 'Pendente' as const,
-      terms: terms || 'Contrato padrão de temporada sob as regras de trabalho internacional.',
+      status: 'Pending' as const,
+      terms: terms || 'Standard seasonal employment terms under international labor laws.',
       createdAt: new Date().toISOString()
     };
     
     db.contracts.push(newContract);
     saveDB(db);
     
-    res.status(201).json({ contract: newContract, message: 'Contrato emitido com sucesso!' });
+    res.status(201).json({ contract: newContract, message: 'Contract issued successfully!' });
   });
 
   // Sign contract (Worker actions)
   app.put('/api/contracts/:contractId/sign', (req, res) => {
     const { contractId } = req.params;
-    const { status } = req.body; // 'Assinado' or 'Cancelado'
+    const { status } = req.body; // 'Signed' or 'Cancelled'
     
     const cIndex = db.contracts.findIndex(c => c.id === contractId);
     if (cIndex === -1) {
-      return res.status(404).json({ error: 'Contrato não encontrado.' });
+      return res.status(404).json({ error: 'Contract not found.' });
     }
     
     db.contracts[cIndex].status = status;
     saveDB(db);
     
-    res.json({ contract: db.contracts[cIndex], message: `Contrato marcado como ${status}.` });
+    res.json({ contract: db.contracts[cIndex], message: `Contract status updated to ${status}.` });
   });
 
   // Static serving of locally written uploaded assets

@@ -14,9 +14,17 @@ import TCWLogo from './components/TCWLogo';
 import { User as UserType } from './types';
 import { api } from './services/api';
 
+// New Sections & Pages
+import FeaturedProfessions from './components/FeaturedProfessions';
+import ContractManagement from './components/ContractManagement';
+import MediaGallery from './components/MediaGallery';
+import WorkerCatalog from './components/WorkerCatalog';
+import AboutWork from './components/AboutWork';
+import HowItWorks from './components/HowItWorks';
+
 export default function App() {
   const [currentUser, setCurrentUser] = useState<UserType | null>(null);
-  const [appView, setAppView] = useState<'landing' | 'login' | 'register' | 'dashboard'>('landing');
+  const [appView, setAppView] = useState<'landing' | 'login' | 'register' | 'dashboard' | 'catalog'>('landing');
   const [workerTab, setWorkerTab] = useState<'profile' | 'contracts'>('profile');
   const [pendingContractsCount, setPendingContractsCount] = useState(0);
   const [isPlayingVideo, setIsPlayingVideo] = useState(false);
@@ -41,10 +49,10 @@ export default function App() {
 
   useEffect(() => {
     const texts = [
-      'Buscando dados de expatriação regular...',
-      'Autenticando credenciais do portal consular...',
-      'Sincronizando contratos sazonais homologados...',
-      'Finalizando inicialização ambiental...'
+      'Fetching global deployment credentials...',
+      'Authorizing secure consular portal access...',
+      'Synchronizing certified seasonal contracts...',
+      'Finalizing secure environment handshake...'
     ];
 
     let count = 0;
@@ -100,7 +108,7 @@ export default function App() {
     if (currentUser && currentUser.role === 'worker') {
       api.getContracts(currentUser.id)
         .then(contracts => {
-          const pending = contracts.filter(c => c.status === 'Pendente').length;
+          const pending = contracts.filter(c => c.status === 'Pending').length;
           setPendingContractsCount(pending);
         })
         .catch(err => console.error(err));
@@ -136,7 +144,7 @@ export default function App() {
     setTimeout(() => {
       setNewsletterEmail('');
       setNewsletterSubmitted(false);
-      alert('Sua inscrição de newsletter foi confirmada!');
+      alert('Your newsletter subscription has been confirmed!');
     }, 2000);
   };
 
@@ -194,13 +202,13 @@ export default function App() {
                 </div>
                 {/* Percentage text */}
                 <span className="text-[10px] text-cyan-400 font-mono font-black tracking-widest block text-center animate-pulse">
-                  {loadingProgress}% CARREGADO
+                  {loadingProgress}% SECURE NETWORK CONNECTED
                 </span>
               </div>
 
               {/* Secure Consular Footnote */}
               <p className="text-[8px] text-zinc-550 font-mono tracking-widest uppercase font-black opacity-60">
-                Acesso Seguro Consular Corporativo • TCW Group Inc.
+                Secure Consular Corporate Access • TCW Group Inc.
               </p>
             </div>
           </motion.div>
@@ -224,6 +232,30 @@ export default function App() {
             <TCWLogo size="sm" showText={true} />
           </button>
 
+          {/* Main Navigation Links */}
+          <div className="flex items-center gap-2 sm:gap-4">
+            <button
+              onClick={() => setAppView('landing')}
+              className={`text-[9px] sm:text-[10px] uppercase font-mono tracking-wider sm:tracking-widest font-black transition-all cursor-pointer py-1 px-2.5 sm:px-3.5 rounded-xl border ${
+                appView === 'landing' 
+                  ? 'text-cyan-405 bg-white/[0.03] border-cyan-500/15' 
+                  : 'text-zinc-400 hover:text-white border-transparent'
+              }`}
+            >
+              Home
+            </button>
+            <button
+              onClick={() => setAppView('catalog')}
+              className={`text-[9px] sm:text-[10px] uppercase font-mono tracking-wider sm:tracking-widest font-black transition-all cursor-pointer py-1 px-2.5 sm:px-3.5 rounded-xl border ${
+                appView === 'catalog' 
+                  ? 'text-cyan-405 bg-white/[0.03] border-cyan-500/15' 
+                  : 'text-zinc-400 hover:text-white border-transparent'
+              }`}
+            >
+              Talent Catalog
+            </button>
+          </div>
+
 
 
           {/* Right Area - Admin/User indicator or CTA button */}
@@ -233,14 +265,14 @@ export default function App() {
                 <div className="text-right hidden md:block">
                   <span className="text-xs font-bold block text-white">{currentUser.fullName}</span>
                   <span className="text-[9px] text-zinc-500 font-mono block uppercase tracking-wider">
-                    {currentUser.role === 'admin' ? 'Administrativo (Comitê)' : 'Trabalhador Qualificado'}
+                    {currentUser.role === 'admin' ? 'Administrative Committee' : 'Certified Candidate'}
                   </span>
                 </div>
 
                 <div 
                   onClick={() => setAppView('dashboard')}
                   className="w-9 h-9 rounded-full bg-blue-600/15 border border-blue-500/20 hover:border-cyan-400 hover:bg-blue-600/20 flex items-center justify-center text-cyan-400 cursor-pointer transition-all"
-                  title="Acessar Área Interna"
+                  title="Access Secure Portal"
                 >
                   <User size={15} />
                 </div>
@@ -251,7 +283,7 @@ export default function App() {
                   className="flex items-center gap-1 py-1.5 px-3 rounded-full text-xs font-bold transition-all cursor-pointer bg-white/5 border border-white/10 hover:border-red-500/30 hover:bg-red-500/10 text-zinc-300 hover:text-red-400"
                 >
                   <LogOut size={13} />
-                  <span className="hidden sm:inline">Sair</span>
+                  <span className="hidden sm:inline">Sign Out</span>
                 </button>
               </div>
             ) : (
@@ -271,7 +303,7 @@ export default function App() {
                       onClick={() => setAppView('register')}
                       className="bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-black tracking-widest text-[10px] uppercase px-5 py-2 rounded-full cursor-pointer flex items-center gap-1.5 transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)]"
                     >
-                      Criar Conta
+                      Join the Network
                       <ChevronRight size={13} className="stroke-[3]" />
                     </button>
                   </>
@@ -281,7 +313,7 @@ export default function App() {
                     onClick={() => setAppView('landing')}
                     className="text-xs text-zinc-300 hover:text-white px-4 py-2 hover:bg-white/5 rounded-full transition-all cursor-pointer font-bold border border-white/10 bg-[#060a23]/40"
                   >
-                    Voltar ao Início
+                    Back to Home
                   </button>
                 )}
               </div>
@@ -304,21 +336,31 @@ export default function App() {
               <div className="max-w-4xl mx-auto space-y-8">
                 {/* 1. Header Area block with high fidelity contact tag */}
                 <div className="space-y-6 pt-4">
-                  
-                  {/* Giant premium statement */}
+                                {/* Giant premium statement */}
                   <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-semibold tracking-tight text-white leading-[1.1] max-w-4xl mx-auto">
-                    Sua jornada internacional <br />
-                    <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">começa aqui.</span>
+                    Your global career roadmap <br />
+                    <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">starts right here.</span>
                   </h1>
                   
                   <p className="text-base sm:text-lg text-zinc-400 max-w-3xl mx-auto leading-relaxed">
-                    Na TCW, você se cadastra, mostra suas qualificações e fica disponível para oportunidades internacionais. Os contratos são sempre de temporada, com duração de 1 a 3 meses, garantindo flexibilidade e segurança. Após preencher seu perfil com fotos e vídeos, nossa equipe avalia suas habilidades e pode chamá-lo para trabalhar em diferentes países. A contratação é feita exclusivamente pelo nosso email ou por um representante, assegurando transparência e confiança.
+                    Welcome to TCW. Register your credentials, showcase your certified trade skills, and position yourself to get matched with high-paying international employers. Our seasonal contracts offer secure terms, verified legal safeguards, and flexible placements with structured support. Backed by transparent procedures and fully consolidated sponsorships, this is your fast-track to global opportunities.
                   </p>
                 </div>
 
 
               </div>
             </section>
+
+            {/* NEW LANDING SECTIONS */}
+            <FeaturedProfessions />
+            
+            <ContractManagement />
+            
+            <MediaGallery />
+            
+            <HowItWorks />
+            
+            <AboutWork />
 
             {/* TWO BEAUTIFUL MOCK-DESIGN PREMIUM SECTIONS WITH TEXT/IMAGE AND TEXT/VIDEO */}
             {/* 1. IMAGE SECTION: DESCRIPTION AND PRESENTATION OF THE COMPANY */}
@@ -332,20 +374,20 @@ export default function App() {
                   <div className="lg:col-span-6 space-y-6 text-left">
                     <div className="space-y-3">
                       <span className="text-[10px] font-mono font-black text-cyan-400 uppercase tracking-[0.2em] bg-cyan-400/5 px-3 py-1.5 rounded-full border border-cyan-400/20 inline-block">
-                        APRESENTAÇÃO CORPORATIVA
+                        CORPORATE DISCLOSURE
                       </span>
                       <h2 className="text-3xl sm:text-4xl font-extrabold uppercase tracking-tight text-white leading-tight">
-                        Nossa História & <br />
-                        Valores Globais
+                        Our History & <br />
+                        Global Core Values
                       </h2>
                     </div>
 
                     <div className="space-y-4 text-xs sm:text-sm text-zinc-400 leading-relaxed font-sans text-justify font-medium">
                       <p>
-                        A <strong>Work</strong> é uma iniciativa estratégica inovadora, criada para atender às demandas crescentes da mobilidade internacional e da contratação de profissionais qualificados em diferentes setores. Atuamos de forma sinérgica com empresas globais, oferecendo soluções modernas e seguras para o recrutamento de trabalhadores técnicos e especializados.
+                        A <strong>Work</strong> is a strategic talent network designed specifically to address the increasing demand for global labor mobility. We operate hand-in-hand with verified major employers across developed markets, offering solid logistics, transparent matching technology, and legal peace of mind for specialized frontline workers.
                       </p>
                       <p>
-                        Sob a tutela do grupo <strong>TCW (Connecting the Future)</strong>, acumulamos mais de uma década de experiência em gestão de talentos e contratos internacionais. Nosso compromisso é apoiar profissionais dinâmicos em seus objetivos de crescimento financeiro e desenvolvimento de carreira, sempre dentro de um modelo regulado e transparente.
+                        Under the expert stewardship of the <strong>TCW (Connecting the Future)</strong> group, we leverage over a decade of hands-on expertise in administering safe international placements and seasonal human resource deployment. Our goal is to empower hard-working candidates like you, establishing clear channels for stable legal employment and remarkable career growth.
                       </p>
                     </div>
 
@@ -355,7 +397,7 @@ export default function App() {
                         onClick={() => setAppView('register')}
                         className="bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-black text-[10px] uppercase tracking-wider px-5 py-3 rounded-full hover:shadow-[0_0_15px_rgba(34,211,238,0.2)] hover:scale-[1.02] transition-all cursor-pointer font-sans"
                       >
-                        Começar Temporada
+                        Launch Seasonal Career
                       </button>
                     </div>
 
@@ -390,7 +432,7 @@ export default function App() {
                 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
                   
-                  {/* Left Column: Testimonial & support statement */}
+                  {/* Left Side Content */}
                   <div className="lg:col-span-5 space-y-6 text-left">
                     <div className="space-y-4">
                       {/* Breathtaking styled double quotation marks */}
@@ -399,7 +441,7 @@ export default function App() {
                       </span>
                       
                       <p className="text-lg sm:text-xl text-zinc-100 font-medium leading-relaxed font-sans pt-3">
-                        Na TCW, nós cuidamos de toda burocracia e logística integrada. Nossos contratos de 1 a 3 meses de temporada oferecem retorno financeiro imediato e total flexibilidade para nossos parceiros selecionados.
+                        At TCW, we take administrative overhead and complex cross-border logistics entirely off your shoulders. Our placement offers provide instant, high-yielding financial security and perfect alignment for your hard-earned credentials.
                       </p>
                     </div>
 
@@ -409,23 +451,23 @@ export default function App() {
                     <div className="space-y-2 pt-2 text-xs font-mono font-bold uppercase tracking-wider text-zinc-400">
                       <div className="flex items-center gap-2">
                         <CheckCircle2 size={14} className="text-cyan-400 shrink-0" />
-                        Alojamento Homologado & Conforto
+                        Fully Vetted Premium Housing
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle2 size={14} className="text-cyan-400 shrink-0" />
-                        Seguro de Viagem & Saúde Incluso
+                        Comprehensive Flight & Health Coverage
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle2 size={14} className="text-cyan-400 shrink-0" />
-                        Assistência Documental & Visto Internacional
+                        Hassle-Free Visa & Legal Paperwork
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle2 size={14} className="text-cyan-400 shrink-0" />
-                        Gestão de Contrato & Pagamento Garantido
+                        Verified Contracts & Guaranteed Payments
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle2 size={14} className="text-cyan-400 shrink-0" />
-                        Transporte & Logística de Temporada
+                        Coordinated On-Site Support & Ground Transport
                       </div>
                     </div>
 
@@ -435,7 +477,7 @@ export default function App() {
                         onClick={() => setAppView('register')}
                         className="bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-black text-[10px] uppercase tracking-wider px-5 py-3 rounded-full hover:shadow-[0_0_15px_rgba(34,211,238,0.25)] hover:scale-[1.02] transition-all cursor-pointer font-sans"
                       >
-                        Começar Meu Cadastro
+                        Start My Registration
                       </button>
                     </div>
                   </div>
@@ -460,8 +502,8 @@ export default function App() {
                       <div className="absolute inset-x-0 bottom-0 top-[29px] overflow-hidden">
                         {isPlayingVideo ? (
                           <iframe
-                            src="https://www.youtube.com/embed/9No-FiE9ZMc?autoplay=1&modestbranding=1&rel=0&iv_load_policy=3&hl=pt"
-                            title="Apresentação Geral de Temporadas Sazonais"
+                            src="https://www.youtube.com/embed/9No-FiE9ZMc?autoplay=1&modestbranding=1&rel=0&iv_load_policy=3&hl=en"
+                            title="General Overview of Seasonal Placements"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             allowFullScreen
                             className="w-full h-full border-0"
@@ -471,7 +513,7 @@ export default function App() {
                           <div className="relative w-full h-full cursor-pointer" onClick={() => setIsPlayingVideo(true)}>
                             <img 
                               src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80" 
-                              alt="Apresentação de Temporada Sazonal" 
+                              alt="Seasonal Placement Presentation" 
                               referrerPolicy="no-referrer"
                               className="w-full h-full object-cover brightness-90 group-hover:scale-102 transition-transform duration-700"
                             />
@@ -489,7 +531,7 @@ export default function App() {
                             {/* Live Badge overlay */}
                             <div className="absolute bottom-4 left-4 flex items-center gap-1.5 text-[9px] font-mono font-bold text-cyan-400 uppercase tracking-widest bg-slate-950/70 border border-white/5 py-1 px-3 rounded-full">
                               <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse inline-block" />
-                              PRONTOS PARA TRABALHO • ASSISTIR AGORA
+                              READY FOR COMPLIANCE • RECRUIT NOW
                             </div>
                           </div>
                         )}
@@ -503,113 +545,90 @@ export default function App() {
 
 
 
-            {/* 3. DEDICATED PHOTOS SHOWCASE SECTION BELOW THE VIDEO CONTAINER */}
+            {/* 3. DEDICATED CREATORS SHOWCASE SECTION BELOW THE VIDEO CONTAINER */}
             <section id="photos-environment" className="pb-28 px-4 max-w-7xl mx-auto">
               <div className="space-y-12">
                 {/* Centered Heading Section */}
                 <div className="max-w-2xl mx-auto text-center space-y-4">
                   <span className="text-[10px] font-mono font-black text-cyan-400 uppercase tracking-[0.25em] bg-cyan-400/5 px-3 py-1.5 rounded-full border border-cyan-400/20 inline-block">
-                    GALERIA DE PROFISSÕES
+                    MEET THE LEADERSHIP
                   </span>
                   <h2 className="text-3xl sm:text-4xl font-extrabold text-white uppercase tracking-tight font-display">
-                    Nossas Frentes de Atuação
+                    The Founders
                   </h2>
-                  <p className="text-sm text-zinc-400 leading-relaxed font-sans max-w-xl mx-auto">
-                    Confira imagens reais dos alojamentos, frentes de transporte logística e ambientes homologados mantidos com alta qualidade e conforto pelo grupo TCW.
+                  <p className="text-sm text-zinc-400 leading-relaxed font-sans max-w-xl mx-auto border-transparent">
+                    Meet the visionaries and strategic architects behind the TCW network, dedicated to streamlining seasonal global workforce deployment with complete legal alignment.
                   </p>
                 </div>
 
-                {/* Grid Layout containing 4 Gorgeous photo cards with custom tags */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {/* Grid Layout containing 3 Gorgeous Creator cards */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto justify-center">
                   
-                  {/* Card 1: Carpinteiros */}
-                  <div className="bg-[#05081b]/40 border border-white/5 rounded-3xl overflow-hidden hover:border-cyan-500/20 transition-all duration-500 flex flex-col group justify-between">
-                    <div className="relative aspect-[4/3] overflow-hidden">
+                  {/* Creator 1 */}
+                  <div className="bg-[#05081b]/50 border border-white/5 rounded-3xl overflow-hidden hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] transition-all duration-500 flex flex-col group justify-between">
+                    <div className="relative aspect-square overflow-hidden bg-zinc-950">
                       <img 
-                        src="https://images.unsplash.com/photo-1426927308491-6380b6a9936f?auto=format&fit=crop&w=600&q=80" 
-                        alt="Carpinteiros estruturais" 
+                        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&h=600&q=80" 
+                        alt="Marcus Vance" 
                         referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover transition-transform duration-750 group-hover:scale-105"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-95"
                       />
                       <div className="absolute top-3 left-3">
-                        <span className="text-[9px] font-mono font-bold text-cyan-400 uppercase tracking-wider bg-slate-950/80 px-2 py-0.5 rounded-full border border-white/5">
-                          CARPINTARIA
+                        <span className="text-[9px] font-mono font-bold text-cyan-400 uppercase tracking-wider bg-slate-950/80 px-2.5 py-1 rounded-full border border-white/5">
+                          CO-FOUNDER & CEO
                         </span>
                       </div>
                     </div>
-                    <div className="p-4 space-y-1 text-left">
-                      <h4 className="text-sm font-bold text-white uppercase tracking-tight">Carpinteiros</h4>
-                      <p className="text-xs text-zinc-400 font-sans leading-normal">
-                        estruturas e acabamentos de madeira para obras e montagens de eventos.
+                    <div className="p-6 space-y-2 text-left bg-[#070b22]/40 border-t border-white/5">
+                      <h4 className="text-base font-black text-white uppercase tracking-tight group-hover:text-cyan-400 transition-colors">Marcus Vance</h4>
+                      <p className="text-xs text-zinc-400 font-sans leading-relaxed">
+                        Specializing in consulate engagement and immigration strategy, Marcus brings over 12 years of executive experience delivering secure multi-national pipelines.
                       </p>
                     </div>
                   </div>
 
-                  {/* Card 2: Eletricistas */}
-                  <div className="bg-[#05081b]/40 border border-white/5 rounded-3xl overflow-hidden hover:border-cyan-500/20 transition-all duration-500 flex flex-col group justify-between">
-                    <div className="relative aspect-[4/3] overflow-hidden">
+                  {/* Creator 2 */}
+                  <div className="bg-[#05081b]/50 border border-white/5 rounded-3xl overflow-hidden hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] transition-all duration-500 flex flex-col group justify-between">
+                    <div className="relative aspect-square overflow-hidden bg-zinc-950">
                       <img 
-                        src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80" 
-                        alt="Eletricistas qualificados" 
+                        src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&h=600&q=80" 
+                        alt="Camila Borges" 
                         referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover transition-transform duration-750 group-hover:scale-105"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-95"
                       />
                       <div className="absolute top-3 left-3">
-                        <span className="text-[9px] font-mono font-bold text-cyan-400 uppercase tracking-wider bg-slate-950/80 px-2 py-0.5 rounded-full border border-white/5">
-                          ELETRICIDADE
+                        <span className="text-[9px] font-mono font-bold text-cyan-400 uppercase tracking-wider bg-slate-950/80 px-2.5 py-1 rounded-full border border-white/5">
+                          CO-FOUNDER & CTO
                         </span>
                       </div>
                     </div>
-                    <div className="p-4 space-y-1 text-left">
-                      <h4 className="text-sm font-bold text-white uppercase tracking-tight">Eletricistas</h4>
-                      <p className="text-xs text-zinc-400 font-sans leading-normal">
-                        instalações elétricas seguras em canteiros e arenas.
+                    <div className="p-6 space-y-2 text-left bg-[#070b22]/40 border-t border-white/5">
+                      <h4 className="text-base font-black text-white uppercase tracking-tight group-hover:text-cyan-400 transition-colors">Camila Borges</h4>
+                      <p className="text-xs text-zinc-400 font-sans leading-relaxed">
+                        Lead engineer of the TCW platform, Camila architected our smart credentials matching compliance, profile auto-verification, and database security protocols.
                       </p>
                     </div>
                   </div>
 
-                  {/* Card 3: Bombeiros Hidráulicos */}
-                  <div className="bg-[#05081b]/40 border border-white/5 rounded-3xl overflow-hidden hover:border-cyan-500/20 transition-all duration-500 flex flex-col group justify-between">
-                    <div className="relative aspect-[4/3] overflow-hidden">
+                  {/* Creator 3 */}
+                  <div className="bg-[#05081b]/50 border border-white/5 rounded-3xl overflow-hidden hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] transition-all duration-500 flex flex-col group justify-between">
+                    <div className="relative aspect-square overflow-hidden bg-zinc-950">
                       <img 
-                        src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80" 
-                        alt="Instalações hidráulicas" 
+                        src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&h=600&q=80" 
+                        alt="Arthur Pendelton" 
                         referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover transition-transform duration-750 group-hover:scale-105"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-95"
                       />
                       <div className="absolute top-3 left-3">
-                        <span className="text-[9px] font-mono font-bold text-cyan-400 uppercase tracking-wider bg-slate-950/80 px-2 py-0.5 rounded-full border border-white/5">
-                          HIDRÁULICA
+                        <span className="text-[9px] font-mono font-bold text-cyan-400 uppercase tracking-wider bg-slate-950/80 px-2.5 py-1 rounded-full border border-white/5">
+                          COO & GLOBAL EXPANSION
                         </span>
                       </div>
                     </div>
-                    <div className="p-4 space-y-1 text-left">
-                      <h4 className="text-sm font-bold text-white uppercase tracking-tight">Bombeiros Hidráulicos</h4>
-                      <p className="text-xs text-zinc-400 font-sans leading-normal">
-                        sistemas hidráulicos e encanamentos em obras e estruturas temporárias.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Card 4: Operadores de Empilhadeira */}
-                  <div className="bg-[#05081b]/40 border border-white/5 rounded-3xl overflow-hidden hover:border-cyan-500/20 transition-all duration-500 flex flex-col group justify-between">
-                    <div className="relative aspect-[4/3] overflow-hidden">
-                      <img 
-                        src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=80" 
-                        alt="Operação de Empilhadeira Logística" 
-                        referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover transition-transform duration-750 group-hover:scale-105"
-                      />
-                      <div className="absolute top-3 left-3">
-                        <span className="text-[9px] font-mono font-bold text-cyan-400 uppercase tracking-wider bg-slate-950/80 px-2 py-0.5 rounded-full border border-white/5">
-                          LOGÍSTICA / CARGAS
-                        </span>
-                      </div>
-                    </div>
-                    <div className="p-4 space-y-1 text-left">
-                      <h4 className="text-sm font-bold text-white uppercase tracking-tight">Operadores de Empilhadeira</h4>
-                      <p className="text-xs text-zinc-400 font-sans leading-normal">
-                        logística e movimentação de cargas em obras e montagens de palco.
+                    <div className="p-6 space-y-2 text-left bg-[#070b22]/40 border-t border-white/5">
+                      <h4 className="text-base font-black text-white uppercase tracking-tight group-hover:text-cyan-400 transition-colors">Arthur Pendelton</h4>
+                      <p className="text-xs text-zinc-400 font-sans leading-relaxed">
+                        Arthur directs our international relations, spearheading legal partnerships with premier corporate hosts and consulate committees to bypass global red tape.
                       </p>
                     </div>
                   </div>
@@ -638,6 +657,11 @@ export default function App() {
           />
         )}
 
+        {/* CATALOG VIEW */}
+        {appView === 'catalog' && (
+          <WorkerCatalog />
+        )}
+
         {/* AUTHORIZED REGION (DASHBOARDS) */}
         {appView === 'dashboard' && currentUser && (
           <div id="authorized-app-views" className="font-sans">
@@ -654,8 +678,8 @@ export default function App() {
                       <User size={18} />
                     </div>
                     <div>
-                      <h4 className="font-display text-sm font-bold text-white">Bem-vindo(a), {currentUser.fullName}!</h4>
-                      <p className="text-xs text-zinc-400 mt-0.5">Mantenha seu perfil completo para obter liberação imediata de visto consular.</p>
+                      <h4 className="font-display text-sm font-bold text-white">Welcome, {currentUser.fullName}!</h4>
+                      <p className="text-xs text-zinc-400 mt-0.5">Keep your profile credentials fully updated to ensure immediate consular visa release.</p>
                     </div>
                   </div>
 
@@ -671,7 +695,7 @@ export default function App() {
                       }`}
                     >
                       <User size={14} />
-                      Qualificações Técnicas
+                      Technical Qualifications
                     </button>
                     <button
                       id="worker-tab-contracts-trigger"
@@ -683,7 +707,7 @@ export default function App() {
                       }`}
                     >
                       <FileText size={14} />
-                      Contratos Emitidos
+                      Issued Contracts
                       {pendingContractsCount > 0 && (
                         <span id="badge-pending" className="absolute -top-1 -right-1 w-4.5 h-4.5 rounded-full bg-red-500 text-white font-mono font-black text-[9px] flex items-center justify-center animate-pulse shadow-md">
                           {pendingContractsCount}
@@ -715,10 +739,10 @@ export default function App() {
           {/* Legal copyrights */}
           <div className="text-center text-[10px] font-mono text-zinc-650 flex flex-col sm:flex-row items-center sm:justify-between gap-4">
             <span className="uppercase tracking-wider">
-              © 2026 WORK INC. • PLATAFORMA DE EXPATRIAÇÃO REGULAR E ACORDO SAZONAL
+              © 2026 WORK INC. • COMPLIANT DEPLOYMENT & SEASONAL PLACEMENT NETWORK
             </span>
             <span className="text-[10px]">
-              Desenvolvido sob o comitê de mobilidade consular corporativa do grupo TCW.
+              Administered under the corporate consular mobility committee of the TCW Group.
             </span>
           </div>
 
