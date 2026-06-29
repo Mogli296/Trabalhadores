@@ -17,7 +17,6 @@ import { api } from './services/api';
 // New Sections & Pages
 import FeaturedProfessions from './components/FeaturedProfessions';
 import ContractManagement from './components/ContractManagement';
-import MediaGallery from './components/MediaGallery';
 import WorkerCatalog from './components/WorkerCatalog';
 import AboutWork from './components/AboutWork';
 import HowItWorks from './components/HowItWorks';
@@ -234,26 +233,18 @@ export default function App() {
 
           {/* Main Navigation Links */}
           <div className="flex items-center gap-2 sm:gap-4">
-            <button
-              onClick={() => setAppView('landing')}
-              className={`text-[9px] sm:text-[10px] uppercase font-mono tracking-wider sm:tracking-widest font-black transition-all cursor-pointer py-1 px-2.5 sm:px-3.5 rounded-xl border ${
-                appView === 'landing' 
-                  ? 'text-cyan-405 bg-white/[0.03] border-cyan-500/15' 
-                  : 'text-zinc-400 hover:text-white border-transparent'
-              }`}
-            >
-              Home
-            </button>
-            <button
-              onClick={() => setAppView('catalog')}
-              className={`text-[9px] sm:text-[10px] uppercase font-mono tracking-wider sm:tracking-widest font-black transition-all cursor-pointer py-1 px-2.5 sm:px-3.5 rounded-xl border ${
-                appView === 'catalog' 
-                  ? 'text-cyan-405 bg-white/[0.03] border-cyan-500/15' 
-                  : 'text-zinc-400 hover:text-white border-transparent'
-              }`}
-            >
-              Talent Catalog
-            </button>
+            {currentUser && currentUser.role === 'admin' && (
+              <button
+                onClick={() => setAppView('catalog')}
+                className={`text-[9px] sm:text-[10px] uppercase font-mono tracking-wider sm:tracking-widest font-black transition-all cursor-pointer py-1 px-2.5 sm:px-3.5 rounded-xl border ${
+                  appView === 'catalog' 
+                    ? 'text-cyan-405 bg-white/[0.03] border-cyan-500/15' 
+                    : 'text-zinc-400 hover:text-white border-transparent'
+                }`}
+              >
+                Talent Catalog
+              </button>
+            )}
           </div>
 
 
@@ -355,8 +346,6 @@ export default function App() {
             <FeaturedProfessions />
             
             <ContractManagement />
-            
-            <MediaGallery />
             
             <HowItWorks />
             
@@ -658,7 +647,7 @@ export default function App() {
         )}
 
         {/* CATALOG VIEW */}
-        {appView === 'catalog' && (
+        {appView === 'catalog' && currentUser && currentUser.role === 'admin' && (
           <WorkerCatalog />
         )}
 

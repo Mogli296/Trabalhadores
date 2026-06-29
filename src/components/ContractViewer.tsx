@@ -55,8 +55,12 @@ export default function ContractViewer({ userId }: ContractViewerProps) {
     }
   };
 
-  const handleDeclineContract = async (contractId: string) => {
-    if (!confirm('Are you absolutely sure you want to decline this high-paying seasonal offer?')) return;
+  const handleDeclineContract = async (contractId: string, isSigned = false) => {
+    const message = isSigned
+      ? 'Are you absolutely sure you want to cancel and abandon your active signed contract? This action is irreversible.'
+      : 'Are you absolutely sure you want to decline this high-paying seasonal offer?';
+      
+    if (!confirm(message)) return;
     
     try {
       const res = await api.signContract(contractId, 'Cancelled');
@@ -287,15 +291,34 @@ export default function ContractViewer({ userId }: ContractViewerProps) {
                       </div>
                     </div>
                   ) : selectedContract.status === 'Signed' ? (
-                    <div className="p-6 bg-emerald-500/10 border border-emerald-500/20 rounded-3xl flex flex-col sm:flex-row items-center gap-4 text-emerald-400">
-                      <div className="w-12 h-12 bg-[#0b112d] border border-emerald-500/20 text-emerald-400 flex items-center justify-center rounded-2xl shadow-sm shrink-0">
-                        <Check size={24} />
+                    <div className="space-y-4">
+                      <div className="p-6 bg-emerald-500/10 border border-emerald-500/20 rounded-3xl flex flex-col sm:flex-row items-center gap-4 text-emerald-400">
+                        <div className="w-12 h-12 bg-[#0b112d] border border-emerald-500/20 text-emerald-400 flex items-center justify-center rounded-2xl shadow-sm shrink-0">
+                          <Check size={24} />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-display font-extrabold text-white">Placement Approved & Active</h4>
+                          <p className="text-xs text-zinc-400 mt-1.5 max-w-lg font-mono leading-relaxed">
+                            You have digitally signed this agreement under strict international standard guidelines. Our TCW Group coordinators will contact you via WhatsApp for immediate flight booking instructions.
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="font-display font-extrabold text-white">Placement Approved & Active</h4>
-                        <p className="text-xs text-zinc-400 mt-1.5 max-w-lg font-mono leading-relaxed">
-                          You have digitally signed this agreement under strict international standard guidelines. Our TCW Group coordinators will contact you via WhatsApp for immediate flight booking instructions.
+
+                      <div className="p-5 bg-red-950/20 border border-red-500/15 rounded-2xl space-y-3">
+                        <div className="flex items-center gap-2 text-red-400 font-bold text-xs uppercase tracking-wider">
+                          <AlertTriangle size={14} className="text-red-400" />
+                          <span>Cancel Contract / Withdraw (Cancelar Contrato / Abandonar)</span>
+                        </div>
+                        <p className="text-[11px] text-zinc-400 leading-relaxed font-sans">
+                          If something unexpected happened and you can no longer proceed with this international contract, you can cancel it. This will immediately free your profile to receive other opportunities in the system.
                         </p>
+                        <button
+                          type="button"
+                          onClick={() => handleDeclineContract(selectedContract.id, true)}
+                          className="w-full sm:w-auto px-5 py-2.5 bg-red-950/40 hover:bg-red-900/30 text-red-400 border border-red-500/25 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer text-center font-mono"
+                        >
+                          Cancel Contract / Cancelar Contrato
+                        </button>
                       </div>
                     </div>
                   ) : (

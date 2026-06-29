@@ -95,11 +95,22 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleCancelContractByAdmin = async (contractId: string) => {
+    if (!confirm('Are you sure you want to cancel and abandon this seasonal employment contract?')) return;
+    try {
+      const res = await api.signContract(contractId, 'Cancelled');
+      setContracts(prev => prev.map(c => c.id === contractId ? res.contract : c));
+      alert('Contract successfully cancelled.');
+    } catch (err) {
+      alert('Error cancelling contract.');
+    }
+  };
+
   // Helper calculation details
   const totalWorkers = profiles.length;
-  const withPassport = profiles.filter(p => p.hasPassport === 'Sim').length;
+  const withPassport = profiles.filter(p => p.hasPassport === 'Sim' || p.hasPassport === 'Yes').length;
   const issuedContracts = contracts.length;
-  const signedContracts = contracts.filter(c => c.status === 'Assinado').length;
+  const signedContracts = contracts.filter(c => c.status === 'Assinado' || c.status === 'Signed').length;
 
   const filteredProfiles = profiles.filter(profile => {
     const matchesSearch = 
@@ -579,6 +590,7 @@ export default function AdminDashboard() {
                     <th className="py-3 px-4">Commencement / Expiration</th>
                     <th className="py-3 px-4">Remuneration</th>
                     <th className="py-3 px-4">Status</th>
+                    <th className="py-3 px-4 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5 font-sans">
@@ -595,14 +607,24 @@ export default function AdminDashboard() {
                       <td className="py-4 px-4 font-mono font-extrabold text-[#22d3ee]">{contract.salary}</td>
                       <td className="py-4 px-4">
                         <span className={`px-2 py-0.5 rounded-full font-mono uppercase text-[9px] font-black ${
-                          contract.status === 'Assinado' 
+                          contract.status === 'Assinado' || contract.status === 'Signed' 
                             ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
-                            : contract.status === 'Cancelado' 
+                            : contract.status === 'Cancelado' || contract.status === 'Cancelled' 
                             ? 'bg-red-500/10 text-red-400 border border-red-500/20' 
                             : 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/20'
                         }`}>
-                          {contract.status === 'Assinado' ? 'Signed' : contract.status === 'Cancelado' ? 'Cancelled' : 'Pending'}
+                          {contract.status === 'Assinado' || contract.status === 'Signed' ? 'Signed' : contract.status === 'Cancelado' || contract.status === 'Cancelled' ? 'Cancelled' : 'Pending'}
                         </span>
+                      </td>
+                      <td className="py-4 px-4 text-right">
+                        {contract.status !== 'Cancelled' && contract.status !== 'Cancelado' && (
+                          <button
+                            onClick={() => handleCancelContractByAdmin(contract.id)}
+                            className="px-2.5 py-1 bg-red-950/40 hover:bg-red-900/30 text-red-400 hover:text-red-300 border border-red-500/20 rounded-lg text-[10px] font-black font-mono uppercase tracking-wider transition-all cursor-pointer"
+                          >
+                            Cancel
+                          </button>
+                        )}
                       </td>
                     </tr>
                   ))}
