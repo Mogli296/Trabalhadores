@@ -8,6 +8,21 @@ import {
 import { api } from '../services/api';
 import { WorkerProfile, SeasonalContract } from '../types';
 
+const formatDateSafe = (dateStr: string) => {
+  if (!dateStr) return '';
+  const parts = dateStr.split('-');
+  if (parts.length === 3) {
+    const year = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1;
+    const day = parseInt(parts[2], 10);
+    const date = new Date(year, month, day);
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+  const d = new Date(dateStr);
+  const userTimezoneOffset = d.getTimezoneOffset() * 60000;
+  return new Date(d.getTime() + userTimezoneOffset).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+};
+
 export default function AdminDashboard() {
   const [profiles, setProfiles] = useState<(WorkerProfile & { email: string })[]>([]);
   const [contracts, setContracts] = useState<SeasonalContract[]>([]);
@@ -601,8 +616,8 @@ export default function AdminDashboard() {
                       <td className="py-4 px-4 text-cyan-400 font-mono font-black uppercase">{contract.destinationCountry}</td>
                       <td className="py-4 px-4 font-mono font-black text-zinc-405">{contract.durationMonths} m</td>
                       <td className="py-4 px-4 text-zinc-500 font-mono text-[10px]">
-                        {new Date(contract.startDate).toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})} to{' '}
-                        {new Date(contract.endDate).toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'})}
+                        {formatDateSafe(contract.startDate)} to{' '}
+                        {formatDateSafe(contract.endDate)}
                       </td>
                       <td className="py-4 px-4 font-mono font-extrabold text-[#22d3ee]">{contract.salary}</td>
                       <td className="py-4 px-4">

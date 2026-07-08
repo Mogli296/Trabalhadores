@@ -728,7 +728,7 @@ export default function App() {
           {/* Legal copyrights */}
           <div className="text-center text-[10px] font-mono text-zinc-650 flex flex-col sm:flex-row items-center sm:justify-between gap-4">
             <span className="uppercase tracking-wider">
-              © 2026 WORK INC. • COMPLIANT DEPLOYMENT & SEASONAL PLACEMENT NETWORK
+              © 2026 TCW • COMPLIANT DEPLOYMENT & SEASONAL PLACEMENT NETWORK
             </span>
             <span className="text-[10px]">
               Administered under the corporate consular mobility committee of the TCW Group.

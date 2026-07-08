@@ -138,37 +138,6 @@ export default function LoginForm({ onSuccess, onNavigateToRegister }: LoginForm
           </div>
         </form>
 
-        {/* Quick Credentials testing panel */}
-        <div className="mt-8 border-t border-white/5 pt-6">
-          <p className="text-center text-[10px] text-zinc-400 uppercase font-black tracking-wider mb-4 font-mono">
-            Instant Review Fast-Pass
-          </p>
-          <div className="grid grid-cols-2 gap-3">
-            <button
-              type="button"
-              id="login-demo-worker"
-              onClick={() => handleQuickLogin('worker')}
-              className="flex items-center justify-center gap-1.5 py-2.5 px-3 border border-white/5 bg-[#0b112d] text-zinc-300 text-xs font-bold hover:border-cyan-450 hover:text-white hover:bg-[#0e163b] transition-all cursor-pointer rounded-xl"
-            >
-              <UserCheck size={14} className="text-cyan-400" />
-              Certified Candidate
-            </button>
-            <button
-              type="button"
-              id="login-demo-admin"
-              onClick={() => handleQuickLogin('admin')}
-              className="flex items-center justify-center gap-1.5 py-2.5 px-3 border border-white/5 bg-[#0b112d] text-zinc-300 text-xs font-bold hover:border-cyan-450 hover:text-white hover:bg-[#0e163b] transition-all cursor-pointer rounded-xl"
-            >
-              <ShieldCheck size={14} className="text-cyan-400" />
-              Admin Committee
-            </button>
-          </div>
-        </div>
-
-        <div className="mt-5 text-center text-[10px] text-zinc-500 font-mono font-bold tracking-wide">
-          Admin: <span className="text-cyan-400">speakai.agency@gmail.com</span> / Pass: <span className="text-cyan-400">admin</span>
-        </div>
-
         <div className="mt-6 text-center border-t border-white/5 pt-5">
           <span className="text-xs text-zinc-400 font-semibold uppercase tracking-wide font-sans">New to the platform? </span>
           <button

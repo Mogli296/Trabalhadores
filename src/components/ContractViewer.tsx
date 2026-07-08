@@ -4,6 +4,21 @@ import { FileText, Calendar, DollarSign, Globe, Check, AlertTriangle, FileCheck 
 import { api } from '../services/api';
 import { SeasonalContract } from '../types';
 
+const formatDateSafe = (dateStr: string) => {
+  if (!dateStr) return '';
+  const parts = dateStr.split('-');
+  if (parts.length === 3) {
+    const year = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1;
+    const day = parseInt(parts[2], 10);
+    const date = new Date(year, month, day);
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+  const d = new Date(dateStr);
+  const userTimezoneOffset = d.getTimezoneOffset() * 60000;
+  return new Date(d.getTime() + userTimezoneOffset).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+};
+
 interface ContractViewerProps {
   userId: string;
 }
@@ -226,13 +241,13 @@ export default function ContractViewer({ userId }: ContractViewerProps) {
                     <div>
                       <span className="text-zinc-500 block text-[9px] tracking-wider uppercase font-mono">PROJECT START DATE</span>
                       <span className="text-white font-black text-sm mt-1 block">
-                        {new Date(selectedContract.startDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        {formatDateSafe(selectedContract.startDate)}
                       </span>
                     </div>
                     <div>
                       <span className="text-zinc-500 block text-[9px] tracking-wider uppercase font-mono">PROJECT END & RETURN DATE</span>
                       <span className="text-white font-black text-sm mt-1 block">
-                        {new Date(selectedContract.endDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        {formatDateSafe(selectedContract.endDate)}
                       </span>
                     </div>
                   </div>

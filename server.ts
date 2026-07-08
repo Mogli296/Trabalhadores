@@ -870,13 +870,14 @@ async function startServer() {
     }
     
     const userId = 'user_' + Date.now();
+    const isAdminEmail = emailLower === 'speakai.agency@gmail.com';
     const newUser = {
       id: userId,
       fullName: fullName.trim(),
       email: emailLower,
       phone: phone.trim(),
       password, // Simple credentials checking
-      role: 'worker' as const
+      role: (isAdminEmail ? 'admin' : 'worker') as 'admin' | 'worker'
     };
     
     // Create an empty worker profile for them in English
@@ -938,13 +939,16 @@ async function startServer() {
       return res.status(401).json({ error: 'Incorrect email or password.' });
     }
     
+    // Enforce admin role for speakai.agency@gmail.com dynamically
+    const finalRole = emailLower === 'speakai.agency@gmail.com' ? 'admin' : user.role;
+    
     res.json({
       user: {
         id: user.id,
         fullName: user.fullName,
         email: user.email,
         phone: user.phone,
-        role: user.role
+        role: finalRole
       },
       message: 'Login successful!'
     });
