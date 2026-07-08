@@ -43,8 +43,7 @@ export default function LoginForm({ onSuccess, onNavigateToRegister }: LoginForm
 
   return (
     <div id="login-root" className="min-h-[90vh] flex flex-col items-center justify-center p-4 relative text-zinc-300">
-      {/* Decorative Grid Overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0b112d_1px,transparent_1px),linear-gradient(to_bottom,#0b112d_1px,transparent_1px)] bg-[size:3rem_3rem] opacity-40 pointer-events-none" />
+      {/* Decorative Grid Overlay removed */}
 
       {/* Login Card */}
       <motion.div

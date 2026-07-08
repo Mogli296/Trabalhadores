@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Briefcase, Shield, Clock, FileText, Globe, LogOut, User, 
   MapPin, CheckCircle2, Navigation, ArrowRight, Compass, HeartHandshake, LogIn,
-  Mail, Phone, Send, Facebook, Twitter, Instagram, Linkedin, Play, Check, ChevronRight, Sparkles, Star
+  Mail, Phone, Send, Facebook, Twitter, Instagram, Linkedin, Play, Check, ChevronRight, Sparkles, Star,
+  Sun, Moon
 } from 'lucide-react';
 import RegisterForm from './components/RegisterForm';
 import LoginForm from './components/LoginForm';
@@ -22,6 +23,21 @@ import AboutWork from './components/AboutWork';
 import HowItWorks from './components/HowItWorks';
 
 export default function App() {
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    return (localStorage.getItem('app_theme') as 'dark' | 'light') || 'dark';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('app_theme', theme);
+    if (theme === 'light') {
+      document.documentElement.classList.add('light-theme');
+      document.documentElement.classList.remove('dark');
+    } else {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light-theme');
+    }
+  }, [theme]);
+
   const [currentUser, setCurrentUser] = useState<UserType | null>(null);
   const [appView, setAppView] = useState<'landing' | 'login' | 'register' | 'dashboard' | 'catalog'>('landing');
   const [workerTab, setWorkerTab] = useState<'profile' | 'contracts'>('profile');
@@ -152,7 +168,7 @@ export default function App() {
   return (
     <div 
       id="app-main-container" 
-      className="min-h-screen bg-[#010312] text-zinc-300 selection:bg-cyan-500 selection:text-slate-950 font-sans transition-all duration-500 overflow-x-hidden relative"
+      className={`min-h-screen ${theme === 'light' ? 'bg-[#f8fafc] text-slate-950' : 'bg-[#010312] text-zinc-300'} selection:bg-cyan-500 selection:text-slate-950 font-sans transition-all duration-500 overflow-x-hidden relative`}
     >
       {/* Cinematic Access Loading Screen */}
       <AnimatePresence>
@@ -251,6 +267,20 @@ export default function App() {
 
           {/* Right Area - Admin/User indicator or CTA button */}
           <div className="flex items-center gap-4">
+            {/* Theme Toggle Button */}
+            <button
+              id="theme-toggle-btn"
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className={`p-2 rounded-full border transition-all cursor-pointer flex items-center justify-center ${
+                theme === 'light' 
+                  ? 'border-slate-300 bg-slate-100 hover:bg-slate-200 text-slate-800' 
+                  : 'border-white/10 bg-white/5 hover:bg-white/10 text-zinc-300 hover:text-cyan-400 hover:border-cyan-400/50'
+              }`}
+              title={theme === 'dark' ? 'Alternar para Modo Claro' : 'Alternar para Modo Escuro'}
+            >
+              {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
+            </button>
+
             {currentUser ? (
               <div className="flex items-center gap-3">
                 <div className="text-right hidden md:block">
@@ -401,8 +431,11 @@ export default function App() {
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover select-none filter brightness-95 opacity-85 hover:scale-105 transition-transform duration-1000"
                     />
-                    {/* Inner glowing edge overlays */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#010414] via-transparent to-transparent pointer-events-none" />
+                    {/* Inner glowing edge overlays with theme-adaptive blending */}
+                    <div 
+                      className="absolute inset-0 bg-gradient-to-t via-transparent to-transparent pointer-events-none"
+                      style={{ backgroundImage: 'linear-gradient(to top, var(--overlay-gradient-from), transparent)' }}
+                    />
                   </div>
 
                 </div>

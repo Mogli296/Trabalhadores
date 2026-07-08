@@ -52,6 +52,7 @@ export interface WorkerProfile {
 
   // Languages
   languages?: { language: string; level: string }[]; // e.g. [{language: "Inglês", level: "Intermediário"}]
+  englishLevel?: string;
 
   // Professional Media
   avatarPhoto?: string; // Profile photo

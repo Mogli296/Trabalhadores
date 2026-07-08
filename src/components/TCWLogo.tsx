@@ -213,13 +213,19 @@ export default function TCWLogo({
         <div className={`flex flex-col ${layout === 'vertical' ? 'items-center animate-fade-in' : 'text-left justify-center'}`}>
           <div className="flex items-baseline leading-none font-display">
             {/* T, C, W rendered together as TCW with a premium text gradient */}
-            <span className={`${titleSize} text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-400 to-blue-500 font-black tracking-[0.05em]`}>
+            <span 
+              className={`${titleSize} text-transparent bg-clip-text font-black tracking-[0.05em]`}
+              style={{ backgroundImage: 'var(--logo-gradient, linear-gradient(to right, #ffffff, #22d3ee, #3b82f6))' }}
+            >
               TCW
             </span>
           </div>
           {/* Subtitle - only in horizontal layout */}
           {layout === 'horizontal' && (
-            <span className={`${subtitleSize} text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-400 to-blue-500 uppercase mt-1.5 font-bold tracking-[0.2em] whitespace-nowrap`}>
+            <span 
+              className={`${subtitleSize} text-transparent bg-clip-text uppercase mt-1.5 font-bold tracking-[0.2em] whitespace-nowrap`}
+              style={{ backgroundImage: 'var(--logo-gradient, linear-gradient(to right, #ffffff, #22d3ee, #3b82f6))' }}
+            >
               CONNECTING THE FUTURE
             </span>
           )}

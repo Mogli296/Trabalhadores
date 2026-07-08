@@ -22,7 +22,9 @@ const professionDisplayNames: Record<string, string> = {
   'Garçom': 'Waiter / Server',
   'Segurança': 'Security Guard',
   'Cozinha': 'Kitchen / Cook',
-  'Atendimento ao Público': 'Customer Service / Host'
+  'Atendimento ao Público': 'Customer Service / Host',
+  'Ajudante / General Helper': 'Ajudante / General Helper',
+  'Ajudante': 'Ajudante / General Helper'
 };
 
 const countryDisplayNames: Record<string, string> = {
@@ -81,7 +83,10 @@ const genderDisplayNames: Record<string, string> = {
   'Outro': 'Other'
 };
 
-const displayProfession = (prof: string) => professionDisplayNames[prof] || prof || "Industrial Trade";
+const displayProfession = (prof: string) => {
+  if (!prof || prof.trim() === '') return "Ajudante / General Helper";
+  return professionDisplayNames[prof] || prof;
+};
 const displayCountry = (c: string) => countryDisplayNames[c] || c || "Brazil";
 const displayCountryList = (countries: string[]) => {
   if (!countries || countries.length === 0) return 'Germany, Netherlands';
@@ -119,6 +124,7 @@ export default function WorkerCatalog() {
 
   const professionsList = [
     { key: 'All', display: 'All' },
+    { key: 'Ajudante / General Helper', display: 'Ajudante / General Helper' },
     { key: 'Produção de Eventos', display: 'Event Production' },
     { key: 'Montagem de Estruturas', display: 'Scaffolding & Rigging' },
     { key: 'Operador de Empilhadeira', display: 'Forklift Operator' },
@@ -149,8 +155,9 @@ export default function WorkerCatalog() {
   const filteredProfiles = profiles.filter(p => {
     // 1. Profession filter
     let matchesProfession = searchProfession === 'All';
-    if (!matchesProfession && p.profession) {
-      matchesProfession = p.profession.toLowerCase().includes(searchProfession.toLowerCase());
+    if (!matchesProfession) {
+      const actualProf = p.profession || 'Ajudante / General Helper';
+      matchesProfession = actualProf.toLowerCase().includes(searchProfession.toLowerCase());
     }
 
     // 2. Language filter

@@ -11,4 +11,265 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Light Theme support */
+:root {
+  --logo-gradient: linear-gradient(to right, #ffffff, #22d3ee, #3b82f6);
+  --overlay-gradient-from: #010414;
+}
+
+.light-theme {
+  --bg-primary: #ecf2f7;
+  --bg-secondary: #ffffff;
+  --text-primary: #0a1128;
+  --text-secondary: #475b7a;
+  --border-color: rgba(8, 145, 178, 0.12);
+  --card-bg: #ffffff;
+  --header-bg: rgba(255, 255, 255, 0.85);
+  --logo-gradient: linear-gradient(to right, #0a1128, #0891b2, #2563eb);
+  --overlay-gradient-from: #ecf2f7;
+}
+
+/* Base text color overrides */
+.light-theme,
+.light-theme #app-main-container {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Immersive cinematic loader should ALWAYS remain beautifully dark and high-contrast */
+.light-theme #global-portal-loader {
+  background-color: #010312 !important;
+  color: #e4e4e7 !important;
+}
+.light-theme #global-portal-loader * {
+  color: #ffffff !important;
+}
+.light-theme #global-portal-loader [class*="text-cyan"] {
+  color: #22d3ee !important;
+}
+.light-theme #global-portal-loader [class*="bg-white/"] {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Specific dark background classes translated beautifully to light-theme colors */
+.light-theme [class*="bg-[#010312]"],
+.light-theme [class*="bg-[#010210]"],
+.light-theme [class*="bg-[#01020d]"],
+.light-theme [class*="bg-[#020412]"],
+.light-theme [class*="bg-[#030614]"] {
+  background-color: var(--bg-primary) !important;
+  background-image: none !important;
+}
+
+/* Main Cards / Large panels mapped to clean white card-bg */
+.light-theme [class*="bg-[#060a23]"],
+.light-theme [class*="bg-[#05081b]"],
+.light-theme [class*="bg-[#070b22]"],
+.light-theme [class*="bg-slate-950"],
+.light-theme [class*="bg-zinc-950"] {
+  background-color: var(--card-bg) !important;
+  background-image: none !important;
+  border-color: var(--border-color) !important;
+  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Nested panels, list items, stats boxes, and sub-cards mapped to soft ice-blue/slate to retain hierarchy */
+.light-theme [class*="bg-[#0b112d]"],
+.light-theme [class*="bg-[#0c1432]"],
+.light-theme [class*="bg-[#0e163b]"],
+.light-theme [class*="bg-[#080d24]"] {
+  background-color: #f1f5f9 !important; /* soft slate */
+  background-image: none !important;
+  border-color: rgba(15, 23, 42, 0.06) !important;
+}
+
+/* Map white translucent background overlays to clean soft grays in light theme */
+.light-theme [class*="bg-white/"]:not(#global-portal-loader):not(.absolute):not(.absolute *),
+.light-theme [class*="bg-white\\["]:not(#global-portal-loader):not(.absolute):not(.absolute *) {
+  background-color: rgba(15, 23, 42, 0.04) !important;
+  color: var(--text-primary) !important;
+}
+
+/* Light Theme Header */
+.light-theme header#main-header {
+  background-color: var(--header-bg) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 4px 30px rgba(15, 23, 42, 0.03) !important;
+}
+
+.light-theme header#main-header button,
+.light-theme header#main-header a {
+  color: var(--text-secondary) !important;
+}
+
+.light-theme header#main-header button:hover,
+.light-theme header#main-header a:hover {
+  color: var(--text-primary) !important;
+}
+
+.light-theme header#main-header button[class*="text-cyan"],
+.light-theme header#main-header button[class*="bg-gradient"] {
+  color: inherit !important;
+}
+
+/* Specific text tweaks to retain brand colors and avoid flat gray text */
+.light-theme button *,
+.light-theme [class*="bg-gradient"] *,
+.light-theme [class*="from-"] *,
+.light-theme [class*="bg-cyan-950"] *,
+.light-theme [class*="bg-[#060e2e]"] * {
+  color: inherit !important;
+}
+
+/* In light theme, map text colors that are light (for dark mode) to readable dark colors */
+.light-theme .text-white:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
+.light-theme .text-zinc-100:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
+.light-theme .text-zinc-200:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
+.light-theme .text-zinc-300:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *) {
+  color: var(--text-primary) !important;
+}
+
+.light-theme .text-zinc-400:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
+.light-theme .text-zinc-500:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
+.light-theme .text-slate-400:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *) {
+  color: var(--text-secondary) !important;
+}
+
+.light-theme .text-zinc-350:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
+.light-theme .text-zinc-450:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
+.light-theme .text-zinc-550:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *) {
+  color: var(--text-secondary) !important;
+}
+
+/* Headings, strong texts, and heavy elements should stand out beautifully in dark primary text */
+.light-theme h1,
+.light-theme h2,
+.light-theme h3,
+.light-theme h4,
+.light-theme h5,
+.light-theme h6,
+.light-theme h1 *,
+.light-theme h2 *,
+.light-theme h3 *,
+.light-theme h4 *,
+.light-theme h5 *,
+.light-theme h6 *,
+.light-theme strong,
+.light-theme b,
+.light-theme th,
+.light-theme [class*="font-black"],
+.light-theme [class*="font-extrabold"] {
+  color: var(--text-primary) !important;
+}
+
+/* General texts and lists */
+.light-theme p:not(button *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
+.light-theme li:not(button *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
+.light-theme label:not(button *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
+.light-theme span:not(button *):not([class*="bg-gradient"] *):not([class*="from-"] *):not([class*="text-cyan"]):not([class*="text-blue"]):not([class*="text-emerald"]):not([class*="text-indigo"]):not([class*="text-red"]):not([class*="bg-cyan"]):not([class*="text-slate-950"]):not(.absolute):not(.absolute *) {
+  color: var(--text-secondary) !important;
+}
+
+/* Border override mapping to light-theme colors */
+.light-theme [class*="border-white/"],
+.light-theme [class*="border-white\\["] {
+  border-color: var(--border-color) !important;
+}
+
+/* Ensure active/selected custom controls stand out perfectly in light mode */
+.light-theme button[class*="bg-[#060e2e]"] {
+  background-color: #0e7490 !important; /* cyan-700 */
+  color: #ffffff !important;
+  border-color: #0891b2 !important;
+}
+
+.light-theme button[class*="from-cyan-400"] {
+  color: #0f172a !important;
+}
+
+/* Footer panel with light slate background separation */
+.light-theme footer#app-main-footer {
+  background-color: #f1f5f9 !important;
+  border-top: 1px solid var(--border-color) !important;
+}
+
+/* Badge/Labels using bg-cyan-950 */
+.light-theme [class*="bg-cyan-950"] {
+  background-color: rgba(6, 182, 212, 0.08) !important;
+  color: #0e7490 !important;
+  border-color: rgba(6, 182, 212, 0.2) !important;
+}
+
+/* Custom styling for status/alert banners in light mode to avoid dark background text issues */
+.light-theme [class*="bg-red-950"],
+.light-theme [class*="bg-red-500/10"] {
+  background-color: #fef2f2 !important; /* red-50 */
+  color: #991b1b !important; /* red-800 */
+  border-color: #fca5a5 !important; /* red-300 */
+}
+.light-theme [class*="bg-red-950"] *,
+.light-theme [class*="bg-red-500/10"] * {
+  color: #991b1b !important;
+}
+
+.light-theme [class*="bg-emerald-500/10"] {
+  background-color: #f0fdf4 !important; /* green-50 */
+  color: #166534 !important; /* green-800 */
+  border-color: #bbf7d0 !important; /* green-200 */
+}
+.light-theme [class*="bg-emerald-500/10"] * {
+  color: #166534 !important;
+}
+
+.light-theme [class*="bg-yellow-500/10"] {
+  background-color: #fefce8 !important; /* yellow-50 */
+  color: #854d0e !important; /* yellow-800 */
+  border-color: #fef08a !important; /* yellow-200 */
+}
+.light-theme [class*="bg-yellow-500/10"] * {
+  color: #854d0e !important;
+}
+
+/* Inputs, Select dropdowns, Options and Interactive fields */
+.light-theme input,
+.light-theme select,
+.light-theme textarea {
+  background-color: #f1f5f9 !important;
+  color: var(--text-primary) !important;
+  border-color: rgba(15, 23, 42, 0.1) !important;
+}
+
+.light-theme option {
+  background-color: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+}
+
+.light-theme input::placeholder,
+.light-theme textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Table elements */
+.light-theme tr {
+  border-bottom-color: var(--border-color) !important;
+}
+
+.light-theme tr:hover {
+  background-color: rgba(15, 23, 42, 0.01) !important;
+}
+
+/* Specific text tweaks for contrast */
+.light-theme .text-cyan-400 {
+  color: #0891b2 !important; /* cyan-600 */
+}
+
+.light-theme .text-blue-400 {
+  color: #2563eb !important; /* blue-600 */
+}
+
+.light-theme .text-zinc-650 {
+  color: #64748b !important;
+}
+
 

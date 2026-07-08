@@ -314,7 +314,7 @@ export default function AdminDashboard() {
                             <h4 className="font-extrabold text-white text-sm">{p.fullName}</h4>
                             <span className="text-[10px] text-zinc-500 font-sans font-bold">({p.age} yrs)</span>
                           </div>
-                          <p className="text-[10px] text-[#22d3ee] font-sans font-black mt-1 uppercase tracking-wider">{p.profession || 'Trade unresolved'}</p>
+                          <p className="text-[10px] text-[#22d3ee] font-sans font-black mt-1 uppercase tracking-wider">{p.profession || 'Ajudante / General Helper'}</p>
                         </div>
                         <span className="text-[10px] text-zinc-300 font-mono font-black bg-[#101942]/60 border border-white/5 px-3 py-1 rounded-full flex items-center gap-1 uppercase">
                           <MapPin size={10} className="text-zinc-500" />
@@ -340,118 +340,414 @@ export default function AdminDashboard() {
             {selectedProfile ? (
               <div className="bg-[#060a23]/60 border border-white/5 backdrop-blur-md rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 space-y-5 sm:space-y-6 shadow-2xl relative text-zinc-350">
                 {/* Header */}
-                <div className="border-b border-white/5 pb-5">
-                  <span className="text-[10px] font-mono text-cyan-400 font-black uppercase tracking-wider">
-                    Technical Candidate Dossier
-                  </span>
-                  <h2 className="text-lg lg:text-xl font-display font-black text-white mt-1 uppercase">
-                    {selectedProfile.fullName}
-                  </h2>
-                  <p className="text-[10px] text-zinc-400 mt-1.5 font-mono uppercase tracking-widest font-black">{selectedProfile.email} • {selectedProfile.phone}</p>
+                <div className="border-b border-white/5 pb-5 flex gap-4 items-center">
+                  <div className="w-14 h-14 rounded-xl overflow-hidden border border-[#22d3ee]/30 bg-slate-900 shrink-0">
+                    {selectedProfile.avatarPhoto ? (
+                      <img src={selectedProfile.avatarPhoto} alt="Profile" className="w-full h-full object-cover" />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-cyan-950 text-cyan-400 font-extrabold text-lg">
+                        {selectedProfile.fullName.charAt(0).toUpperCase()}
+                      </div>
+                    )}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <span className="text-[10px] font-mono text-[#22d3ee] font-black uppercase tracking-wider block">
+                      Technical Candidate Dossier • {selectedProfile.ranking || 'Verified'}
+                    </span>
+                    <h2 className="text-base sm:text-lg font-display font-black text-white mt-0.5 uppercase truncate">
+                      {selectedProfile.fullName}
+                    </h2>
+                    <p className="text-[10px] text-zinc-400 mt-0.5 font-mono uppercase tracking-widest font-black truncate">
+                      {selectedProfile.email}
+                    </p>
+                  </div>
                 </div>
 
                 {!showContractForm ? (
                   <>
-                    {/* Information map specs */}
-                    <div className="space-y-4">
-                      <h3 className="text-[10px] font-mono font-black uppercase tracking-widest text-[#22d3ee] border-l-2 border-cyan-400 pl-2">
-                        Professional Verification & Details ({selectedProfile.gender})
-                      </h3>
-                      
-                      <div className="grid grid-cols-2 gap-4 text-xs font-sans leading-relaxed">
-                        <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
-                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Trade / Trade Specialization</span>
-                          <span className="text-white font-extrabold block mt-0.5">{selectedProfile.profession || 'Unresolved'}</span>
-                        </div>
-                        <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
-                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">English Level</span>
-                          <span className="text-[#22d3ee] font-extrabold block mt-0.5">{selectedProfile.englishLevel}</span>
-                        </div>
-                        <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
-                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">License / CNH</span>
-                          <span className="text-white font-extrabold block mt-0.5">{selectedProfile.licenseType}</span>
-                        </div>
-                        <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
-                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Operate Machinery</span>
-                          <span className="text-white font-extrabold block mt-0.5">{selectedProfile.drivesMachinery}</span>
-                        </div>
-                        <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5 col-span-2">
-                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Specialized Industrial Certificate</span>
-                          <span className="text-white font-extrabold block mt-0.5">
-                            {selectedProfile.certificateType ? `${selectedProfile.certificateType} (Val: ${selectedProfile.certificateValidity})` : 'No registered certifications'}
-                          </span>
-                        </div>
-                        <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
-                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Hold Valid Passport</span>
-                          <span className="text-white font-extrabold block mt-0.5">{selectedProfile.hasPassport}</span>
-                        </div>
-                        <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
-                          <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Current Visa Status</span>
-                          <span className="text-white font-extrabold block mt-0.5">
-                            {selectedProfile.visaType ? `${selectedProfile.visaType} (Val: ${selectedProfile.visaValidity})` : 'None'}
-                          </span>
+                    {/* Scrollable Dossier Content */}
+                    <div className="max-h-[70vh] overflow-y-auto pr-2 space-y-6 scrollbar-thin scrollbar-thumb-zinc-700">
+                      {/* SECTION 1: PERSONAL DETAILS */}
+                      <div className="space-y-3">
+                        <h3 className="text-[10px] font-mono font-black uppercase tracking-widest text-[#22d3ee] border-l-2 border-cyan-400 pl-2">
+                          1. Informações Pessoais & Contato
+                        </h3>
+                        <div className="grid grid-cols-2 gap-3 text-xs leading-relaxed">
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Full Name / Nome Completo</span>
+                            <span className="text-white font-extrabold block mt-0.5">{selectedProfile.fullName}</span>
+                          </div>
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Date of Birth / Nascimento</span>
+                            <span className="text-white font-extrabold block mt-0.5">{selectedProfile.birthDate || 'Not declared'}</span>
+                          </div>
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Age & Gender / Idade e Gênero</span>
+                            <span className="text-white font-extrabold block mt-0.5">{selectedProfile.age} years • {selectedProfile.gender || 'Not declared'}</span>
+                          </div>
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Nationality / Nacionalidade</span>
+                            <span className="text-white font-extrabold block mt-0.5">{selectedProfile.nationality || 'Not declared'}</span>
+                          </div>
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5 col-span-2">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Current Location / Residência</span>
+                            <span className="text-white font-extrabold block mt-0.5">
+                              {selectedProfile.city ? `${selectedProfile.city}, ` : ''}{selectedProfile.country || 'Not declared'}
+                            </span>
+                          </div>
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Email Address</span>
+                            <span className="text-white font-extrabold block mt-0.5 truncate">{selectedProfile.email || 'Not declared'}</span>
+                          </div>
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Phone / WhatsApp</span>
+                            <span className="text-white font-extrabold block mt-0.5">{selectedProfile.phone}</span>
+                          </div>
+                          {selectedProfile.linkedin && (
+                            <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5 col-span-2">
+                              <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">LinkedIn Profile</span>
+                              <a 
+                                href={selectedProfile.linkedin.startsWith('http') ? selectedProfile.linkedin : `https://${selectedProfile.linkedin}`} 
+                                target="_blank" 
+                                rel="noreferrer" 
+                                className="text-[#22d3ee] font-extrabold block mt-0.5 hover:underline truncate"
+                              >
+                                {selectedProfile.linkedin} 🗗
+                              </a>
+                            </div>
+                          )}
                         </div>
                       </div>
-                    </div>
 
-                    {/* Photo and Video analysis */}
-                    <div className="space-y-4 pt-2">
-                      <h3 className="text-[10px] font-mono font-black uppercase tracking-widest text-[#22d3ee]/85">
-                        Work Gallery & Verification Media
-                      </h3>
-
-                      {/* Currículo (CV) inspect */}
-                      <div className="bg-[#0b112d]/50 border border-white/5 rounded-2xl p-4 space-y-2">
-                        <span className="text-[9px] text-zinc-400 font-mono block uppercase font-bold tracking-wider">Uploaded Resume & Document Copies</span>
-                        {selectedProfile.resumePhoto ? (
-                          <div className="relative aspect-video max-w-sm rounded-xl overflow-hidden border border-white/10 bg-black group shadow-md">
-                            <img src={selectedProfile.resumePhoto} className="w-full h-full object-contain" />
-                            <a 
-                              href={selectedProfile.resumePhoto} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all text-white text-[10px] font-mono uppercase font-black tracking-widest cursor-pointer"
-                            >
-                              View Complete Document 🗗
-                            </a>
+                      {/* SECTION 2: OFFICIAL DOCUMENTS */}
+                      <div className="space-y-3">
+                        <h3 className="text-[10px] font-mono font-black uppercase tracking-widest text-[#22d3ee] border-l-2 border-cyan-400 pl-2">
+                          2. Documentação e Identificação
+                        </h3>
+                        <div className="grid grid-cols-2 gap-3 text-xs leading-relaxed">
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Holds Valid Passport?</span>
+                            <span className="text-white font-extrabold block mt-0.5">{selectedProfile.hasPassport}</span>
                           </div>
-                        ) : (
-                          <div className="aspect-video max-w-sm bg-[#0b112d] border border-white/5 border-dashed flex items-center justify-center text-[10px] rounded-xl text-zinc-500 font-bold uppercase tracking-wider">No resume/CV attached via web upload or camera snapshot.</div>
+                          {selectedProfile.passportNumber && (
+                            <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                              <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Passport Number</span>
+                              <span className="text-white font-extrabold block mt-0.5">{selectedProfile.passportNumber || 'Not declared'}</span>
+                            </div>
+                          )}
+                          {selectedProfile.passportValidity && (
+                            <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5 col-span-2">
+                              <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Passport Expiration / Validade</span>
+                              <span className="text-white font-extrabold block mt-0.5">{selectedProfile.passportValidity || 'Not declared'}</span>
+                            </div>
+                          )}
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">RG / Document</span>
+                            <span className="text-white font-extrabold block mt-0.5">{selectedProfile.rgNumber || 'Not declared'}</span>
+                          </div>
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">CPF / Tax Number</span>
+                            <span className="text-white font-extrabold block mt-0.5">{selectedProfile.cpfNumber || 'Not declared'}</span>
+                          </div>
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Driver's License / CNH</span>
+                            <span className="text-white font-extrabold block mt-0.5">{selectedProfile.licenseType}</span>
+                          </div>
+                          {selectedProfile.licenseType !== 'None' && selectedProfile.licenseType !== 'Nenhuma' && selectedProfile.licenseCountry && (
+                            <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                              <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">License Country</span>
+                              <span className="text-white font-extrabold block mt-0.5">{selectedProfile.licenseCountry || 'Not declared'}</span>
+                            </div>
+                          )}
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5 col-span-2">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Operates Heavy Machinery?</span>
+                            <span className="text-white font-extrabold block mt-0.5">{selectedProfile.drivesMachinery}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* SECTION 3: INTERNATIONAL AVAILABILITY */}
+                      <div className="space-y-3">
+                        <h3 className="text-[10px] font-mono font-black uppercase tracking-widest text-[#22d3ee] border-l-2 border-cyan-400 pl-2">
+                          3. Disponibilidade Internacional & Visto
+                        </h3>
+                        <div className="grid grid-cols-2 gap-3 text-xs leading-relaxed">
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5 col-span-2">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black mb-1.5">Países de Interesse / Target Countries</span>
+                            <div className="flex flex-wrap gap-1.5">
+                              {selectedProfile.countriesOfInterest && selectedProfile.countriesOfInterest.length > 0 ? (
+                                selectedProfile.countriesOfInterest.map((cnt, idx) => (
+                                  <span key={idx} className="px-2 py-0.5 bg-cyan-950/40 text-[#22d3ee] border border-cyan-500/20 rounded-md text-[10px] font-mono font-bold">
+                                    {cnt}
+                                  </span>
+                                ))
+                              ) : (
+                                <span className="text-zinc-500 text-[10px] font-medium">None selected</span>
+                              )}
+                            </div>
+                          </div>
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5 col-span-2">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Earliest Departure / Disponibilidade de Viagem</span>
+                            <span className="text-white font-extrabold block mt-0.5">{selectedProfile.travelAvailability || 'Immediate'}</span>
+                          </div>
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Holds Valid Visa?</span>
+                            <span className="text-white font-extrabold block mt-0.5">{selectedProfile.hasVisa || 'No'}</span>
+                          </div>
+                          {selectedProfile.hasVisa === 'Yes' && (
+                            <>
+                              <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                                <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Visa Country</span>
+                                <span className="text-white font-extrabold block mt-0.5">{selectedProfile.visaCountry || 'Not declared'}</span>
+                              </div>
+                              <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                                <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Visa Type</span>
+                                <span className="text-white font-extrabold block mt-0.5">{selectedProfile.visaType || 'Not declared'}</span>
+                              </div>
+                              <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                                <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Visa Validity</span>
+                                <span className="text-white font-extrabold block mt-0.5">{selectedProfile.visaValidity || 'Not declared'}</span>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* SECTION 4: PROFESSIONAL HISTORY */}
+                      <div className="space-y-3">
+                        <h3 className="text-[10px] font-mono font-black uppercase tracking-widest text-[#22d3ee] border-l-2 border-cyan-400 pl-2">
+                          4. Experiência e Trajetória Profissional
+                        </h3>
+                        <div className="grid grid-cols-2 gap-3 text-xs leading-relaxed">
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Trade Specialty / Profissão</span>
+                            <span className="text-white font-extrabold block mt-0.5">{selectedProfile.profession || 'Ajudante / General Helper'}</span>
+                          </div>
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Years of Experience</span>
+                            <span className="text-[#22d3ee] font-extrabold block mt-0.5">{selectedProfile.experienceYears || 'Not declared'}</span>
+                          </div>
+                          {selectedProfile.lastCompany && (
+                            <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5 col-span-2">
+                              <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Last Company / Última Empresa</span>
+                              <span className="text-white font-extrabold block mt-0.5">{selectedProfile.lastCompany}</span>
+                            </div>
+                          )}
+                          {selectedProfile.lastRole && (
+                            <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                              <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Last Role / Cargo</span>
+                              <span className="text-white font-extrabold block mt-0.5">{selectedProfile.lastRole}</span>
+                            </div>
+                          )}
+                          {selectedProfile.lastPeriod && (
+                            <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5">
+                              <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Employment Duration / Período</span>
+                              <span className="text-white font-extrabold block mt-0.5">{selectedProfile.lastPeriod}</span>
+                            </div>
+                          )}
+                          {selectedProfile.experienceDescription && (
+                            <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5 col-span-2">
+                              <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black mb-1">Description / Atividades</span>
+                              <p className="text-zinc-350 whitespace-pre-wrap leading-relaxed text-xs bg-slate-950/30 p-2.5 rounded-lg border border-white/5 font-medium">{selectedProfile.experienceDescription}</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* SECTION 5: LANGUAGES & CERTIFICATIONS */}
+                      <div className="space-y-3">
+                        <h3 className="text-[10px] font-mono font-black uppercase tracking-widest text-[#22d3ee] border-l-2 border-cyan-400 pl-2">
+                          5. Idiomas e Certificações
+                        </h3>
+                        <div className="grid grid-cols-2 gap-3 text-xs leading-relaxed">
+                          {/* Languages list */}
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5 col-span-2 space-y-2">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Languages / Idiomas</span>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                              {selectedProfile.languages && selectedProfile.languages.length > 0 ? (
+                                selectedProfile.languages.map((lang, idx) => (
+                                  <div key={idx} className="flex justify-between items-center bg-slate-950/40 p-2 rounded-lg border border-white/5 text-[11px]">
+                                    <span className="text-white font-bold">{lang.language}</span>
+                                    <span className="text-[#22d3ee] font-mono font-extrabold uppercase text-[10px]">{lang.level}</span>
+                                  </div>
+                                ))
+                              ) : (
+                                <div className="text-zinc-500 text-[10px] font-bold uppercase tracking-wide">English level: {selectedProfile.englishLevel || 'Not declared'}</div>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Custom Certs */}
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5 col-span-2 space-y-2">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">NR Certifications / Qualificações</span>
+                            <div className="flex flex-wrap gap-1.5">
+                              {selectedProfile.certifications && selectedProfile.certifications.length > 0 ? (
+                                selectedProfile.certifications.map((crt, idx) => (
+                                  <span key={idx} className="px-2 py-1 bg-emerald-950/40 text-emerald-400 border border-emerald-500/20 rounded-md text-[10px] font-mono font-black uppercase">
+                                    ✓ {crt}
+                                  </span>
+                                ))
+                              ) : (
+                                <span className="text-zinc-500 text-[10px] font-semibold">No general certifications checked</span>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Legacy Certificate info */}
+                          <div className="p-3 bg-[#0b112d]/75 rounded-xl border border-white/5 col-span-2">
+                            <span className="text-zinc-550 block text-[9px] uppercase font-mono font-black">Specialized Certificate Info</span>
+                            <span className="text-white font-extrabold block mt-0.5">
+                              {selectedProfile.certificateType ? `${selectedProfile.certificateType} (Val: ${selectedProfile.certificateValidity || 'Indefinite'})` : 'None registered'}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* SECTION 6: COMPLETE MEDIA VERIFICATION */}
+                      <div className="space-y-4">
+                        <h3 className="text-[10px] font-mono font-black uppercase tracking-widest text-[#22d3ee] border-l-2 border-cyan-400 pl-2">
+                          6. Galeria de Fotos e Vídeos de Verificação
+                        </h3>
+                        
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          {/* Profile Photo Face check */}
+                          <div className="bg-[#0b112d]/50 border border-white/5 rounded-2xl p-3.5 space-y-2">
+                            <span className="text-[9px] text-zinc-400 font-mono block uppercase font-black">1. Foto de Perfil (Avatar Check)</span>
+                            {selectedProfile.avatarPhoto ? (
+                              <div className="relative aspect-square w-full rounded-xl overflow-hidden border border-white/10 bg-black group shadow-md">
+                                <img src={selectedProfile.avatarPhoto} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                                <a 
+                                  href={selectedProfile.avatarPhoto} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all text-white text-[10px] font-mono uppercase font-black tracking-widest cursor-pointer"
+                                >
+                                  Open Large Photo 🗗
+                                </a>
+                              </div>
+                            ) : (
+                              <div className="aspect-square w-full bg-slate-950/40 border border-white/5 border-dashed flex items-center justify-center text-[10px] rounded-xl text-zinc-500 font-bold uppercase tracking-wider">No photo uploaded</div>
+                            )}
+                          </div>
+
+                          {/* Full Body Posture Check */}
+                          <div className="bg-[#0b112d]/50 border border-white/5 rounded-2xl p-3.5 space-y-2">
+                            <span className="text-[9px] text-zinc-400 font-mono block uppercase font-black">2. Foto de Corpo (Full Body Check)</span>
+                            {selectedProfile.fullBodyPhoto ? (
+                              <div className="relative aspect-square w-full rounded-xl overflow-hidden border border-white/10 bg-black group shadow-md">
+                                <img src={selectedProfile.fullBodyPhoto} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                                <a 
+                                  href={selectedProfile.fullBodyPhoto} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all text-white text-[10px] font-mono uppercase font-black tracking-widest cursor-pointer"
+                                >
+                                  Open Large Photo 🗗
+                                </a>
+                              </div>
+                            ) : (
+                              <div className="aspect-square w-full bg-slate-950/40 border border-white/5 border-dashed flex items-center justify-center text-[10px] rounded-xl text-zinc-500 font-bold uppercase tracking-wider">No photo uploaded</div>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Resume Curriculo Copy */}
+                        <div className="bg-[#0b112d]/50 border border-white/5 rounded-2xl p-4 space-y-2">
+                          <span className="text-[9px] text-zinc-400 font-mono block uppercase font-black">3. Currículo / Cópia de Documento (CV Snapshot)</span>
+                          {selectedProfile.resumePhoto ? (
+                            <div className="relative aspect-video w-full rounded-xl overflow-hidden border border-white/10 bg-black group shadow-md">
+                              <img src={selectedProfile.resumePhoto} className="w-full h-full object-contain" referrerPolicy="no-referrer" />
+                              <a 
+                                href={selectedProfile.resumePhoto} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all text-white text-[10px] font-mono uppercase font-black tracking-widest cursor-pointer"
+                              >
+                                Open Full CV Document 🗗
+                              </a>
+                            </div>
+                          ) : (
+                            <div className="aspect-video w-full bg-slate-950/40 border border-white/5 border-dashed flex items-center justify-center text-[10px] rounded-xl text-zinc-500 font-bold uppercase tracking-wider">No resume/CV attached</div>
+                          )}
+                        </div>
+
+                        {/* Pitch & Docs Videos */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          <div className="bg-[#0b112d]/50 border border-white/5 rounded-2xl p-3 space-y-2">
+                            <span className="text-[9px] text-zinc-400 font-mono block uppercase font-black">4. Elevator Pitch (Vídeo de Apresentação)</span>
+                            {selectedProfile.videos?.presentation ? (
+                              <video src={selectedProfile.videos.presentation} controls className="w-full aspect-video rounded-xl bg-black object-cover shadow-md" />
+                            ) : (
+                              <div className="aspect-video w-full bg-slate-950/40 border border-white/5 flex items-center justify-center text-[10px] rounded-xl text-zinc-500 font-semibold tracking-wider uppercase">Pending elevator pitch</div>
+                            )}
+                          </div>
+                          <div className="bg-[#0b112d]/50 border border-white/5 rounded-2xl p-3 space-y-2">
+                            <span className="text-[9px] text-zinc-400 font-mono block uppercase font-black">5. Verificação de ID (Vídeo de Documentos)</span>
+                            {selectedProfile.videos?.documents ? (
+                              <video src={selectedProfile.videos.documents} controls className="w-full aspect-video rounded-xl bg-black object-cover shadow-md" />
+                            ) : (
+                              <div className="aspect-video w-full bg-slate-950/40 border border-white/5 flex items-center justify-center text-[10px] rounded-xl text-zinc-500 font-semibold tracking-wider uppercase">Pending ID stream</div>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Work site photos gallery portfolio */}
+                        <div className="bg-[#0b112d]/50 border border-white/5 rounded-2xl p-4 space-y-3">
+                          <span className="text-[9px] text-zinc-400 font-mono block uppercase font-black">6. Fotos de Portfólio de Obras (Worksite Showcase Portfolio)</span>
+                          {selectedProfile.photos && selectedProfile.photos.length > 0 ? (
+                            <div className="grid grid-cols-3 gap-2">
+                              {selectedProfile.photos.map((src, i) => (
+                                <a href={src} target="_blank" rel="noopener noreferrer" key={i} className="aspect-square border border-white/10 bg-slate-950 rounded-xl overflow-hidden cursor-pointer hover:border-[#22d3ee] transition-all group relative block">
+                                  <img src={src} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" referrerPolicy="no-referrer" />
+                                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-[10px] font-mono">Zoom</div>
+                                </a>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="text-zinc-500 text-[10px] uppercase font-mono font-bold tracking-wider">No worksite portfolio photos registered.</div>
+                          )}
+                        </div>
+
+                        {/* Verification certificate files */}
+                        {selectedProfile.certificationFiles && selectedProfile.certificationFiles.length > 0 && (
+                          <div className="bg-[#0b112d]/50 border border-white/5 rounded-2xl p-4 space-y-2">
+                            <span className="text-[9px] text-zinc-400 font-mono block uppercase font-black">7. Arquivos Anexados de Certificados (Certificate Proofs)</span>
+                            <div className="space-y-2">
+                              {selectedProfile.certificationFiles.map((fileUrl, idx) => (
+                                <a 
+                                  href={fileUrl} 
+                                  target="_blank" 
+                                  rel="noreferrer" 
+                                  key={idx}
+                                  className="flex items-center justify-between p-2.5 bg-slate-950/40 rounded-xl border border-white/5 hover:border-cyan-400/30 transition-all text-xs"
+                                >
+                                  <span className="text-zinc-300 font-mono font-medium truncate max-w-[80%]">Anexo de Certificado #{idx + 1}</span>
+                                  <span className="text-[#22d3ee] font-mono font-bold shrink-0 text-[10px] uppercase">Abrir Anexo 🗗</span>
+                                </a>
+                              ))}
+                            </div>
+                          </div>
                         )}
                       </div>
 
-                      {/* Video clips */}
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="space-y-1">
-                          <span className="text-[9px] text-zinc-500 font-mono block uppercase font-bold">Elevator Pitch</span>
-                          {selectedProfile.videos?.presentation ? (
-                            <video src={selectedProfile.videos.presentation} controls className="w-full aspect-video rounded-xl bg-black object-cover shadow-xs" />
-                          ) : (
-                            <div className="aspect-video bg-[#0b112d] border border-white/5 flex items-center justify-center text-[10px] rounded-xl text-zinc-500 font-semibold tracking-wider uppercase">Pending</div>
-                          )}
-                        </div>
-                        <div className="space-y-1">
-                          <span className="text-[9px] text-zinc-500 font-mono block uppercase font-bold">ID Verification</span>
-                          {selectedProfile.videos?.documents ? (
-                            <video src={selectedProfile.videos.documents} controls className="w-full aspect-video rounded-xl bg-black object-cover shadow-xs" />
-                          ) : (
-                            <div className="aspect-video bg-[#0b112d] border border-white/5 flex items-center justify-center text-[10px] rounded-xl text-zinc-500 font-semibold tracking-wider uppercase">Pending</div>
-                          )}
+                      {/* SECTION 7: CONSENTS & PRIVACY TERMS */}
+                      <div className="p-4 bg-slate-950/20 border border-white/5 rounded-2xl space-y-3">
+                        <h4 className="text-[10px] font-mono font-black uppercase tracking-widest text-[#22d3ee]">7. Consentimentos e Termos Legais</h4>
+                        <div className="space-y-2 text-[11px] leading-relaxed">
+                          <div className="flex items-center gap-2">
+                            <span className={`w-2 h-2 rounded-full ${selectedProfile.termsShare ? 'bg-emerald-400' : 'bg-red-400'}`} />
+                            <span className="text-zinc-300 font-medium">Permissão de Compartilhamento de Dossier: <strong className="text-white">{selectedProfile.termsShare ? 'AUTORIZADO' : 'NÃO AUTORIZADO'}</strong></span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className={`w-2 h-2 rounded-full ${selectedProfile.termsTruth ? 'bg-emerald-400' : 'bg-red-400'}`} />
+                            <span className="text-zinc-300 font-medium">Declaração de Veracidade das Informações: <strong className="text-white">{selectedProfile.termsTruth ? 'DECLARADO VERDADEIRO' : 'PENDENTE'}</strong></span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className={`w-2 h-2 rounded-full ${selectedProfile.termsPrivacy ? 'bg-emerald-400' : 'bg-red-400'}`} />
+                            <span className="text-zinc-300 font-medium">Aceite das Políticas de Privacidade (LGPD): <strong className="text-white">{selectedProfile.termsPrivacy ? 'CONFIRMADO' : 'PENDENTE'}</strong></span>
+                          </div>
                         </div>
                       </div>
-
-                      {/* Photos inspect */}
-                      {selectedProfile.photos && selectedProfile.photos.length > 0 ? (
-                        <div className="grid grid-cols-3 gap-2">
-                          {selectedProfile.photos.map((src, i) => (
-                            <a href={src} target="_blank" rel="noopener noreferrer" key={i} className="aspect-square border border-white/10 bg-[#0b112d] rounded-xl overflow-hidden cursor-pointer hover:border-[#22d3ee] transition-all">
-                              <img src={src} className="w-full h-full object-cover" />
-                            </a>
-                          ))}
-                        </div>
-                      ) : (
-                        <p className="text-[10px] text-zinc-500 uppercase tracking-widest font-black font-mono">No job site portfolio photos uploaded.</p>
-                      )}
                     </div>
 
                     {/* Action button: Emit contract */}
@@ -463,7 +759,7 @@ export default function AdminDashboard() {
                         setContractTerms(`SEASONAL EXPATRIATE CONTRACT IN CONSULAR COMPLIANCE.\n\nThis seasonal employment agreement sets forth all professional obligations, durations, and duties between the skilled trade specialist ${selectedProfile.fullName} and the hiring organization for the duration of the upcoming active season abroad.\n\nGuaranteed Benefits Incurred:\n- fully funded private or shared accommodations.\n- round-trip flight arrangements both ways.\n- certified base wages and rest schedules matching local regional commerce terms.\n- direct industrial operations group health & accident insurance coverage.`);
                         setShowContractForm(true);
                       }}
-                      className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-black py-4 transition-all rounded-xl shadow-[0_0_20px_rgba(34,211,238,0.15)] cursor-pointer text-xs uppercase tracking-widest font-mono"
+                      className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-black py-4 transition-all rounded-xl shadow-[0_0_20px_rgba(34,211,238,0.15)] cursor-pointer text-xs uppercase tracking-widest font-mono mt-4 shrink-0"
                     >
                       <Plus size={14} className="stroke-[2.5]" />
                       ISSUE GLOBAL CORPORATE SERVICE OFFER

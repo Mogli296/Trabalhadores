@@ -92,7 +92,7 @@ export default function WorkerProfileForm({ userId, onProfileUpdated }: WorkerPr
   const listCountriesOfInt = ['Netherlands', 'Germany', 'Belgium', 'Spain', 'United States', 'Canada', 'Australia'];
   const listTravelAvails = ['Immediate', '30 days', '60 days', '90 days'];
   const listProfessions = [
-    'Event Production', 'Scaffolding & Rigging', 'Forklift Operator', 'Electrician', 
+    'Ajudante / General Helper', 'Event Production', 'Scaffolding & Rigging', 'Forklift Operator', 'Electrician', 
     'Welder', 'Mechanic', 'Professional Driver', 'Waiter/Server', 'Security Guard', 'Logistics', 
     'Industrial Cleaning', 'Hospitality', 'Kitchen/Cook', 'Customer Service'
   ];
