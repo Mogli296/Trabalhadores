@@ -324,7 +324,7 @@ export default function App() {
                       onClick={() => setAppView('register')}
                       className="bg-gradient-to-r from-cyan-400 to-blue-500 hover:from-cyan-300 hover:to-blue-400 text-slate-950 font-black tracking-widest text-[10px] uppercase px-5 py-2 rounded-full cursor-pointer flex items-center gap-1.5 transition-all shadow-[0_0_20px_rgba(34,211,238,0.2)]"
                     >
-                      Join the Network
+                      REGISTER
                       <ChevronRight size={13} className="stroke-[3]" />
                     </button>
                   </>
@@ -366,6 +366,16 @@ export default function App() {
                   <p className="text-base sm:text-lg text-zinc-400 max-w-3xl mx-auto leading-relaxed">
                     Welcome to TCW. Register your credentials, showcase your certified trade skills, and position yourself to get matched with high-paying international employers. Our seasonal contracts offer secure terms, verified legal safeguards, and flexible placements with structured support. Backed by transparent procedures and fully consolidated sponsorships, this is your fast-track to global opportunities.
                   </p>
+                  
+                  <div className="pt-4 flex justify-center">
+                    <button
+                      onClick={() => setAppView('register')}
+                      className="bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 hover:from-cyan-300 hover:via-blue-400 hover:to-indigo-400 text-slate-950 font-black tracking-widest text-xs uppercase px-8 py-3.5 rounded-full cursor-pointer flex items-center gap-2 transition-all duration-300 shadow-[0_0_30px_rgba(34,211,238,0.3)] hover:shadow-[0_0_40px_rgba(34,211,238,0.5)] hover:scale-105 active:scale-95"
+                    >
+                      REGISTER
+                      <ChevronRight size={14} className="stroke-[3]" />
+                    </button>
+                  </div>
                 </div>
 
 
@@ -416,7 +426,7 @@ export default function App() {
                         onClick={() => setAppView('register')}
                         className="bg-gradient-to-r from-cyan-400 to-blue-500 text-slate-950 font-black text-[10px] uppercase tracking-wider px-5 py-3 rounded-full hover:shadow-[0_0_15px_rgba(34,211,238,0.2)] hover:scale-[1.02] transition-all cursor-pointer font-sans"
                       >
-                        Launch Seasonal Career
+                        REGISTER
                       </button>
                     </div>
 

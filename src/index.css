@@ -18,25 +18,36 @@ html {
 }
 
 .light-theme {
-  --bg-primary: #ecf2f7;
+  --bg-primary: #f8fafc;
   --bg-secondary: #ffffff;
-  --text-primary: #0a1128;
-  --text-secondary: #475b7a;
-  --border-color: rgba(8, 145, 178, 0.12);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --border-color: rgba(15, 23, 42, 0.08);
   --card-bg: #ffffff;
   --header-bg: rgba(255, 255, 255, 0.85);
   --logo-gradient: linear-gradient(to right, #0a1128, #0891b2, #2563eb);
-  --overlay-gradient-from: #ecf2f7;
+  --overlay-gradient-from: #f8fafc;
 }
 
-/* Base text color overrides */
+/* Base root backgrounds and colors in Light Theme */
 .light-theme,
-.light-theme #app-main-container {
+.light-theme #app-main-container,
+.light-theme [class*="bg-[#010312]"]:not(.absolute),
+.light-theme [class*="bg-[#010210]"]:not(.absolute),
+.light-theme [class*="bg-[#020412]"]:not(.absolute),
+.light-theme [class*="bg-[#020515]"]:not(.absolute) {
   background-color: var(--bg-primary) !important;
+  background-image: none !important;
   color: var(--text-primary) !important;
 }
 
-/* Immersive cinematic loader should ALWAYS remain beautifully dark and high-contrast */
+/* Translucent backdrops/overlays in Light Mode should be soft slate with blur, never pure white */
+.light-theme [class*="bg-[#01020d]"] {
+  background-color: rgba(15, 23, 42, 0.45) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* Loader should ALWAYS remain beautifully dark and high-contrast */
 .light-theme #global-portal-loader {
   background-color: #010312 !important;
   color: #e4e4e7 !important;
@@ -51,43 +62,133 @@ html {
   background-color: rgba(255, 255, 255, 0.05) !important;
 }
 
-/* Specific dark background classes translated beautifully to light-theme colors */
-.light-theme [class*="bg-[#010312]"],
-.light-theme [class*="bg-[#010210]"],
-.light-theme [class*="bg-[#01020d]"],
-.light-theme [class*="bg-[#020412]"],
-.light-theme [class*="bg-[#030614]"] {
-  background-color: var(--bg-primary) !important;
-  background-image: none !important;
-}
-
-/* Main Cards / Large panels mapped to clean white card-bg */
-.light-theme [class*="bg-[#060a23]"],
-.light-theme [class*="bg-[#05081b]"],
-.light-theme [class*="bg-[#070b22]"],
-.light-theme [class*="bg-slate-950"],
-.light-theme [class*="bg-zinc-950"] {
+/* 
+   ELEVATED CARDS & SECTIONS:
+   Map any dark-colored containers or panels to clean white card-bg with drop shadows.
+   Explicitly exclude absolute overlays to prevent them from becoming solid white.
+*/
+.light-theme [class*="bg-[#060a23]"]:not(.absolute),
+.light-theme [class*="bg-[#05081b]"]:not(.absolute),
+.light-theme [class*="bg-[#070b22]"]:not(.absolute),
+.light-theme [class*="bg-[#030614]"]:not(.absolute),
+.light-theme [class*="bg-[#04081e]"]:not(.absolute),
+.light-theme [class*="bg-[#020516]"]:not(.absolute),
+.light-theme [class*="bg-[#040924]"]:not(.absolute),
+.light-theme [class*="bg-[#070d24]"]:not(.absolute),
+.light-theme [class*="bg-[#0e163b]"]:not(.absolute),
+.light-theme [class*="bg-slate-950"]:not(.absolute):not([class*="/"]):not(.overlay),
+.light-theme [class*="bg-zinc-950"]:not(.absolute):not([class*="/"]):not(.overlay),
+.light-theme [class*="bg-black/45"]:not(.absolute),
+.light-theme [class*="bg-black/60"]:not(.absolute),
+.light-theme [class*="bg-slate-900/90"]:not(.absolute),
+.light-theme [class*="bg-gradient-to-tr"]:not(.absolute),
+.light-theme section[class*="bg-gradient"]:not(.absolute) {
   background-color: var(--card-bg) !important;
   background-image: none !important;
   border-color: var(--border-color) !important;
-  box-shadow: 0 10px 30px -10px rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.04), 0 8px 10px -6px rgba(15, 23, 42, 0.04) !important;
 }
 
-/* Nested panels, list items, stats boxes, and sub-cards mapped to soft ice-blue/slate to retain hierarchy */
-.light-theme [class*="bg-[#0b112d]"],
-.light-theme [class*="bg-[#0c1432]"],
-.light-theme [class*="bg-[#0e163b]"],
-.light-theme [class*="bg-[#080d24]"] {
-  background-color: #f1f5f9 !important; /* soft slate */
+/* Map custom dark backgrounds used in dark gradients so they are beautifully light */
+.light-theme [class*="from-[#"]:not(button):not(a):not([class*="bg-gradient-to-r"]):not([id="theme-toggle-btn"]),
+.light-theme [class*="to-[#"]:not(button):not(a):not([class*="bg-gradient-to-r"]):not([id="theme-toggle-btn"]),
+.light-theme [class*="via-[#"]:not(button):not(a):not([class*="bg-gradient-to-r"]):not([id="theme-toggle-btn"]) {
+  background-image: none !important;
+  background-color: #f1f5f9 !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Ensure images never look washed out or faded in Light Theme */
+.light-theme img {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* Success / Emerald sub-alerts mapping */
+.light-theme [class*="bg-[#0a231d]"] {
+  background-color: rgba(16, 185, 129, 0.08) !important;
+  color: #059669 !important;
+  border-color: rgba(16, 185, 129, 0.15) !important;
+}
+.light-theme [class*="bg-[#0a231d]"] * {
+  color: #059669 !important;
+}
+
+/* Premium badge mapping */
+.light-theme [class*="bg-[#061e38]"] {
+  background-color: rgba(6, 182, 212, 0.08) !important;
+  color: #0891b2 !important;
+  border-color: rgba(6, 182, 212, 0.15) !important;
+}
+
+/* Verified amber badge mapping */
+.light-theme [class*="bg-amber-950"] {
+  background-color: rgba(245, 158, 11, 0.08) !important;
+  color: #b45309 !important;
+  border-color: rgba(245, 158, 11, 0.15) !important;
+}
+
+/* Blue badges or secondary highlights mapping */
+.light-theme [class*="bg-[#060e2e]"],
+.light-theme [class*="bg-[#101942]"] {
+  background-color: rgba(37, 99, 235, 0.08) !important;
+  color: #2563eb !important;
+  border-color: rgba(37, 99, 235, 0.15) !important;
+}
+.light-theme [class*="bg-[#060e2e]"] *,
+.light-theme [class*="bg-[#101942]"] * {
+  color: #2563eb !important;
+}
+
+/* General neutral-950 background (e.g., avatar backups or panels) */
+.light-theme .bg-neutral-950,
+.light-theme [class*="bg-zinc-900"],
+.light-theme [class*="bg-zinc-850"],
+.light-theme [class*="bg-zinc-800"] {
+  background-color: #f1f5f9 !important;
+  color: #475569 !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Ensure CTA / active gradient buttons remain beautifully colored and legible */
+.light-theme [class*="bg-gradient-to-r"][class*="from-cyan"],
+.light-theme [class*="bg-gradient-to-r"][class*="from-blue"],
+.light-theme button[class*="bg-gradient"],
+.light-theme a[class*="bg-gradient"] {
+  background-color: transparent !important;
+  background-image: linear-gradient(to right, #22d3ee, #3b82f6) !important;
+  box-shadow: 0 4px 14px 0 rgba(34, 211, 238, 0.25) !important;
+}
+
+.light-theme button[class*="bg-gradient"] *,
+.light-theme button[class*="from-cyan"] *,
+.light-theme button[class*="from-cyan"],
+.light-theme a[class*="bg-gradient"] *,
+.light-theme a[class*="from-cyan"] * {
+  color: #0f172a !important;
+  font-weight: 800 !important;
+}
+
+/* 
+   SUB-PANELS & NESTED BOXES:
+   Stats blocks, dropdown lists, and secondary elements map to a soft slate-gray background
+*/
+.light-theme [class*="bg-[#0b112d]"]:not(.absolute),
+.light-theme [class*="bg-[#0c1432]"]:not(.absolute),
+.light-theme [class*="bg-[#0e163b]"]:not(.absolute),
+.light-theme [class*="bg-[#080d24]"]:not(.absolute),
+.light-theme [class*="bg-[#050920]"]:not(.absolute),
+.light-theme [class*="bg-[#0b1028]"]:not(.absolute),
+.light-theme [class*="bg-slate-900"]:not([class*="bg-slate-900/90"]):not(.absolute) {
+  background-color: #f1f5f9 !important;
   background-image: none !important;
   border-color: rgba(15, 23, 42, 0.06) !important;
 }
 
-/* Map white translucent background overlays to clean soft grays in light theme */
+/* Map white translucent background overlays to soft grays in light theme */
 .light-theme [class*="bg-white/"]:not(#global-portal-loader):not(.absolute):not(.absolute *),
 .light-theme [class*="bg-white\\["]:not(#global-portal-loader):not(.absolute):not(.absolute *) {
   background-color: rgba(15, 23, 42, 0.04) !important;
-  color: var(--text-primary) !important;
 }
 
 /* Light Theme Header */
@@ -108,41 +209,7 @@ html {
   color: var(--text-primary) !important;
 }
 
-.light-theme header#main-header button[class*="text-cyan"],
-.light-theme header#main-header button[class*="bg-gradient"] {
-  color: inherit !important;
-}
-
-/* Specific text tweaks to retain brand colors and avoid flat gray text */
-.light-theme button *,
-.light-theme [class*="bg-gradient"] *,
-.light-theme [class*="from-"] *,
-.light-theme [class*="bg-cyan-950"] *,
-.light-theme [class*="bg-[#060e2e]"] * {
-  color: inherit !important;
-}
-
-/* In light theme, map text colors that are light (for dark mode) to readable dark colors */
-.light-theme .text-white:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
-.light-theme .text-zinc-100:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
-.light-theme .text-zinc-200:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
-.light-theme .text-zinc-300:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *) {
-  color: var(--text-primary) !important;
-}
-
-.light-theme .text-zinc-400:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
-.light-theme .text-zinc-500:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
-.light-theme .text-slate-400:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *) {
-  color: var(--text-secondary) !important;
-}
-
-.light-theme .text-zinc-350:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
-.light-theme .text-zinc-450:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
-.light-theme .text-zinc-550:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *) {
-  color: var(--text-secondary) !important;
-}
-
-/* Headings, strong texts, and heavy elements should stand out beautifully in dark primary text */
+/* General Typography overrides for readable contrast */
 .light-theme h1,
 .light-theme h2,
 .light-theme h3,
@@ -159,85 +226,40 @@ html {
 .light-theme b,
 .light-theme th,
 .light-theme [class*="font-black"],
-.light-theme [class*="font-extrabold"] {
+.light-theme [class*="font-extrabold"],
+.light-theme [class*="font-bold"]:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *) {
   color: var(--text-primary) !important;
 }
 
-/* General texts and lists */
-.light-theme p:not(button *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
-.light-theme li:not(button *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
-.light-theme label:not(button *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(.absolute):not(.absolute *),
-.light-theme span:not(button *):not([class*="bg-gradient"] *):not([class*="from-"] *):not([class*="text-cyan"]):not([class*="text-blue"]):not([class*="text-emerald"]):not([class*="text-indigo"]):not([class*="text-red"]):not([class*="bg-cyan"]):not([class*="text-slate-950"]):not(.absolute):not(.absolute *) {
+.light-theme p,
+.light-theme li,
+.light-theme label,
+.light-theme td,
+.light-theme span:not([class*="text-cyan"]):not([class*="text-blue"]):not([class*="text-emerald"]):not([class*="text-indigo"]):not([class*="text-red"]):not([class*="bg-cyan"]):not([class*="text-slate-950"]):not(.absolute):not(.absolute *),
+.light-theme [class*="text-zinc-"],
+.light-theme [class*="text-slate-"]:not([class*="text-slate-950"]),
+.light-theme .text-white:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="from-"] *):not(#global-portal-loader):not(#global-portal-loader *) {
   color: var(--text-secondary) !important;
 }
 
-/* Border override mapping to light-theme colors */
-.light-theme [class*="border-white/"],
-.light-theme [class*="border-white\\["] {
-  border-color: var(--border-color) !important;
+/* Keep accent text vibrant and colored */
+.light-theme .text-cyan-400,
+.light-theme [class*="text-cyan"] {
+  color: #0891b2 !important;
 }
 
-/* Ensure active/selected custom controls stand out perfectly in light mode */
-.light-theme button[class*="bg-[#060e2e]"] {
-  background-color: #0e7490 !important; /* cyan-700 */
-  color: #ffffff !important;
-  border-color: #0891b2 !important;
+.light-theme .text-blue-400,
+.light-theme [class*="text-blue"] {
+  color: #2563eb !important;
 }
 
-.light-theme button[class*="from-cyan-400"] {
-  color: #0f172a !important;
-}
-
-/* Footer panel with light slate background separation */
-.light-theme footer#app-main-footer {
-  background-color: #f1f5f9 !important;
-  border-top: 1px solid var(--border-color) !important;
-}
-
-/* Badge/Labels using bg-cyan-950 */
-.light-theme [class*="bg-cyan-950"] {
-  background-color: rgba(6, 182, 212, 0.08) !important;
-  color: #0e7490 !important;
-  border-color: rgba(6, 182, 212, 0.2) !important;
-}
-
-/* Custom styling for status/alert banners in light mode to avoid dark background text issues */
-.light-theme [class*="bg-red-950"],
-.light-theme [class*="bg-red-500/10"] {
-  background-color: #fef2f2 !important; /* red-50 */
-  color: #991b1b !important; /* red-800 */
-  border-color: #fca5a5 !important; /* red-300 */
-}
-.light-theme [class*="bg-red-950"] *,
-.light-theme [class*="bg-red-500/10"] * {
-  color: #991b1b !important;
-}
-
-.light-theme [class*="bg-emerald-500/10"] {
-  background-color: #f0fdf4 !important; /* green-50 */
-  color: #166534 !important; /* green-800 */
-  border-color: #bbf7d0 !important; /* green-200 */
-}
-.light-theme [class*="bg-emerald-500/10"] * {
-  color: #166534 !important;
-}
-
-.light-theme [class*="bg-yellow-500/10"] {
-  background-color: #fefce8 !important; /* yellow-50 */
-  color: #854d0e !important; /* yellow-800 */
-  border-color: #fef08a !important; /* yellow-200 */
-}
-.light-theme [class*="bg-yellow-500/10"] * {
-  color: #854d0e !important;
-}
-
-/* Inputs, Select dropdowns, Options and Interactive fields */
+/* Inputs, Selects, and textareas */
 .light-theme input,
 .light-theme select,
 .light-theme textarea {
   background-color: #f1f5f9 !important;
   color: var(--text-primary) !important;
-  border-color: rgba(15, 23, 42, 0.1) !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
 }
 
 .light-theme option {
@@ -250,6 +272,19 @@ html {
   color: #94a3b8 !important;
 }
 
+/* Borders */
+.light-theme [class*="border-white/"],
+.light-theme [class*="border-white\\["] {
+  border-color: var(--border-color) !important;
+}
+
+/* Badges and tags using bg-cyan-950 */
+.light-theme [class*="bg-cyan-950"] {
+  background-color: rgba(6, 182, 212, 0.08) !important;
+  color: #0891b2 !important;
+  border-color: rgba(6, 182, 212, 0.2) !important;
+}
+
 /* Table elements */
 .light-theme tr {
   border-bottom-color: var(--border-color) !important;
@@ -259,17 +294,10 @@ html {
   background-color: rgba(15, 23, 42, 0.01) !important;
 }
 
-/* Specific text tweaks for contrast */
-.light-theme .text-cyan-400 {
-  color: #0891b2 !important; /* cyan-600 */
-}
-
-.light-theme .text-blue-400 {
-  color: #2563eb !important; /* blue-600 */
-}
-
-.light-theme .text-zinc-650 {
-  color: #64748b !important;
+/* Footer layout */
+.light-theme footer#app-main-footer {
+  background-color: #f1f5f9 !important;
+  border-top: 1px solid var(--border-color) !important;
 }
 
 

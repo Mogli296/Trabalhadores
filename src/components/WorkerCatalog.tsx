@@ -384,6 +384,94 @@ export default function WorkerCatalog() {
                         </div>
                       </div>
                     )}
+
+                    {/* Highly apparent Photos & Videos Section */}
+                    <div className="p-3 bg-[#050920]/60 border border-cyan-500/10 rounded-2xl space-y-2 mt-1">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[7.5px] text-[#22d3ee] font-mono uppercase tracking-widest font-black block">
+                          📸 Mídias de Verificação / Verification Files
+                        </span>
+                        <span className="text-[7px] text-zinc-500 font-mono uppercase">Apparent</span>
+                      </div>
+                      
+                      <div className="flex items-center gap-2 overflow-x-auto py-0.5 scrollbar-thin">
+                        {/* Videos */}
+                        {profile.videos?.presentation && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setActiveVideoUrl(profile.videos.presentation);
+                            }}
+                            className="h-10 px-2 bg-cyan-950/40 hover:bg-cyan-900/50 border border-cyan-500/30 rounded-xl shrink-0 flex items-center gap-1 text-[9px] font-mono font-black text-cyan-300 transition-all cursor-pointer shadow-sm"
+                            title="Watch Presentation Pitch Video"
+                          >
+                            <span className="text-[10px] animate-pulse">🎥</span>
+                            <span>Apresentação</span>
+                          </button>
+                        )}
+                        {profile.videos?.documents && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setActiveVideoUrl(profile.videos.documents);
+                            }}
+                            className="h-10 px-2 bg-blue-950/40 hover:bg-blue-900/50 border border-blue-500/30 rounded-xl shrink-0 flex items-center gap-1 text-[9px] font-mono font-black text-blue-300 transition-all cursor-pointer shadow-sm"
+                            title="Watch Document Verification Video"
+                          >
+                            <span className="text-[10px]">🆔</span>
+                            <span>Vídeo ID</span>
+                          </button>
+                        )}
+
+                        {/* Full Body Photo */}
+                        {profile.fullBodyPhoto && (
+                          <a
+                            href={profile.fullBodyPhoto}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="w-10 h-10 rounded-xl overflow-hidden border border-white/15 shrink-0 hover:border-[#22d3ee] transition-all relative group/thumb block shadow-sm"
+                            title="View Full-Body Photo"
+                          >
+                            <img src={profile.fullBodyPhoto} className="w-full h-full object-cover filter brightness-90 group-hover/thumb:brightness-100" referrerPolicy="no-referrer" />
+                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/thumb:opacity-100 flex items-center justify-center text-[7px] text-white font-mono uppercase font-black">Corpo</div>
+                          </a>
+                        )}
+
+                        {/* Resume Photo */}
+                        {profile.resumePhoto && (
+                          <a
+                            href={profile.resumePhoto}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="w-10 h-10 rounded-xl overflow-hidden border border-white/15 shrink-0 hover:border-[#22d3ee] transition-all relative group/thumb block shadow-sm"
+                            title="View CV / Resume scan"
+                          >
+                            <img src={profile.resumePhoto} className="w-full h-full object-cover filter brightness-90 group-hover/thumb:brightness-100" referrerPolicy="no-referrer" />
+                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/thumb:opacity-100 flex items-center justify-center text-[7px] text-white font-mono uppercase font-black">CV</div>
+                          </a>
+                        )}
+
+                        {/* Worksite photos */}
+                        {profile.photos && profile.photos.slice(0, 3).map((pUrl, idx) => (
+                          <a
+                            key={idx}
+                            href={pUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="w-10 h-10 rounded-xl overflow-hidden border border-white/15 shrink-0 hover:border-[#22d3ee] transition-all relative group/thumb block shadow-sm"
+                            title={`View Portfolio Work Photo ${idx + 1}`}
+                          >
+                            <img src={pUrl} className="w-full h-full object-cover filter brightness-90 group-hover/thumb:brightness-100" referrerPolicy="no-referrer" />
+                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/thumb:opacity-100 flex items-center justify-center text-[7px] text-[#22d3ee] font-mono uppercase font-black">Obra</div>
+                          </a>
+                        ))}
+                      </div>
+                    </div>
                   </div>
 
                   {/* Corporate Inquiry Button & Action */}
@@ -695,13 +783,25 @@ export default function WorkerCatalog() {
                   )}
                 </div>
 
-                {/* Video pitch if available */}
-                {selectedProfile.videos?.presentation && (
-                  <div className="p-5 bg-black/60 border border-white/5 rounded-2xl space-y-3">
-                    <span className="block text-[10px] uppercase font-mono tracking-widest font-black text-[#22d3ee] text-center">🎥 30-Second Video Presentation Pitch</span>
-                    <div className="max-w-md mx-auto aspect-video rounded-xl overflow-hidden bg-black border border-white/5 shadow-inner">
-                      <video src={selectedProfile.videos.presentation} controls className="w-full h-full object-cover" />
-                    </div>
+                {/* Video pitch & ID check video if available */}
+                {(selectedProfile.videos?.presentation || selectedProfile.videos?.documents) && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {selectedProfile.videos?.presentation && (
+                      <div className="p-5 bg-black/60 border border-white/5 rounded-2xl space-y-3">
+                        <span className="block text-[10px] uppercase font-mono tracking-widest font-black text-[#22d3ee] text-center">🎥 30-Second Video Presentation Pitch</span>
+                        <div className="aspect-video rounded-xl overflow-hidden bg-black border border-white/5 shadow-inner">
+                          <video src={selectedProfile.videos.presentation} controls className="w-full h-full object-cover" />
+                        </div>
+                      </div>
+                    )}
+                    {selectedProfile.videos?.documents && (
+                      <div className="p-5 bg-black/60 border border-white/5 rounded-2xl space-y-3">
+                        <span className="block text-[10px] uppercase font-mono tracking-widest font-black text-blue-400 text-center">🆔 Identity & Documents Video Check</span>
+                        <div className="aspect-video rounded-xl overflow-hidden bg-black border border-white/5 shadow-inner">
+                          <video src={selectedProfile.videos.documents} controls className="w-full h-full object-cover" />
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
 

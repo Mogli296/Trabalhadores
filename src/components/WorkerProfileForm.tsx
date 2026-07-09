@@ -1387,6 +1387,34 @@ export default function WorkerProfileForm({ userId, onProfileUpdated }: WorkerPr
               )}
             </div>
 
+            {/* Vídeo Verificação de ID / Documento */}
+            <div className="p-4 bg-[#0b112d]/50 border border-white/5 rounded-2xl space-y-4 md:col-span-2">
+              <span className="text-[10px] uppercase font-mono tracking-wider font-extrabold text-cyan-400 block">🎥 Identity Verification Video (ID & Face Check)</span>
+              <p className="text-[10px] text-zinc-450 uppercase tracking-widest leading-relaxed">Show your passport or ID card next to your face for 5 seconds to verify identity.</p>
+
+              {documentsVideo ? (
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-emerald-400 font-bold text-xs uppercase tracking-wider">
+                    <CheckCircle size={14} /> Identity Verification Video Uploaded
+                  </div>
+                  <video src={documentsVideo} controls className="w-full max-w-md mx-auto aspect-video rounded-xl bg-black object-cover" />
+                  <button
+                    type="button"
+                    onClick={() => setDocumentsVideo('')}
+                    className="px-4 py-2 bg-slate-900 border border-white/5 text-zinc-300 hover:text-white rounded-xl text-xs font-bold"
+                  >
+                    Replace Video
+                  </button>
+                </div>
+              ) : (
+                <label className="border-2 border-dashed border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/5 py-10 rounded-xl flex flex-col items-center justify-center cursor-pointer text-zinc-500 hover:text-cyan-300 text-xs font-bold font-mono">
+                  <Video size={30} className="mb-2 text-zinc-400" />
+                  CLICK TO UPLOAD ID VERIFICATION VIDEO
+                  <input type="file" accept="video/*" onChange={(e) => handleMediaUpload(e, 'docVerify')} className="hidden" />
+                </label>
+              )}
+            </div>
+
             {/* Foto do Currículo */}
             <div className="p-4 bg-[#0b112d]/50 border border-white/5 rounded-2xl space-y-4 md:col-span-2">
               <span className="text-[10px] uppercase font-mono tracking-wider font-extrabold text-cyan-400 block">📄 Resume / CV Scan Photo</span>
@@ -1419,6 +1447,35 @@ export default function WorkerProfileForm({ userId, onProfileUpdated }: WorkerPr
                   </button>
                 </div>
               )}
+            </div>
+
+            {/* Fotos de Portfólio de Obras */}
+            <div className="p-4 bg-[#0b112d]/50 border border-white/5 rounded-2xl space-y-4 md:col-span-2">
+              <span className="text-[10px] uppercase font-mono tracking-wider font-extrabold text-cyan-400 block">🏗️ Worksite Showcase Portfolio Photos</span>
+              <p className="text-[10px] text-zinc-450 uppercase tracking-widest leading-relaxed">Upload real pictures of your previous worksites, machinery operated, or completed projects.</p>
+
+              {photos && photos.length > 0 && (
+                <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+                  {photos.map((pUrl, i) => (
+                    <div key={i} className="relative aspect-square rounded-xl overflow-hidden border border-white/10 group shadow-md">
+                      <img referrerPolicy="no-referrer" src={pUrl} alt={`Portfolio ${i}`} className="w-full h-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => setPhotos(prev => prev.filter((_, idx) => idx !== i))}
+                        className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all text-red-400 text-xs font-bold animate-fade-in"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <label className="border-2 border-dashed border-white/10 hover:border-cyan-400/50 hover:bg-cyan-500/5 py-8 rounded-xl flex flex-col items-center justify-center cursor-pointer text-zinc-500 hover:text-cyan-300 text-xs font-bold font-mono text-center">
+                <Upload size={24} className="mb-2" />
+                Upload Portfolio Photos (Multiple Allowed)
+                <input type="file" accept="image/*" multiple onChange={(e) => handleMediaUpload(e, 'photos')} className="hidden" />
+              </label>
             </div>
           </div>
         </div>
