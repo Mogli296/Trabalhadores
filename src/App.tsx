@@ -593,17 +593,17 @@ export default function App() {
                   </p>
                 </div>
 
-                {/* Grid Layout containing 3 Gorgeous Creator cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto justify-center">
+                {/* Grid Layout containing 2 Gorgeous Creator cards */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto justify-center">
                   
                   {/* Creator 1 */}
-                  <div className="bg-[#05081b]/50 border border-white/5 rounded-3xl overflow-hidden hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] transition-all duration-500 flex flex-col group justify-between">
+                  <div className="bg-[#05081b]/50 border border-white/5 rounded-3xl overflow-hidden hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] transition-all duration-500 flex flex-col group h-full">
                     <div className="relative aspect-square overflow-hidden bg-zinc-950">
-                      <img 
+                       <img 
                         src="https://i.pinimg.com/736x/b1/99/5a/b1995a808291c033dd55d4fed13343e6.jpg" 
                         alt="Gustavo Paiva" 
                         referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-95"
+                        className="w-full h-full object-cover scale-[1.3] origin-[50%_12%] transition-transform duration-700 group-hover:scale-[1.37] filter brightness-95"
                       />
                       <div className="absolute top-3 left-3">
                         <span className="text-[9px] font-mono font-bold text-cyan-400 uppercase tracking-wider bg-slate-950/80 px-2.5 py-1 rounded-full border border-white/5">
@@ -611,7 +611,7 @@ export default function App() {
                         </span>
                       </div>
                     </div>
-                    <div className="p-6 space-y-2 text-left bg-[#070b22]/40 border-t border-white/5">
+                    <div className="p-6 space-y-2 text-left bg-[#070b22]/40 border-t border-white/5 flex-1">
                       <h4 className="text-base font-black text-white uppercase tracking-tight group-hover:text-cyan-400 transition-colors">Gustavo Paiva</h4>
                       <p className="text-xs text-zinc-400 font-sans leading-relaxed">
                         Specialized in international mobility and talent management, Gustavo leads an innovative platform that connects professionals to seasonal work opportunities at global events. At 30, he brings an entrepreneurial vision to streamline secure and strategic pipelines for companies seeking qualified workforce abroad.
@@ -620,13 +620,13 @@ export default function App() {
                   </div>
 
                   {/* Creator 2 */}
-                  <div className="bg-[#05081b]/50 border border-white/5 rounded-3xl overflow-hidden hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] transition-all duration-500 flex flex-col group justify-between">
+                  <div className="bg-[#05081b]/50 border border-white/5 rounded-3xl overflow-hidden hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] transition-all duration-500 flex flex-col group h-full">
                     <div className="relative aspect-square overflow-hidden bg-zinc-950">
                       <img 
                         src="https://i.pinimg.com/736x/15/f1/db/15f1db2d3e6750432814031b69964b6f.jpg" 
                         alt="Matheus Filizola" 
                         referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105 filter brightness-95"
+                        className="w-full h-full object-cover object-[50%_28%] transition-transform duration-700 group-hover:scale-105 filter brightness-95"
                       />
                       <div className="absolute top-3 left-3">
                         <span className="text-[9px] font-mono font-bold text-cyan-400 uppercase tracking-wider bg-slate-950/80 px-2.5 py-1 rounded-full border border-white/5">
@@ -634,33 +634,10 @@ export default function App() {
                         </span>
                       </div>
                     </div>
-                    <div className="p-6 space-y-2 text-left bg-[#070b22]/40 border-t border-white/5">
+                    <div className="p-6 space-y-2 text-left bg-[#070b22]/40 border-t border-white/5 flex-1">
                       <h4 className="text-base font-black text-white uppercase tracking-tight group-hover:text-cyan-400 transition-colors">Matheus Filizola</h4>
                       <p className="text-xs text-zinc-400 font-sans leading-relaxed">
                         Founder and corporate liaison, Matheus Filizola leads the platform with a focus on international mobility and talent management. His strategic role ensures not only the connection of professionals to global opportunities, but also direct engagement with companies, strengthening partnerships and securing safe and effective pipelines of qualified workforce.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Creator 3 */}
-                  <div className="bg-[#05081b]/50 border border-white/5 rounded-3xl overflow-hidden hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] transition-all duration-500 flex flex-col group justify-between">
-                    <div className="relative aspect-square overflow-hidden bg-zinc-950">
-                      <img 
-                        src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&h=600&q=80" 
-                        alt="Arthur Pendelton" 
-                        referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-95"
-                      />
-                      <div className="absolute top-3 left-3">
-                        <span className="text-[9px] font-mono font-bold text-cyan-400 uppercase tracking-wider bg-slate-950/80 px-2.5 py-1 rounded-full border border-white/5">
-                          COO & GLOBAL EXPANSION
-                        </span>
-                      </div>
-                    </div>
-                    <div className="p-6 space-y-2 text-left bg-[#070b22]/40 border-t border-white/5">
-                      <h4 className="text-base font-black text-white uppercase tracking-tight group-hover:text-cyan-400 transition-colors">Arthur Pendelton</h4>
-                      <p className="text-xs text-zinc-400 font-sans leading-relaxed">
-                        Arthur directs our international relations, spearheading legal partnerships with premier corporate hosts and consulate committees to bypass global red tape.
                       </p>
                     </div>
                   </div>

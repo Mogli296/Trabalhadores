@@ -227,7 +227,7 @@ html {
 .light-theme th,
 .light-theme [class*="font-black"],
 .light-theme [class*="font-extrabold"],
-.light-theme [class*="font-bold"]:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *) {
+.light-theme [class*="font-bold"]:not(button):not(button *):not(a):not(a *):not([class*="bg-gradient"] *):not([class*="text-cyan"]):not([class*="text-blue"]):not([class*="text-emerald"]):not([class*="text-indigo"]) {
   color: var(--text-primary) !important;
 }
 
