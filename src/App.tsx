@@ -600,21 +600,21 @@ export default function App() {
                   <div className="bg-[#05081b]/50 border border-white/5 rounded-3xl overflow-hidden hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] transition-all duration-500 flex flex-col group justify-between">
                     <div className="relative aspect-square overflow-hidden bg-zinc-950">
                       <img 
-                        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&h=600&q=80" 
-                        alt="Marcus Vance" 
+                        src="https://i.pinimg.com/736x/b1/99/5a/b1995a808291c033dd55d4fed13343e6.jpg" 
+                        alt="Gustavo Paiva" 
                         referrerPolicy="no-referrer"
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-95"
                       />
                       <div className="absolute top-3 left-3">
                         <span className="text-[9px] font-mono font-bold text-cyan-400 uppercase tracking-wider bg-slate-950/80 px-2.5 py-1 rounded-full border border-white/5">
-                          CO-FOUNDER & CEO
+                          Creator - Founder
                         </span>
                       </div>
                     </div>
                     <div className="p-6 space-y-2 text-left bg-[#070b22]/40 border-t border-white/5">
-                      <h4 className="text-base font-black text-white uppercase tracking-tight group-hover:text-cyan-400 transition-colors">Marcus Vance</h4>
+                      <h4 className="text-base font-black text-white uppercase tracking-tight group-hover:text-cyan-400 transition-colors">Gustavo Paiva</h4>
                       <p className="text-xs text-zinc-400 font-sans leading-relaxed">
-                        Specializing in consulate engagement and immigration strategy, Marcus brings over 12 years of executive experience delivering secure multi-national pipelines.
+                        Specialized in international mobility and talent management, Gustavo leads an innovative platform that connects professionals to seasonal work opportunities at global events. At 30, he brings an entrepreneurial vision to streamline secure and strategic pipelines for companies seeking qualified workforce abroad.
                       </p>
                     </div>
                   </div>
@@ -623,21 +623,21 @@ export default function App() {
                   <div className="bg-[#05081b]/50 border border-white/5 rounded-3xl overflow-hidden hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(34,211,238,0.1)] transition-all duration-500 flex flex-col group justify-between">
                     <div className="relative aspect-square overflow-hidden bg-zinc-950">
                       <img 
-                        src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&h=600&q=80" 
-                        alt="Camila Borges" 
+                        src="https://i.pinimg.com/736x/15/f1/db/15f1db2d3e6750432814031b69964b6f.jpg" 
+                        alt="Matheus Filizola" 
                         referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-95"
+                        className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105 filter brightness-95"
                       />
                       <div className="absolute top-3 left-3">
                         <span className="text-[9px] font-mono font-bold text-cyan-400 uppercase tracking-wider bg-slate-950/80 px-2.5 py-1 rounded-full border border-white/5">
-                          CO-FOUNDER & CTO
+                          CO-FOUNDER
                         </span>
                       </div>
                     </div>
                     <div className="p-6 space-y-2 text-left bg-[#070b22]/40 border-t border-white/5">
-                      <h4 className="text-base font-black text-white uppercase tracking-tight group-hover:text-cyan-400 transition-colors">Camila Borges</h4>
+                      <h4 className="text-base font-black text-white uppercase tracking-tight group-hover:text-cyan-400 transition-colors">Matheus Filizola</h4>
                       <p className="text-xs text-zinc-400 font-sans leading-relaxed">
-                        Lead engineer of the TCW platform, Camila architected our smart credentials matching compliance, profile auto-verification, and database security protocols.
+                        Founder and corporate liaison, Matheus Filizola leads the platform with a focus on international mobility and talent management. His strategic role ensures not only the connection of professionals to global opportunities, but also direct engagement with companies, strengthening partnerships and securing safe and effective pipelines of qualified workforce.
                       </p>
                     </div>
                   </div>
